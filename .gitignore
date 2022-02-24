@@ -1,0 +1,8 @@
+#   FOLDERS
+backup
+.vscode
+
+
+#   FILES
+
+env.py

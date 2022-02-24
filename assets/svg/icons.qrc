@@ -1,0 +1,12 @@
+<RCC>
+  <qresource prefix="svg">
+    <file>manage_accounts_white_48dp.svg</file>
+    <file>menu_open_white_right_48dp.svg</file>
+    <file>close_white_48dp.svg</file>
+    <file>fullscreen_exit_white_48dp.svg</file>
+    <file>fullscreen_white_48dp.svg</file>
+    <file>minimize_white_48dp.svg</file>
+    <file>menu_open_white_48dp.svg</file>
+    <file>menu_white_48dp.svg</file>
+  </qresource>
+</RCC>
