@@ -2,6 +2,7 @@
 backup
 .vscode
 assets/stuffs
+.qt_for_python
 
 #   FILES
 
