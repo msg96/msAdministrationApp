@@ -1,6 +1,10 @@
-from required import *
 import os
-
+###########################################################################################################################
+########    PYSIDE6 IMPORTS                             ~   * IMPORTANT
+###########################################################################################################################
+from PySide6.QtGui import *
+from PySide6.QtWidgets import *
+from PySide6.QtCore import *
 
 
 def updateSVG(parca) -> str:
