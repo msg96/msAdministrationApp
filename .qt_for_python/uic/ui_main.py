@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'ui_mainGknxkh.ui'
+## Form generated from reading UI file 'ui_main.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.2.3
 ##
@@ -18,7 +18,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QCheckBox, QFrame, QHBoxLayout,
     QLabel, QLineEdit, QMainWindow, QPushButton,
     QSizePolicy, QStackedWidget, QVBoxLayout, QWidget)
-import assets.svg.icons_rc as icons_rc
+import icons_rc
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):

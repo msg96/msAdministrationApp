@@ -97,12 +97,6 @@ border-top-left-radius: 10px; border-bottom-left-radius: 0px;
     </property>
     <item>
      <widget class="QFrame" name="LeftModal">
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>0</height>
-       </size>
-      </property>
       <property name="maximumSize">
        <size>
         <width>0</width>
@@ -200,9 +194,6 @@ border-top-left-radius: 10px; border-bottom-left-radius: 0px;
               <height>33</height>
              </size>
             </property>
-            <property name="mouseTracking">
-             <bool>false</bool>
-            </property>
             <property name="focusPolicy">
              <enum>Qt::NoFocus</enum>
             </property>
@@ -213,7 +204,7 @@ border-top-left-radius: 10px; border-bottom-left-radius: 0px;
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../assets/svg/icons.qrc">
+             <iconset resource="../../../assets/svg/icons.qrc">
               <normaloff>:/svg/menu_white_48dp.svg</normaloff>
               <normalon>:/svg/menu_open_white_48dp.svg</normalon>:/svg/menu_white_48dp.svg</iconset>
             </property>
@@ -358,7 +349,7 @@ border-top-left-radius: 10px; border-bottom-left-radius: 0px;
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../../assets/svg/icons.qrc">
+                <iconset resource="../../../assets/svg/icons.qrc">
                  <normaloff>:/svg/minimize_white_48dp.svg</normaloff>:/svg/minimize_white_48dp.svg</iconset>
                </property>
               </widget>
@@ -381,7 +372,7 @@ border-top-left-radius: 10px; border-bottom-left-radius: 0px;
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../../assets/svg/icons.qrc">
+                <iconset resource="../../../assets/svg/icons.qrc">
                  <normaloff>:/svg/fullscreen_white_48dp.svg</normaloff>
                  <normalon>:/svg/fullscreen_exit_white_48dp.svg</normalon>:/svg/fullscreen_white_48dp.svg</iconset>
                </property>
@@ -408,7 +399,7 @@ border-top-left-radius: 10px; border-bottom-left-radius: 0px;
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../../assets/svg/icons.qrc">
+                <iconset resource="../../../assets/svg/icons.qrc">
                  <normaloff>:/svg/close_white_48dp.svg</normaloff>:/svg/close_white_48dp.svg</iconset>
                </property>
               </widget>
@@ -590,9 +581,6 @@ border-top-left-radius: 10px; border-bottom-left-radius: 0px;
                     <height>33</height>
                    </size>
                   </property>
-                  <property name="mouseTracking">
-                   <bool>false</bool>
-                  </property>
                   <property name="focusPolicy">
                    <enum>Qt::NoFocus</enum>
                   </property>
@@ -603,14 +591,11 @@ border-top-left-radius: 10px; border-bottom-left-radius: 0px;
                    <string/>
                   </property>
                   <property name="icon">
-                   <iconset resource="../../assets/svg/icons.qrc">
+                   <iconset resource="../../../assets/svg/icons.qrc">
                     <normaloff>:/svg/menu_white_48dp.svg</normaloff>
                     <normalon>:/svg/menu_open_white_right_48dp.svg</normalon>:/svg/menu_white_48dp.svg</iconset>
                   </property>
                   <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                  <property name="flat">
                    <bool>true</bool>
                   </property>
                  </widget>
@@ -644,20 +629,8 @@ border-top-left-radius: 10px; border-bottom-left-radius: 0px;
                 </property>
                 <item>
                  <widget class="QStackedWidget" name="Paginas">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="frameShadow">
-                   <enum>QFrame::Raised</enum>
-                  </property>
-                  <property name="lineWidth">
-                   <number>0</number>
-                  </property>
                   <property name="currentIndex">
-                   <number>0</number>
+                   <number>1</number>
                   </property>
                   <widget class="QWidget" name="LoginPage">
                    <layout class="QHBoxLayout" name="horizontalLayout_9">
@@ -878,7 +851,7 @@ border-top-left-radius: 10px; border-bottom-left-radius: 0px;
                                    <string/>
                                   </property>
                                   <property name="icon">
-                                   <iconset resource="../../assets/svg/icons.qrc">
+                                   <iconset resource="../../../assets/svg/icons.qrc">
                                     <normaloff>:/svg/manage_accounts_white_48dp.svg</normaloff>:/svg/manage_accounts_white_48dp.svg</iconset>
                                   </property>
                                   <property name="iconSize">
@@ -1220,6 +1193,12 @@ border-top-left-radius: 10px; border-bottom-left-radius: 0px;
                                      <property name="text">
                                       <string>Entrar</string>
                                      </property>
+                                     <property name="default">
+                                      <bool>true</bool>
+                                     </property>
+                                     <property name="flat">
+                                      <bool>true</bool>
+                                     </property>
                                     </widget>
                                    </item>
                                   </layout>
@@ -1240,19 +1219,18 @@ border-top-left-radius: 10px; border-bottom-left-radius: 0px;
                    </layout>
                   </widget>
                   <widget class="QWidget" name="page_2">
-                   <widget class="QLabel" name="label">
-                    <property name="geometry">
-                     <rect>
-                      <x>411</x>
-                      <y>208</y>
-                      <width>49</width>
-                      <height>16</height>
-                     </rect>
-                    </property>
-                    <property name="text">
-                     <string>Page 2</string>
-                    </property>
-                   </widget>
+                   <layout class="QHBoxLayout" name="horizontalLayout_14">
+                    <item>
+                     <widget class="QLabel" name="label">
+                      <property name="text">
+                       <string>Page 2</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
                   </widget>
                  </widget>
                 </item>
@@ -1291,7 +1269,7 @@ border-top-left-radius: 10px; border-bottom-left-radius: 0px;
   </widget>
  </widget>
  <resources>
-  <include location="../../assets/svg/icons.qrc"/>
+  <include location="../../../assets/svg/icons.qrc"/>
  </resources>
  <connections/>
 </ui>

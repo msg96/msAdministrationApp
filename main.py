@@ -259,17 +259,37 @@ class loginApp(msLoginForm):
 ########    LOGIN METHOD
 ###########################################################################################################################
     def LoginBtnClick(self):
-        if auth.login(username=self.UI.UsernameLb.text(), password=self.UI.PasswordLb.text()):
-            self.logado = True
-            self.CheckLogin()
+        con = auth.login(login=self.UI.UsernameLb.text(), password=self.UI.PasswordLb.text())
+        if con and con < 4:
+            self.__saveOP = self.windowOpacity()
+            self.Annimation = QPropertyAnimation(self, b"windowOpacity")
+            self.Annimation.setDuration(self.AnniDuration)
+            self.Annimation.setStartValue(self.__saveOP)
+            self.Annimation.setEndValue(0)
+            self.Annimation.finished.connect(self.__EndSucess)
+            self.Annimation.setEasingCurve(QEasingCurve.OutInBounce)
+            self.Annimation.start()
         else:
-         
             if self.logado:
                 self.logado = False
-            self.LoginFailed(2000)
+            if con == 4:
+                self.LoginFailed(2000, "Conta Bloqueada, entre em contato com o administrador!.")
+            else:
+                self.LoginFailed(2000, "Ocorreu um Erro ao logar!.")
+    def __EndSucess(self):
+        self.logado = True
+        self.CheckLogin()
+        self.Annimation = QPropertyAnimation(self, b"windowOpacity")
+        self.Annimation.setDuration(self.AnniDuration)
+        self.Annimation.setStartValue(0)
+        self.Annimation.setEndValue(self.__saveOP)
+        self.Annimation.setEasingCurve(QEasingCurve.OutInBounce)
+        self.Annimation.start()
+
+
 #######     DISPLAY ERROR ON NOT HAVE MATCHED USER O PASS
-    def LoginFailed(self, delayMs):
-        self.UI.ErroMsg.setText("Ocorreu um Erro ao logar!.")
+    def LoginFailed(self, delayMs, displaytext):
+        self.UI.ErroMsg.setText(displaytext)
         self.__old = self.UI.ErroMsg.windowOpacity()
         self.UI.ErroMsg.setWindowOpacity(1)
         self.Annimation = QPropertyAnimation(self.UI.ErroMsg, b"windowOpacity")
@@ -289,9 +309,7 @@ class loginApp(msLoginForm):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     loginApp = loginApp()
-
     try:
         sys.exit(app.exec())
     except:
         pass
-
