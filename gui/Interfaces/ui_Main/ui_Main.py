@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'ui_mainGknxkh.ui'
+## Form generated from reading UI file 'ui_mainfzYese.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.2.3
 ##
@@ -19,6 +19,7 @@ from PySide6.QtWidgets import (QApplication, QCheckBox, QFrame, QHBoxLayout,
     QLabel, QLineEdit, QMainWindow, QPushButton,
     QSizePolicy, QStackedWidget, QVBoxLayout, QWidget)
 import assets.svg.icons_rc as icons_rc
+from assets.stylesheets import GetStyle
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -27,60 +28,7 @@ class Ui_MainWindow(object):
         MainWindow.resize(940, 607)
         MainWindow.setMinimumSize(QSize(940, 600))
         MainWindow.setMaximumSize(QSize(50000, 50000))
-        MainWindow.setStyleSheet(u"* { background-color: transparent; color: #B2B2B2; }\n"
-"#MainWindow, #centralwidget { background-color: transparent; }\n"
-"#TopBar { background-color: #050505; border-top-left-radius:10px;}\n"
-"#TopBarOpen { background-color: #050505; border-top-left-radius:0px; }\n"
-"#LeftModal { background-color: #111111; border-top-left-radius: 10px; border-bottom-left-radius: 15px; }\n"
-"#LeftModalMax { background-color: #111111; border-top-left-radius: 0px; border-bottom-left-radius: 0px; }\n"
-"#RightModal { background-color: #111111; border-top: 1px solid #050505;}\n"
-"#ContentPanel {background-color: #101010; border-top: 1px solid #050505; border-left: 1px solid #050505; }\n"
-"#ContentPages {border-right: 1px solid #050505; border-top: 1px solid #050505;}\n"
-"#ContentTitles { background-color: #090909 ; }\n"
-"/* Toggle buttons */\n"
-"#ToggleLeftBtn { background-color: #050505; border: none;\n"
-"border-top-left-radius: 10px; border-bottom-left-radius: 0px;\n"
-"border-top-right-radius: 0px; border-bottom-right-radius: 0p"
-                        "x;}\n"
-"#ToggleLeftBtn:hover { background-color: #91111111; border: none; }\n"
-"#ToggleLeftBtnOpen { background-color: #111111; border: none; \n"
-"border-top-left-radius: 0px; border-bottom-left-radius: 0px;\n"
-"border-top-right-radius: 10px; border-bottom-right-radius: 0px; }\n"
-"#ToggleLeftBtnOpen:hover { background-color: #91111111; border: none; }\n"
-"/**/\n"
-"#ToggleRightBtn { background-color: #090909; border: none;\n"
-"border-top-left-radius: 0px; border-bottom-left-radius: 0px;\n"
-"border-top-right-radius: 0px; border-bottom-right-radius: 0px;}\n"
-"#ToggleRightBtn:hover  { background-color: #91111111; border: none; }\n"
-"#ToggleRightBtnOpen { background-color: #111111; border:none;\n"
-"border-top-left-radius: 10px; border-bottom-left-radius: 0px;\n"
-" border-top-right-radius: 0px; border-bottom-right-radius: 0px; }\n"
-"#ToggleRightBtnOpen:hover { background-color: #91111111; border: none; }\n"
-"/*	*/\n"
-"/*  windows state buttons */\n"
-"#MinimizeBtn, #MaximizeBtn, #CloseBtn { background-color: transpar"
-                        "ent; border: none; }\n"
-"#MinimizeBtn:hover, #MaximizeBtn:hover, #CloseBtn:hover {	border-bottom: 1px solid #111111;}\n"
-"#MinimizeBtn:hover, #MaximizeBtn:hover { background-color: #101010; }\n"
-"#CloseBtn:hover { background-color: #916c0e17; }\n"
-"/*	*/\n"
-"#Body { border-radius: 15px; border: 3px solid #11696969; }\n"
-"#Body:hover {  border: 1px solid #44696969; }\n"
-"#MoveGrip { background-color: #11696969; border-radius: 5px; }\n"
-"#MoveGrip:hover { background-color: #44696969; }\n"
-"#TitleLb { color: #2D2D2D}\n"
-"#TitleLb:hover {color: #303030;}\n"
-"\n"
-"#ErroMsg {Color: #916c0e17; }\n"
-"#UsernameLb, #PasswordLb, #LoginBtn { border-radius: 5px; border: 1px solid #33696969; color: #7D7D7D;}\n"
-"#UsernameLb:focus, #PasswordLb:focus, #LoginBtn:focus { color: #ADADAD; border-bottom: 1px solid #99696969; }\n"
-"#StayConnectBox { color: #5D5D5D }\n"
-"#StayConnectBox:checked { color: #7D7D7D;  }\n"
-"#StayConnectBox:focus { border-bottom: 1px solid #99696969; }\n"
-"#LoginBtn:hover {background-color: #11696969; col"
-                        "or: #4D4D4D;}\n"
-"\n"
-"")
+        MainWindow.setStyleSheet(GetStyle())
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.horizontalLayout = QHBoxLayout(self.centralwidget)
@@ -577,7 +525,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.Paginas.setCurrentIndex(1)
+        self.Paginas.setCurrentIndex(0)
         self.LoginBtn.setDefault(True)
 
 

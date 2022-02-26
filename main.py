@@ -2,15 +2,11 @@
 ########    IMPORTS
 ###########################################################################################################################
 import sys
-from gui import widgets
-import modulos
 from required import *
 ###########################################################################################################################
 ########    CUSTOM WIDGETS AND QTDESIGNEDS IMPORTS
 ###########################################################################################################################
-from gui.widgets import  msLoginForm
-
-
+#from gui.widgets import  msLoginForm
 ###########################################################################################################################
 ########    CLASS FOR OUR MAIN FORM APPLICATION
 ###########################################################################################################################
@@ -25,17 +21,26 @@ class loginApp(msLoginForm):
         # CHAMADA DO MAINFORM #     
         self.UI = uiMain()
         self.UI.setupUi(self)
+        self.__oldOpacity = self.windowOpacity()
         ######################
         #
+        self.perform()
         self.UI.ErroMsg.setWindowOpacity(1)
         self.p = QScreen.availableGeometry(QApplication.primaryScreen()).center()
         x = (self.p.x() - (self.width() / 2))
         y = (self.p.y() - (self.height() / 2))
         self.move(x,y)
+        self._piri = self.geometry()
         self.bar = self.UI.TopBarCenter
         self.AnniDuration = 300
-        self.logado = False
-        self.setWindowOpacity(0.97)
+        self.onAnni = False
+        self.cookie = {'0':'0'}
+        ###################################################################################################################
+        ###########     DEFINA COMO TRUE SE QUISER COMEÇAR LOGADO PARA TESTAR A INTERFACE           #######################
+        ###################################################################################################################
+        self.logado = True
+        ###################################################################################################################
+        self.setWindowOpacity(1)
 #
 ###########################################################################################################################
 ########    FIRST CHECK IF LOGEDIN
@@ -60,12 +65,18 @@ class loginApp(msLoginForm):
 ###########################################################################################################################
 ########    LOAD ANNIMATION FOR FIRST DISPLAY SCREEN
 ###########################################################################################################################
-        self.Annimation =  QPropertyAnimation(self, b"windowOpacity")
-        self.Annimation.setStartValue(0)
-        self.Annimation.setEndValue(self.windowOpacity())
+
+        self.Annimation =  QPropertyAnimation(self, b"geometry")
+        self.Annimation.setStartValue(QRect(0-(self.width()/2),0-(self.height()/2),0,0))
+        self.Annimation.setEndValue(QRect(self.geometry().x(),self.geometry().y(),self.geometry().width(),self.geometry().height()))
         self.Annimation.setDuration(500)
-        self.Annimation.setEasingCurve(QEasingCurve.OutBack)
+        self.Annimation.setEasingCurve(QEasingCurve.OutCirc)
+        self.onAnni = True
+        self.Annimation.finished.connect(self.__endAnni)
         self.Annimation.start()
+
+    def __endAnni(self):
+         self.onAnni = False
 #
 ###########################################################################################################################
 ########    EVENT TO CHECK LOGIN                                ~    NEED REFACTORING
@@ -116,20 +127,7 @@ class loginApp(msLoginForm):
 ########    MINIMIZE EVENT                                      ~   NEED BETTER EFFECTS
 ###########################################################################################################################
     def Minimizeme(self):
-        self.__backop = self.geometry()
-        self.Annimation = QPropertyAnimation(self, b"geometry")
-        self.Annimation.setStartValue(self.geometry())
-        self.xxz = QScreen.availableGeometry(QApplication.primaryScreen()).x() / 2
-        self.yyz = QScreen.availableGeometry(QApplication.primaryScreen()).y() 
-        self.Annimation.setEndValue(QRect(self.width(),self.height(),0,0))
-        self.Annimation.setDuration(self.AnniDuration)
-        self.Annimation.setEasingCurve(QEasingCurve.BezierSpline)
-        self.Annimation.start()
-        self.Annimation.finished.connect(self.__afterMin)
-#
-    def __afterMin(self):
         self.setWindowState(Qt.WindowMinimized)
-        self.setGeometry(self.__backop)
 #
 ###########################################################################################################################
 ########    DOUBLE CLICK EVENT
@@ -140,6 +138,7 @@ class loginApp(msLoginForm):
             return
         if not self.bar.underMouse():
             return
+        self.UI.MaximizeBtn.setChecked(not self.UI.MaximizeBtn.isChecked())
         self.Maxmizeme()
 #
 ###########################################################################################################################
@@ -148,40 +147,21 @@ class loginApp(msLoginForm):
     def Maxmizeme(self):
         if not self.logado:
             return
-        self.__backop = self.windowOpacity()
-        self.Annimation = QPropertyAnimation(self, b"windowOpacity")
-        self.Annimation.setStartValue(self.__backop)
-        self.Annimation.setEndValue(0)
-        self.Annimation.setDuration(self.AnniDuration)
-        self.Annimation.setEasingCurve(QEasingCurve.BezierSpline)
-        self.Annimation.start()
-        self.Annimation.finished.connect(self.__afterMax)
-#
-    def __afterMax(self):
-        if self.windowState() == Qt.WindowMaximized:
+        if not self.UI.MaximizeBtn.isChecked():
             self.setWindowState(Qt.WindowNoState)
-            self.UI.MaximizeBtn.setChecked(False)
         else:
             self.setWindowState(Qt.WindowMaximized)
-            self.UI.MaximizeBtn.setChecked(True)
-        self.Annimation = QPropertyAnimation(self, b"windowOpacity")
-        self.Annimation.setStartValue(0)
-        self.Annimation.setEndValue(self.__backop)
-        self.Annimation.setDuration(self.AnniDuration)
-        self.Annimation.setEasingCurve(QEasingCurve.BezierSpline)
-        self.Annimation.start()
-        self.perform()
 #
 ###########################################################################################################################
 ########    CLOSE EVENT                                         ~   NEED BETTER EFFECTS
 ###########################################################################################################################
     def Closeme(self):
-        self.__backop = self.windowOpacity()
-        self.Annimation = QPropertyAnimation(self, b"windowOpacity")
-        self.Annimation.setStartValue(self.__backop)
-        self.Annimation.setEndValue(0)
+        self.Annimation = QPropertyAnimation(self, b"geometry")
+        self.Annimation.setEndValue(QRect(0-(self.width()/2),0-(self.height()/2),0,0))
+        self.Annimation.setStartValue(QRect(self.geometry().x(),self.geometry().y(),self.geometry().width(),self.geometry().height()))
         self.Annimation.setDuration(self.AnniDuration)
         self.Annimation.setEasingCurve(QEasingCurve.BezierSpline)
+        self.onAnni = True
         self.Annimation.start()
         self.Annimation.finished.connect(self.__afterClose)
 #
@@ -192,6 +172,8 @@ class loginApp(msLoginForm):
 ########    CLICK TOGGLELEFTBTN                                 ~   NEED BETTER EFFECTS
 ###########################################################################################################################
     def LeftMenuTogglerClick(self):
+        if self.onAnni:
+            return
         if self.UI.LeftModal.minimumWidth()  == 0:
             self.UI.ToggleLeftBtn.setObjectName("ToggleLeftBtnOpen")
             self.UI.ToggleLeftBtn.setChecked(True)
@@ -201,6 +183,8 @@ class loginApp(msLoginForm):
             self.Annimation.setEndValue(200)
             self.Annimation.setDuration(self.AnniDuration)
             self.Annimation.setEasingCurve(QEasingCurve.BezierSpline)
+            self.Annimation.finished.connect(self._afterToggleClick)
+            self.onAnni = True
             self.Annimation.start()
         else:
             self.UI.ToggleLeftBtn.setObjectName("ToggleLeftBtn")
@@ -211,13 +195,16 @@ class loginApp(msLoginForm):
             self.Annimation.setEndValue(0)
             self.Annimation.setDuration(self.AnniDuration)
             self.Annimation.setEasingCurve(QEasingCurve.BezierSpline)
+            self.onAnni = True
+            self.Annimation.finished.connect(self._afterToggleClick)
             self.Annimation.start()
-        self.perform()
 #
 ###########################################################################################################################
 ########    CLICK TOGGLERIGHTBNT                                ~   NEED BETTER EFFECTS
 ###########################################################################################################################
-    def RightMenuTogglerClick(self):
+    def RightMenuTogglerClick(self):    
+        if self.onAnni:
+            return
         if self.UI.RightModal.minimumWidth()  == 0:
             self.UI.ToggleRightBtn.setObjectName("ToggleRightBtnOpen")
             self.UI.ToggleRightBtn.setChecked(True)
@@ -226,6 +213,8 @@ class loginApp(msLoginForm):
             self.Annimation.setEndValue(200)
             self.Annimation.setDuration(self.AnniDuration)
             self.Annimation.setEasingCurve(QEasingCurve.BezierSpline)
+            self.onAnni = True
+            self.Annimation.finished.connect(self._afterToggleClick)
             self.Annimation.start()
         else:
             self.UI.ToggleRightBtn.setObjectName("ToggleRightBtn")
@@ -235,8 +224,13 @@ class loginApp(msLoginForm):
             self.Annimation.setEndValue(0)
             self.Annimation.setDuration(self.AnniDuration)
             self.Annimation.setEasingCurve(QEasingCurve.BezierSpline)
+            self.onAnni = True
+            self.Annimation.finished.connect(self._afterToggleClick)
             self.Annimation.start()
-        self.perform
+#
+    def _afterToggleClick(self):
+        self.perform()
+        self.onAnni = False
 #
 ###########################################################################################################################
 ########    UPDATE STYLE EVENTS                                 ~   NEED REFACTORING    ~   IMPORTANT
@@ -246,21 +240,21 @@ class loginApp(msLoginForm):
             self.UI.TopBar.setObjectName("TopBarOpen")
             self.UI.LeftModal.setObjectName("LeftModalMax")
         else:
-            self.UI.LeftModal.setObjectName("LeftModal")
             if self.UI.LeftModal.width() != 0:
-                self.UI.TopBar.setObjectName("TopBar") 
+                self.UI.TopBar.setObjectName("TopBar")
             else:
                 self.UI.TopBar.setObjectName("TopBarOpen")
-
-        self.setStyleSheet(self.styleSheet())
-        self.update()
+            
+            self.UI.LeftModal.setObjectName("LeftModal")
 #
 ###########################################################################################################################
 ########    LOGIN METHOD
 ###########################################################################################################################
     def LoginBtnClick(self):
         con = auth.login(login=self.UI.UsernameLb.text(), password=self.UI.PasswordLb.text())
-        if con and con < 4:
+        if con and con[0] < 4:
+            self.cookie.update({'privilege': con[0]})
+            self.cookie.update({'usuario': con[1]})
             self.__saveOP = self.windowOpacity()
             self.Annimation = QPropertyAnimation(self, b"windowOpacity")
             self.Annimation.setDuration(self.AnniDuration)
@@ -272,10 +266,13 @@ class loginApp(msLoginForm):
         else:
             if self.logado:
                 self.logado = False
-            if con == 4:
+            if not con:
+                self.LoginFailed(2000, "Ocorreu um Erro ao logar!.")
+            elif con[0] == 4:
                 self.LoginFailed(2000, "Conta Bloqueada, entre em contato com o administrador!.")
             else:
                 self.LoginFailed(2000, "Ocorreu um Erro ao logar!.")
+#   
     def __EndSucess(self):
         self.logado = True
         self.CheckLogin()
@@ -285,8 +282,7 @@ class loginApp(msLoginForm):
         self.Annimation.setEndValue(self.__saveOP)
         self.Annimation.setEasingCurve(QEasingCurve.OutInBounce)
         self.Annimation.start()
-
-
+#
 #######     DISPLAY ERROR ON NOT HAVE MATCHED USER O PASS
     def LoginFailed(self, delayMs, displaytext):
         self.UI.ErroMsg.setText(displaytext)
@@ -299,11 +295,16 @@ class loginApp(msLoginForm):
         self.Annimation.finished.connect(self.__EndFailed)
         self.Annimation.setEasingCurve(QEasingCurve.OutInBounce)
         self.Annimation.start()
+#    
     def __EndFailed(self):
         self.UI.ErroMsg.setText("")
         self.UI.ErroMsg.setWindowOpacity(self.__old)
 #
-###########################################################################################################################
+    def paintEvent(self, event: QPaintEvent) -> None:
+        self.setStyleSheet(GetStyle("uniColors"))
+        self.update()
+        msLoginForm.paintEvent(self, event)
+#########################################################################
 ########    MAIN LOOP APPLICATION                               ~   V1.1
 ###########################################################################################################################
 if __name__ == "__main__":

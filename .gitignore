@@ -3,7 +3,8 @@ backup
 .vscode
 assets/stuffs
 .qt_for_python
+__pycache__
+
 
 #   FILES
-
 env.py
