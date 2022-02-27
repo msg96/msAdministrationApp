@@ -1,20 +1,19 @@
 ###########################################################################################################################
 ########    PYSIDE6 IMPORTS                             ~   * IMPORTANT
 ###########################################################################################################################
-from typing import MappingView
 from PySide6.QtGui import *
 from PySide6.QtWidgets import *
 from PySide6.QtCore import *
-from gui.widgets.msGrip.msGrip import msGrip
 #############################
 ####### MODULOS
 from gui.widgets.msPanel import msPanel
 from gui.widgets.msButton import msButton
-from gui.widgets.msLoginForm import msLoginForm
+from gui.widgets.msForm import msForm
+from gui.widgets.msGrip import msGrip
 #############################
 
 class uiV2(object):
-    def start(self, mainWindow :msLoginForm):
+    def start(self, mainWindow :msForm):
         if not mainWindow.objectName():
             mainWindow.setObjectName(u"MainWindow")
         centerScreen = QApplication.primaryScreen().availableGeometry()

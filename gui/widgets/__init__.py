@@ -1,4 +1,4 @@
-from .msLoginForm import msLoginForm
+from .msForm import msForm
 from .msPanel import msPanel
 from .msSVGRender import msSVGRender
 from .msTxtImput import MsTxtImput

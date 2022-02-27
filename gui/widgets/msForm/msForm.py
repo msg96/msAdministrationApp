@@ -5,9 +5,9 @@ from PySide6.QtGui import *
 from PySide6.QtWidgets import *
 from PySide6.QtCore import *
 
-class msLoginForm(QMainWindow):
+class msForm(QMainWindow):
     def __init__(self):
-        super(msLoginForm, self).__init__()
+        super(msForm, self).__init__()
         pass
         self.bar = QWidget()
         self.__moving = False
