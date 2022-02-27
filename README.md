@@ -6,7 +6,7 @@
 ![programa](/assets/imgs/screenshot.png)
 
 #### To Do things (Coisas para fazer!.)
-- [] Criar SizeGrip
+- Criar Sizegrip
 
 [27/02/2022]
 > adicionando novo widget de grip para mudar o tamanho da janela do programa
