@@ -35,3 +35,12 @@ class msLoginForm(QMainWindow):
             delta = QPoint(event.globalPos() - self.__GP)
             self.move(self.x() + delta.x(), self.y() + delta.y())
             self.__GP = event.globalPos()
+
+    def mouseDoubleClickEvent(self, event: QMouseEvent) -> None:
+        QMainWindow.mouseDoubleClickEvent(self, event)
+        if self.bar.underMouse():
+            if self.windowState() == Qt.WindowMaximized:
+                self.setWindowState(Qt.WindowNoState)
+            else:
+                self.setWindowState(Qt.WindowMaximized)
+            self.repaint()

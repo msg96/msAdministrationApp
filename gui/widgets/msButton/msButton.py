@@ -5,9 +5,9 @@ from PySide6.QtGui import *
 from PySide6.QtWidgets import *
 from PySide6.QtCore import *
 ###########################################################################################################################
-class msPanel(QFrame):
+class msButton(QPushButton):
     def __init__(self, parent :QWidget):
-        super(msPanel, self).__init__()
+        super(msButton, self).__init__()
         if not self.objectName():
             self.setObjectName(str(hash(self)))
         try:
@@ -287,4 +287,4 @@ class msPanel(QFrame):
         QWidget.leaveEvent(self, event)
         self.repaint()
     def paintEvent(self, event: QPaintEvent) -> None:
-        QFrame.paintEvent(self, event)
+        QPushButton.paintEvent(self, event)
