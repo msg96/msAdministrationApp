@@ -28,7 +28,7 @@ class msGrip(msPanel):
         
         self.weight = 3
         self.type = type
-        self.backgroundColor("red")
+        self.backgroundColor("Transparent")
         self.updateSize()
         
         
@@ -42,4 +42,3 @@ class msGrip(msPanel):
             self.setGeometry(self.parent.width() - self.weight, 1, self.weight, self.parent.height())
         if self.type.lower() == "bottom":
             self.setGeometry(1, self.parent.height() - self.weight, self.parent.width(), self.weight)
-            
