@@ -26,7 +26,10 @@ class myapp(msForm):
         self.appWindow.start(self)
 
         self.appWindow.toggleLeftModalBtn.clicked.connect(self.toggleLeftModalClick)
-        self.appWindow.toggleRightModalBtn.clicked.connect(self.toggleRightModalClick)      
+        self.appWindow.toggleRightModalBtn.clicked.connect(self.toggleRightModalClick)
+        self.appWindow.closeBtn.clicked.connect(self.closeBtnClick)
+        self.appWindow.minimizeBtn.clicked.connect(self.minimizeBtnClick)
+        self.appWindow.maximizeBtn.clicked.connect(self.maximizeBtnClick)
         self.show()
 
     def attCorner(self):
@@ -100,6 +103,7 @@ class myapp(msForm):
 
     def mouseDoubleClickEvent(self, event: QMouseEvent) -> None:
         msForm.mouseDoubleClickEvent(self, event)
+        
         self.attCorner()
 
     def resizeEvent(self, event: QResizeEvent) -> None:
@@ -108,18 +112,50 @@ class myapp(msForm):
             self.appWindow.leftGrip.setVisible(False)
             self.appWindow.topGrip.setVisible(False)
             self.appWindow.rightGrip.setVisible(False)
-            self.appWindow.BottomGrip.setVisible(False)
+            self.appWindow.bottomGrip.setVisible(False)
         else:
             self.appWindow.leftGrip.setVisible(True)
             self.appWindow.topGrip.setVisible(True)
             self.appWindow.rightGrip.setVisible(True)
-            self.appWindow.BottomGrip.setVisible(True)
+            self.appWindow.bottomGrip.setVisible(True)
 
-
+        if self.windowState() == Qt.WindowMaximized:
+            self.appWindow.maximizeBtn.setIcon(self.appWindow.maximizeIconOn)
+        elif self.windowState() == Qt.WindowNoState:
+            self.appWindow.maximizeBtn.setIcon(self.appWindow.maximizeIconOff)
         self.appWindow.leftGrip.updateSize()
         self.appWindow.topGrip.updateSize()
         self.appWindow.rightGrip.updateSize()
-        self.appWindow.BottomGrip.updateSize()
+        self.appWindow.bottomGrip.updateSize()
+    
+    def closeBtnClick(self):
+        self.close()
+
+    def minimizeBtnClick(self):
+        self.setWindowState(Qt.WindowMinimized)
+
+    def maximizeBtnClick(self):
+        if self.windowState() == Qt.WindowMaximized:
+            self.setWindowState(Qt.WindowNoState)
+        elif self.windowState() == Qt.WindowNoState:
+            self.setWindowState(Qt.WindowMaximized)
+
+    def event(self, event: QEvent) -> None:
+        if event.type() == event.WindowStateChange:
+            self.anim = QPropertyAnimation(self, b"windowOpacity")
+            self.anim.setDuration(self.appWindow.AnimDelay)
+            self.old_ = self.windowOpacity()
+            self.anim.setStartValue(self.old_)
+            self.anim.setEndValue(0)
+            self.anim.setEasingCurve(QEasingCurve.Linear)
+            self.anim.finished.connect(self.backopacity)
+            self.anim.start()
+
+        QMainWindow.event(self, event)
+        return True
+
+    def backopacity(self):
+        self.setWindowOpacity(self.old_)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

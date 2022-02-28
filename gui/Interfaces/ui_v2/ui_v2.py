@@ -168,5 +168,43 @@ class uiV2(object):
         self.leftGrip = msGrip(self.appWindow, mainWindow, Qt.LeftEdge)
         self.topGrip = msGrip(self.appWindow, mainWindow,Qt.TopEdge)
         self.rightGrip = msGrip(self.appWindow, mainWindow,Qt.RightEdge)
-        self.BottomGrip = msGrip(self.appWindow, mainWindow,Qt.BottomEdge)
+        self.bottomGrip = msGrip(self.appWindow, mainWindow,Qt.BottomEdge)
 
+########        CREATING BUTTONS TO MINIMIZE MAXIMIZE AND CLOSE WINDOW
+        self.titleProgram = QLabel(self.topBar)
+        self.titleProgram.setText("MS Administration")
+        self.titleProgram.setStyleSheet("color: white")
+        self.titleProgram.setSizePolicy(QSizePolicy(QSizePolicy.Expanding,QSizePolicy.Expanding))
+
+
+        self.minimizeIcon = QIcon(customFunctions.AppGetFile(self.SvgPath, "minimize_white_48dp.svg"))
+        self.maximizeIconOff = QIcon(customFunctions.AppGetFile(self.SvgPath, "fullscreen_white_48dp.svg"))
+        self.maximizeIconOn = QIcon(customFunctions.AppGetFile(self.SvgPath, "fullscreen_exit_white_48dp.svg"))
+        self.closeIcon = QIcon(customFunctions.AppGetFile(self.SvgPath, "close_white_48dp.svg"))
+
+        self.minimizeBtn = msButton(self.topBar)
+        self.minimizeBtn.setIcon(self.minimizeIcon)
+        self.minimizeBtn.setMinimumSize(QSize(33, 33))
+        self.minimizeBtn.backgroundColor("transparent")
+        self.minimizeBtn.hoverBorder(1, "solid", "#111111")
+        self.minimizeBtn.hoverBackgroundColor("#101010")
+        self.maximizeBtn = msButton(self.topBar)
+        self.maximizeBtn.setIcon(self.maximizeIconOff)
+        self.maximizeBtn.setMinimumSize(QSize(33, 33))
+        self.maximizeBtn.backgroundColor("transparent")
+        self.maximizeBtn.hoverBorder(1, "solid", "#111111")
+        self.maximizeBtn.hoverBackgroundColor("#101010")
+        self.closeBtn = msButton(self.topBar)
+        self.closeBtn.setIcon(self.closeIcon)
+        self.closeBtn.setMinimumSize(QSize(33, 33))
+        self.closeBtn.backgroundColor("transparent")
+        self.closeBtn.hoverBorder(1, "solid", "#111111")
+        self.closeBtn.hoverBackgroundColor("#916c0e17")
+
+
+
+
+        self.topBarBox.addWidget(self.titleProgram)
+        self.topBarBox.addWidget(self.minimizeBtn)
+        self.topBarBox.addWidget(self.maximizeBtn)
+        self.topBarBox.addWidget(self.closeBtn)
