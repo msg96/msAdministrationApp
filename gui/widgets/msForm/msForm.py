@@ -47,6 +47,8 @@ class msForm(QMainWindow):
 
     def mouseDoubleClickEvent(self, event: QMouseEvent) -> None:
         QMainWindow.mouseDoubleClickEvent(self, event)
+        if event.button() != Qt.MouseButton.LeftButton:
+            return
         if self.bar.underMouse():
             if self.windowState() == Qt.WindowMaximized:
                 self.setWindowState(Qt.WindowNoState)

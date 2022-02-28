@@ -29,6 +29,8 @@ class uiV2(object):
         myWidth = 940
         myHeight = 500
         mainWindow.setGeometry((centerScreen.width() - myWidth) / 2, (centerScreen.height() -  myHeight) / 2 , 940, 500)
+        mainWindow.setMinimumSize(QSize(myWidth, myHeight))
+        mainWindow.setMaximumSize(QApplication.primaryScreen().availableGeometry().size())
 ########    CENTRAL WIDGET ~ APPWINDOW
         self.appWindow = msPanel(mainWindow)
         ####    DEFINE TO MAIN WINDOW APPWINDOW TO CENTRALWIDGET
