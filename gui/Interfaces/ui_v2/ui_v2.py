@@ -19,6 +19,7 @@ from gui.widgets.msPanel import msPanel
 from gui.widgets.msButton import msButton
 from gui.widgets.msForm import msForm
 from gui.widgets.msGrip import msGrip
+from modulos import customFunctions
 #############################
 
 class uiV2(object):
@@ -109,11 +110,12 @@ class uiV2(object):
         self.rightModal.setMaximumWidth(0)
         self.contentPanelBox.addWidget(self.rightModal)
 
-
-
-        self.MenuIcon = QIcon("C:/Users/sagossi/Desktop/projects/msAdministrationApp/assets/svg/menu_white_48dp.svg")
-        self.MenuLeftOpenIcon = QIcon("C:/Users/sagossi/Desktop/projects/msAdministrationApp/assets/svg/menu_open_white_48dp.svg")
-        self.menuRightOpenIcon = QIcon("C:/Users/sagossi/Desktop/projects/msAdministrationApp/assets/svg/menu_open_white_right_48dp.svg")
+        #####   SCRIPT PARA PEGAR A PASTA RELATIVA QUE FUNCIONE EM [WINDOWS / LINUX / MAC]
+        self.SvgPath = customFunctions.AppGetUniversalPath("assets/svg/")
+        #####
+        self.MenuIcon = QIcon(customFunctions.AppGetFile(self.SvgPath, "menu_white_48dp.svg"))
+        self.MenuLeftOpenIcon = QIcon(customFunctions.AppGetFile(self.SvgPath, "menu_open_white_48dp.svg"))
+        self.menuRightOpenIcon = QIcon(customFunctions.AppGetFile(self.SvgPath, "menu_open_white_right_48dp.svg"))
 
 
         self.topBarBox = QHBoxLayout(self.topBar)
