@@ -18,7 +18,7 @@ from PySide6.QtCore import *
 from gui.widgets.msPanel import msPanel
 
 class msGrip(msPanel):
-    def __init__(self, parent: QWidget, object :QWidget,type :Qt.Edge, weidht = 3, colorizer=True):
+    def __init__(self, parent: QWidget, object :QWidget,type :Qt.Edge, weidht = 3, colorizer=False):
         super(msGrip, self).__init__(parent)
         try:
             self.parent = parent
@@ -71,95 +71,111 @@ class msGrip(msPanel):
             self.midPanel.setCursor(Qt.CursorShape.SizeVerCursor)
             self.afterPanel.setGeometry(self.width() - 10, 0, 10, 10)
 
-########    BEFORE MOVE
-    def beforeMove(self, event: QEvent):
-        formPos = self.object.geometry()
-        um = Qt.BottomEdge
-        dois = Qt.RightEdge
-        tres = Qt.TopEdge
-        quatro = Qt.LeftEdge
-        if self.type == um:
-            height = formPos.height() + event.pos().y()
-            if event.pos().x() < 0: width = formPos.width() + abs(event.pos().x())
-            else: width = formPos.width() - event.pos().x()
-            parsedxpos = formPos.x() + event.pos().x()
-            if width <= self.object.minimumWidth(): parsedxpos = formPos.x()
-            elif width >= self.object.maximumWidth(): parsedxpos = formPos.x()
-            self.object.setGeometry(parsedxpos, formPos.y(), width, height)
-        elif self.type == dois:
-            width = formPos.width() + event.pos().x()
-            if event.pos().y() < 0: height = formPos.height() + abs(event.pos().y())
-            else: height = formPos.height() - event.pos().y()
-            parsedypos = formPos.y() + event.pos().y()
-            if height <= self.object.minimumHeight(): parsedypos = formPos.y()
-            elif height >= self.object.maximumHeight(): parsedypos = formPos.y()
-            self.object.setGeometry(formPos.x(), parsedypos, width, height)
-        elif self.type == tres or self.type == quatro:
-            if event.pos().x() < 0: width = formPos.width() + abs(event.pos().x())
-            else: width = formPos.width() - event.pos().x()
-            if event.pos().y() < 0: height = formPos.height() + abs(event.pos().y())
-            else: height = formPos.height() - event.pos().y()
-            parsedxpos = formPos.x() + event.pos().x()
-            if width <= self.object.minimumWidth(): parsedxpos = formPos.x()
-            elif width >= self.object.maximumWidth(): parsedxpos = formPos.x()
-            parsedypos = formPos.y() + event.pos().y()
-            if height <= self.object.minimumHeight(): parsedypos = formPos.y()
-            elif height >= self.object.maximumHeight(): parsedypos = formPos.y()
-            self.object.setGeometry(parsedxpos, parsedypos, width, height)
-        print("Before: {} - {} ".format(event.pos().x(), event.pos().y()))
-
-
-########    MID MOVE
-    def midMove(self, event: QEvent):
-########
-        formPos = self.object.geometry()
-########    MID MOVE BY BOTTOM
-        if self.type == Qt.BottomEdge:
-            height = formPos.height() + event.pos().y()
-            if height <= self.object.minimumHeight() or height >= self.object.maximumHeight():
-                return
-            self.object.setGeometry(formPos.x(), formPos.y(), formPos.width(), height)
-########    MID MOVE BY RIGHT
-        elif self.type == Qt.RightEdge:
-            width = formPos.width() + event.pos().x()
-            if width <= self.object.minimumWidth() or width >= self.object.maximumWidth():
-                return
-            self.object.setGeometry(formPos.x(), formPos.y(), width, formPos.height())
-########    MID MOVE BY TOP
-        elif self.type == Qt.TopEdge:
-            if event.pos().y() < 0:
-                height = formPos.height() + abs(event.pos().y())
-            else:
-                height = formPos.height() - event.pos().y()
-            if height <= self.object.minimumHeight() or height >= self.object.maximumHeight():
-                return
-            self.object.setGeometry(formPos.x(), formPos.y() + event.pos().y(), formPos.width(), height)
-########    MID MOVE BY LEFT
+    def moveme(self, event):
+        fSize = self.object.geometry()
+        parsedX = parsedY = width = height = 0
+        if self.type == Qt.TopEdge:
+            if self.beforePanel.underMouse():
+                width = (fSize.width() + abs(event.pos().x())) if event.pos().x() < 0 else (fSize.width() - event.pos().x())
+                height = (fSize.height() + abs(event.pos().y())) if event.pos().y() < 0 else (fSize.height() - event.pos().y())
+                parsedX = fSize.x() + event.pos().x()
+                parsedY = fSize.y() + event.pos().y()
+                if width < self.object.minimumWidth() or width > self.object.maximumWidth(): parsedX = fSize.x()
+                if height < self.object.minimumHeight() or height > self.object.maximumHeight(): parsedY = fSize.y()
+            elif self.midPanel.underMouse():
+                width = fSize.width()
+                height = (fSize.height() + abs(event.pos().y())) if event.pos().y() < 0 else (fSize.height() - event.pos().y())
+                parsedX = fSize.x()
+                parsedY = fSize.y() + event.pos().y()
+                if height < self.object.minimumHeight() or height > self.object.maximumHeight(): parsedY = fSize.y()
+            elif self.afterPanel.underMouse():
+                width = fSize.width() + abs(self.width() - event.pos().x()) if self.width() - event.pos().x() < 0 else fSize.width() - (self.width() - event.pos().x())
+                height = fSize.height() + abs(event.pos().y()) if event.pos().y() < 0 else fSize.height() - event.pos().y()
+                parsedX = fSize.x()
+                parsedY = fSize.y() + event.pos().y()
+                if width < self.object.minimumWidth() or width > self.object.maximumWidth(): parsedX = fSize.x()
+                if height < self.object.minimumHeight() or height > self.object.maximumHeight(): parsedY = fSize.y()
+        elif self.type == Qt.BottomEdge:
+            if self.beforePanel.underMouse():
+                width = (fSize.width() + abs(event.pos().x())) if event.pos().x() < 0 else (fSize.width() - event.pos().x())
+                width = self.object.minimumWidth() if width < self.object.minimumWidth() else width
+                width = self.object.maximumWidth() if width > self.object.maximumWidth() else width
+                height = fSize.height() + event.pos().y()
+                height = self.object.minimumHeight() if height < self.object.minimumHeight() else height
+                height = self.object.maximumHeight() if height > self.object.maximumHeight() else height
+                parsedX = fSize.x() + event.pos().x()
+                if width <= self.object.minimumWidth(): parsedX = fSize.x()
+                parsedY = fSize.y()
+            elif self.midPanel.underMouse():
+                width = fSize.width()
+                height = fSize.height() + event.pos().y()
+                parsedX = fSize.x()
+                parsedY = fSize.y()
+                if height < self.object.minimumHeight() or height > self.object.maximumHeight(): parsedY = fSize.y()
+            elif self.afterPanel.underMouse():
+                width = fSize.width() + abs(self.width() - event.pos().x()) if self.width() - event.pos().x() < 0 else fSize.width() - (self.width() - event.pos().x())
+                height = fSize.height() + event.pos().y()
+                parsedX = fSize.x()
+                parsedY = fSize.y()
+                if width < self.object.minimumWidth() or width > self.object.maximumWidth(): parsedX = fSize.x()
+                if height < self.object.minimumHeight() or height > self.object.maximumHeight(): parsedY = fSize.y()
         elif self.type == Qt.LeftEdge:
-            if event.pos().x() < 0:
-                width = formPos.width() + abs(event.pos().x())
-            else:
-                width = formPos.width() - event.pos().x()
-            if width <= self.object.minimumWidth() or width >= self.object.maximumWidth():
-                return
-            self.object.setGeometry(formPos.x() + event.pos().x(), formPos.y(), width, formPos.height())
-        self.object.busy = False
-########    AFTER MOVE
-    def afterMove(self, event: QEvent):
-        formPos = self.object.geometry()
-        print("After: {} - {} ".format(event.pos().x(), event.pos().y()))
+            if self.beforePanel.underMouse():
+                width = (fSize.width() + abs(event.pos().x())) if event.pos().x() < 0 else (fSize.width() - event.pos().x())
+                height = (fSize.height() + abs(event.pos().y())) if event.pos().y() < 0 else (fSize.height() - event.pos().y())
+                parsedX = fSize.x() + event.pos().x()
+                parsedY = fSize.y() + event.pos().y()
+                if width < self.object.minimumWidth() or width > self.object.maximumWidth(): parsedX = fSize.x()
+                if height < self.object.minimumHeight() or height > self.object.maximumHeight(): parsedY = fSize.y()
+            elif self.midPanel.underMouse():
+                width = (fSize.width() + abs(event.pos().x())) if event.pos().x() < 0 else (fSize.width() - event.pos().x())
+                height = fSize.height()
+                parsedX = fSize.x() + event.pos().x()
+                parsedY = fSize.y()
+                if width < self.object.minimumWidth() or width > self.object.maximumWidth(): parsedX = fSize.x()
+                if height < self.object.minimumHeight() or height > self.object.maximumHeight(): parsedY = fSize.y()
+            elif self.afterPanel.underMouse():
+                width = (fSize.width() + abs(event.pos().x())) if event.pos().x() < 0 else (fSize.width() - event.pos().x())
+                width = self.object.minimumWidth() if width < self.object.minimumWidth() else width
+                width = self.object.maximumWidth() if width > self.object.maximumWidth() else width
+                height = fSize.height() - (self.height() - event.pos().y())
+                height = self.object.minimumHeight() if height < self.object.minimumHeight() else height
+                height = self.object.maximumHeight() if height > self.object.maximumHeight() else height
+                parsedX = fSize.x() + event.pos().x()
+                if width <= self.object.minimumWidth(): parsedX = fSize.x()
+                parsedY = fSize.y()
+        elif self.type == Qt.RightEdge:
+            if self.beforePanel.underMouse():
+                width = fSize.width() + event.pos().x()
+                height = fSize.height() + abs(event.pos().y()) if event.pos().y() < 0 else fSize.height() - event.pos().y()
+                parsedX = fSize.x()
+                parsedY = fSize.y() + event.pos().y()
+                if width < self.object.minimumWidth() or width > self.object.maximumWidth(): parsedX = fSize.x()
+                if height < self.object.minimumHeight() or height > self.object.maximumHeight(): parsedY = fSize.y()
+            elif self.midPanel.underMouse():
+                width = fSize.width() + abs(self.width() - event.pos().x()) if self.width() - event.pos().x() < 0 else fSize.width() - (self.width() - event.pos().x())
+                height = fSize.height()
+                parsedX = fSize.x()
+                parsedY = fSize.y()
+                if width < self.object.minimumWidth() or width > self.object.maximumWidth(): parsedX = fSize.x()
+                if height < self.object.minimumHeight() or height > self.object.maximumHeight(): parsedY = fSize.y()
+            elif self.afterPanel.underMouse():
+                width = fSize.width() + event.pos().x()
+                height = fSize.height() - (self.height() - event.pos().y())
+                parsedX = fSize.x()
+                parsedY = fSize.y()
+                if width < self.object.minimumWidth() or width > self.object.maximumWidth(): parsedX = fSize.x()
+                if height < self.object.minimumHeight() or height > self.object.maximumHeight(): parsedY = fSize.y()
+        self.object.setGeometry(parsedX, parsedY, width, height)                
+        self.object.update()
 
-    def event(self, e: QEvent) -> bool:
-        if e.type() == e.MouseButtonPress:  self.resizeing = True
-        if e.type() == e.MouseButtonRelease: self.resizeing = False
-        if e.type() == e.MouseMove: 
+    def event(self, event: QEvent) -> bool:
+        if event.type() == event.MouseButtonPress:  self.resizeing = True
+        if event.type() == event.MouseButtonRelease: self.resizeing = False
+        if event.type() == event.MouseMove: 
             if self.resizeing:
-                if self.beforePanel.underMouse():
-                    self.beforeMove(e)
-                if self.midPanel.underMouse():
-                    self.midMove(e)
-                if self.afterPanel.underMouse():
-                    self.afterMove(e)
-        msPanel.event(self, e)
+                self.moveme(event)
+                
+        msPanel.event(self, event)
         return True
 
