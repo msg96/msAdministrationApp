@@ -71,8 +71,8 @@ class myapp(msForm):
             self.appWindow.toggleLeftModalBtn.hoverBackgroundColor("#AA111111")
             self.appWindow.leftModalAnimation.setDirection(self.appWindow.leftModalAnimation.Forward)
             self.appWindow.leftModalAnimation.start()
-
         self.attCorner()
+        
 
     def toggleRightModalClick(self):
         if self.appWindow.rightModalOpen:

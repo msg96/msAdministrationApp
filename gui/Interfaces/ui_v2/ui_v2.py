@@ -143,25 +143,26 @@ class uiV2(object):
         self.toggleRightModalBtn.borderRadius(15, 0, 0, 0)
         self.toggleRightModalBtn.setIcon(self.MenuIcon)
         self.titlePagesBox.addWidget(self.toggleRightModalBtn)
-
+########        ANIMATIONS CONFIGS :)
+        self.AnimDelay = 200
+        self.AnimCurve = QEasingCurve.OutElastic
+########        LEFT MODAL ANIMATION
         self.leftModalOpen = False
         self.leftModalAnimation = QPropertyAnimation(self.leftModal, b"minimumWidth")
         self.leftModalAnimation.setStartValue(0)
         self.leftModalAnimation.setEndValue(200)
-        self.leftModalAnimation.setDuration(500)
-        self.leftModalAnimation.setEasingCurve(QEasingCurve.OutElastic)
-
+        self.leftModalAnimation.setDuration(self.AnimDelay)
+        self.leftModalAnimation.setEasingCurve(self.AnimCurve)
+########        RIGHT MODAL ANNIMATION
         self.rightModalOpen = False
         self.rightModalAnimation= QPropertyAnimation(self.rightModal, b"minimumWidth")
         self.rightModalAnimation.setStartValue(0)
         self.rightModalAnimation.setEndValue(200)
-        self.rightModalAnimation.setDuration(500)
-        self.rightModalAnimation.setEasingCurve(QEasingCurve.OutElastic)
-
-
-
-        self.leftGrip = msGrip(self.appWindow, "left")
-        self.topGrip = msGrip(self.appWindow, "top")
-        self.rightGrip = msGrip(self.appWindow, "right")
-        self.BottomGrip = msGrip(self.appWindow, "bottom")
+        self.rightModalAnimation.setDuration(self.AnimDelay)
+        self.rightModalAnimation.setEasingCurve(self.AnimCurve)
+########        SIZEGRIPS
+        self.leftGrip = msGrip(self.appWindow, mainWindow, Qt.LeftEdge)
+        self.topGrip = msGrip(self.appWindow, mainWindow,Qt.TopEdge)
+        self.rightGrip = msGrip(self.appWindow, mainWindow,Qt.RightEdge)
+        self.BottomGrip = msGrip(self.appWindow, mainWindow,Qt.BottomEdge)
 
