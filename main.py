@@ -13,6 +13,7 @@
 import sys
 from gui.Interfaces.ui_v2.ui_v2 import uiV2
 from required import *
+from assets.styles import style
 ###########################################################################################################################
 ########    CUSTOM WIDGETS AND QTDESIGNEDS IMPORTS
 ###########################################################################################################################
@@ -36,6 +37,7 @@ class myapp(msForm):
         self.appWindow.maximizeBtn.clicked.connect(self.maximizeBtnClick)
         self.appWindow.LoginUI.loginBtn.clicked.connect(self.loginBtnClick)
         self.appWindow.logOutBtn.clicked.connect(self.logoutBtnClick)
+        self.appWindow.homeBtn.clicked.connect(self.homeBtnClick)
         self.checkeLogin()
         self.myGrip = msGrip(self)
         self.show()
@@ -46,7 +48,6 @@ class myapp(msForm):
         self.appWindow.rightModal.setVisible(self.loged)
         self.appWindow.toggleLeftModalBtn.setVisible(self.loged)
         self.appWindow.toggleRightModalBtn.setVisible(self.loged)
-        self.appWindow.titlePages.setVisible(self.loged)
         self.appWindow.maximizeBtn.setEnabled(self.loged)
         self.appWindow.LoginUI.body.setVisible(not self.loged)
         self.appWindow.logOutBtn.setVisible(self.loged)
@@ -106,26 +107,19 @@ class myapp(msForm):
     def attCorner(self):
         if self.windowState() == Qt.WindowMaximized:
             if not self.appWindow.leftModalOpen:
-                self.appWindow.toggleLeftModalBtn.borderRadius(0, 0, 0, 0)
                 self.appWindow.leftModal.borderRadius(0, 0, 0, 0)
                 self.appWindow.appWindow.borderRadius(0, 0, 0, 0)
-                self.appWindow.topBar.borderRadius(0, 0, 0, 0)
             else:
-                self.appWindow.toggleLeftModalBtn.borderRadius(0, 15, 0, 0)
                 self.appWindow.leftModal.borderRadius(0, 0, 0, 0)
                 self.appWindow.appWindow.borderRadius(0, 0, 0, 0)
-                self.appWindow.topBar.borderRadius(0, 0, 0, 0)
         else:
             if not self.appWindow.leftModalOpen:
-                self.appWindow.toggleLeftModalBtn.borderRadius(0, 0, 0, 0)
-                self.appWindow.leftModal.borderRadius(15, 0, 0, 0)
-                self.appWindow.appWindow.borderRadius(15, 0, 0, 0)
-                self.appWindow.topBar.borderRadius(15, 0, 0, 0)
+                self.appWindow.leftModal.borderRadius(style["topleftradius"], 0, 0, 0)
+                self.appWindow.appWindow.borderRadius(style["topleftradius"], 0, 0, 0)
             else:
-                self.appWindow.toggleLeftModalBtn.borderRadius(0, 15, 0, 0)
-                self.appWindow.leftModal.borderRadius(15, 0, 0, 0)
-                self.appWindow.appWindow.borderRadius(15, 0, 0, 0)
-                self.appWindow.topBar.borderRadius(15, 0, 0, 0)
+                self.appWindow.leftModal.borderRadius(style["topleftradius"], 0, 0, 0)
+                self.appWindow.appWindow.borderRadius(style["topleftradius"], 0, 0, 0)
+
 
     def toggleLeftModalClick(self):
         if self.appWindow.leftModalAnimation.state() != self.appWindow.leftModalAnimation.Stopped:
@@ -133,15 +127,15 @@ class myapp(msForm):
         if self.appWindow.leftModalOpen:
             self.appWindow.leftModalOpen = False
             self.appWindow.toggleLeftModalBtn.setIcon(self.appWindow.MenuIcon)
-            self.appWindow.toggleLeftModalBtn.backgroundColor("#111111")
-            self.appWindow.toggleLeftModalBtn.hoverBackgroundColor("#AA111111")
+            self.appWindow.toggleLeftModalBtn.backgroundColor(style["secondarybg"])
+            self.appWindow.toggleLeftModalBtn.hoverBackgroundColor(style["hoverbtns"])
             self.appWindow.leftModalAnimation.setDirection(self.appWindow.leftModalAnimation.Backward)
             self.appWindow.leftModalAnimation.start()
         else:
             self.appWindow.leftModalOpen = True
             self.appWindow.toggleLeftModalBtn.setIcon(self.appWindow.MenuLeftOpenIcon)
-            self.appWindow.toggleLeftModalBtn.backgroundColor("#111111")
-            self.appWindow.toggleLeftModalBtn.hoverBackgroundColor("#AA111111")
+            self.appWindow.toggleLeftModalBtn.backgroundColor(style["secondarybg"])
+            self.appWindow.toggleLeftModalBtn.hoverBackgroundColor(style["hoverbtns"])
             self.appWindow.leftModalAnimation.setDirection(self.appWindow.leftModalAnimation.Forward)
             self.appWindow.leftModalAnimation.start()
         self.attCorner()
@@ -150,18 +144,15 @@ class myapp(msForm):
         if self.appWindow.rightModalOpen:
             self.appWindow.rightModalOpen = False
             self.appWindow.toggleRightModalBtn.setIcon(self.appWindow.MenuIcon)
-            self.appWindow.toggleRightModalBtn.backgroundColor("#090909")
-            self.appWindow.toggleRightModalBtn.hoverBackgroundColor("#66111111")
-            self.appWindow.toggleRightModalBtn.borderRadius(15, 0, 0, 0)
+            self.appWindow.toggleRightModalBtn.backgroundColor(style["secondarybg"])
+            self.appWindow.toggleRightModalBtn.hoverBackgroundColor(style["hoverbtns"])
             self.appWindow.rightModalAnimation.setDirection(self.appWindow.rightModalAnimation.Backward)
-            self.appWindow.rightModalAnimation.start()
-            
+            self.appWindow.rightModalAnimation.start()     
         else:
             self.appWindow.rightModalOpen = True
             self.appWindow.toggleRightModalBtn.setIcon(self.appWindow.menuRightOpenIcon)
-            self.appWindow.toggleRightModalBtn.backgroundColor("#111111")
-            self.appWindow.toggleRightModalBtn.hoverBackgroundColor("#AA111111")
-            self.appWindow.toggleRightModalBtn.borderRadius(15, 0, 0, 0)
+            self.appWindow.toggleRightModalBtn.backgroundColor(style["hoverbtns"])
+            self.appWindow.toggleRightModalBtn.hoverBackgroundColor(style["hoverbtns"])
             self.appWindow.rightModalAnimation.setDirection(self.appWindow.rightModalAnimation.Forward)
             self.appWindow.rightModalAnimation.start()
 
@@ -218,7 +209,9 @@ class myapp(msForm):
     def backopacity(self):
         self.setWindowOpacity(self.old_)
 
-
+    def homeBtnClick(self):
+        if self.appWindow.homeBtn.actived: return
+        self.appWindow.homeBtn.active()
 from teste import subApp
 testes = False
 

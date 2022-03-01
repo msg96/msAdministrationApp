@@ -26,7 +26,7 @@ class subui_Login(object):
         self.parent = parent
         self.schemeColor = style
         self.body = msPanel(self.parent)
-        self.body.backgroundColor(self.schemeColor["contentpagesbg"])
+        self.body.backgroundColor(self.schemeColor["primarybg"])
         self.body.setMinimumSize(400, 400)
         self.body.setMaximumSize(400, 400)
         self.body.setGeometry(0, 0, 400, 400)
@@ -56,7 +56,7 @@ class subui_Login(object):
         self.bodyBox.addWidget(self.displayLb, 0, Qt.AlignVCenter | Qt.AlignHCenter)
         self.displayLb.setAlignment(Qt.AlignCenter)
         self.displayLb.setFont(font3)
-        self.displayLb.color("#916c0e17")
+        self.displayLb.color(style["logintxt"])       #916c0e17
         self.displayLb.setFocusPolicy(Qt.FocusPolicy.NoFocus)
 
 
@@ -71,15 +71,15 @@ class subui_Login(object):
         self.loginTxt.setContextMenuPolicy(Qt.NoContextMenu)
         self.loginTxt.setPlaceholderText("Usuername or Email")
         self.loginTxt.backgroundColor("Transparent")
-        self.loginTxt.color("#7D7D7D")
+        self.loginTxt.color(style["logintxt"])
         self.loginTxt.flatStyle(True)
         self.loginTxt.hoverFlatStyle(True)
-        self.loginTxt.border(1, "solid", "#33696969")
+        self.loginTxt.border(1, "solid", style["hoverbtns"])
         self.loginTxt.borderRadius(5, 5, 5, 5)
-        self.loginTxt.hoverBackgroundColor("#11696969")
-        self.loginTxt.hoverColor("#4D4D4D")
-        self.loginTxt.focusColor("#ADADAD")
-        self.loginTxt.focusBorderBottom(1, "solid", "#99696969")
+        self.loginTxt.hoverBackgroundColor("transparent")
+        self.loginTxt.hoverColor(style["logintxthover"])
+        self.loginTxt.focusColor(style["displaycolor"])
+        self.loginTxt.focusBorderBottom(1, "solid", style["logintxthover"])
         
 
 
@@ -94,16 +94,16 @@ class subui_Login(object):
         self.passwordTxt.setMaxLength(32)
         self.passwordTxt.setEchoMode(self.passwordTxt.EchoMode.Password)
         self.passwordTxt.backgroundColor("Transparent")
-        self.passwordTxt.color("#7D7D7D")
+        self.passwordTxt.backgroundColor("Transparent")
+        self.passwordTxt.color(style["logintxt"])
         self.passwordTxt.flatStyle(True)
         self.passwordTxt.hoverFlatStyle(True)
-        self.passwordTxt.border(1, "solid", "#33696969")
+        self.passwordTxt.border(1, "solid", style["hoverbtns"])
         self.passwordTxt.borderRadius(5, 5, 5, 5)
-        self.passwordTxt.hoverBackgroundColor("#11696969")
-        self.passwordTxt.hoverColor("#4D4D4D")
-        self.passwordTxt.focusColor("#ADADAD")
-        self.passwordTxt.focusBorderBottom(1, "solid", "#99696969")
-
+        self.passwordTxt.hoverBackgroundColor("transparent")
+        self.passwordTxt.hoverColor(style["logintxthover"])
+        self.passwordTxt.focusColor(style["displaycolor"])
+        self.passwordTxt.focusBorderBottom(1, "solid", style["logintxthover"])
 
         
         self.loginBtn = msButton(self.body)
@@ -111,11 +111,12 @@ class subui_Login(object):
         self.bodyBox.addWidget(self.loginBtn, 0, Qt.AlignVCenter | Qt.AlignHCenter)
         self.loginBtn.setMaximumSize(QSize(150, 27))
         self.loginBtn.setMinimumSize(QSize(150, 27))
-        self.loginBtn.color("#7D7D7D")
+        self.loginBtn.color(style["logintxt"])
         self.loginBtn.flatStyle(True)
-        self.loginBtn.border(1, "solid", "#33696969")
+        self.loginBtn.hoverFlatStyle(True)
+        self.loginBtn.border(1, "solid", style["logintxthover"])
         self.loginBtn.borderRadius(5, 5, 5, 5)
-        self.loginBtn.hoverBackgroundColor("#11696969")
-        self.loginBtn.hoverColor("#4D4D4D")
-        self.loginBtn.focusColor("#ADADAD")
-        self.loginBtn.focusBorderBottom(1, "solid", "#99696969")
+        self.loginBtn.hoverBackgroundColor("transparent")
+        self.loginBtn.hoverColor(style["logintxthover"])
+        self.loginBtn.focusColor(style["displaycolor"])
+        self.loginBtn.focusBorderBottom(1, "solid", style["displaycolor"])

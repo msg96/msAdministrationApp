@@ -13,6 +13,8 @@
 from PySide6.QtGui import *
 from PySide6.QtWidgets import *
 from PySide6.QtCore import *
+
+from gui.widgets.msLabel.msLabel import msLabel
 #############################
 ####### MODULOS
 #############################
@@ -21,6 +23,7 @@ from gui.widgets.msPanel import msPanel
 from gui.widgets.msButton import msButton
 from gui.widgets.msForm import msForm
 from modulos import customFunctions
+from assets.styles import style
 #############################
 
 class uiV2(object):
@@ -38,20 +41,22 @@ class uiV2(object):
         ####    DEFINE TO MAIN WINDOW APPWINDOW TO CENTRALWIDGET
         mainWindow.setCentralWidget(self.appWindow)
         ####
-        self.appWindow.backgroundColor("#050505")
-        self.appWindow.border(0, "solid", "#DD353535")
-        self.appWindow.hoverBorder(0, "solid", "#DD404040")
-        self.appWindow.borderRadius(15, 0, 0, 0)
+        self.lastPage = msPanel(self)
+
+        self.appWindow.backgroundColor(style["secondarybg"])
+        self.appWindow.border(1, "solid", style["secondarybg"])
+        self.appWindow.hoverBorder(2, "solid", style["secondarybg"])
+        self.appWindow.borderRadius(style["topleftradius"], 0, 0, 0)
 ########    HORIZONTAL APP WINDOW [LEFT MODAL AND SUB WINDOW]
         self.appWindowBox = QHBoxLayout(self.appWindow)
         self.appWindowBox.setContentsMargins(0, 0, 0, 0)
         self.appWindowBox.setSpacing(0)
         #####
         self.leftModal = msPanel(self.appWindowBox)
-        self.leftModal.borderRadius(15, 0, 0, 0)
-        self.leftModal.backgroundColor("#111111")
-        self.leftModal.setMinimumWidth(50)
-        self.leftModal.setMaximumWidth(50)
+        self.leftModal.borderRadius(style["topleftradius"], 0, 0, 0)
+        self.leftModal.backgroundColor(style["secondarybg"])
+        self.leftModal.setMinimumWidth(style["leftmodalminwidth"])
+        self.leftModal.setMaximumWidth(style["leftmodalminwidth"])
         self.appWindowBox.addWidget(self.leftModal)
         #####
         self.appWindowSub = msPanel(self.appWindowBox)
@@ -62,9 +67,10 @@ class uiV2(object):
         self.appWindowSubBox.setSpacing(0)
         ####
         self.topBar = msPanel(self.appWindowSub)
-        self.topBar.setMinimumSize(QSize(0, 33))
-        self.topBar.setMaximumSize(QSize(9999, 33))
-        self.topBar.backgroundColor("#050505")
+        self.topBar.setMinimumSize(QSize(0, style["topbarheight"]))
+        self.topBar.setMaximumSize(QSize(9999, style["topbarheight"]))
+        self.topBar.backgroundColor(style["secondarybg"])
+        self.topBar.borderRadius(style["topleftradius"], 0, 0, 0)
         self.appWindowSubBox.addWidget(self.topBar)
         ####
         self.contentPanel = msPanel(self.appWindowSub)
@@ -75,37 +81,32 @@ class uiV2(object):
         self.contentPanelBox.setSpacing(0)
         ####    
         self.mainContent = msPanel(self.contentPanel)
-        self.mainContent.backgroundColor("#101010")
-        self.mainContent.borderTop(1, "solid", "#050505")
-        self.mainContent.borderLeft(1, "solid", "#050505")
+        self.mainContent.backgroundColor(style["primarybg"])
+        self.mainContent.borderTop(0, "solid", style["secondarybg"])
+        self.mainContent.borderLeft(0, "solid", style["secondarybg"])
         self.contentPanelBox.addWidget(self.mainContent)
 ########    VERTICAL BOX SPLIT [TITLEPAGES CONTENTPAGES FOOTER]
         self.mainContentBox = QVBoxLayout(self.mainContent)
         self.mainContentBox.setContentsMargins(0, 0, 0, 0)
         self.mainContentBox.setSpacing(0)
         ####
-        self.titlePages = msPanel(self.mainContent)
-        self.titlePages.backgroundColor("#090909")
-        self.titlePages.setMinimumSize(QSize(0, 33))
-        self.titlePages.setMaximumSize(QSize(9999, 33))
-        self.mainContentBox.addWidget(self.titlePages)
-        ####
         self.contentPages = msPanel(self.mainContent)
-        self.contentPages.borderTop(1, "solid", "#050505")
-        self.contentPages.borderRight(1, "solid", "#050505")
+        self.contentPages.borderTop(1, "solid", style["secondarybg"])
+        self.contentPages.borderRight(1, "solid", style["secondarybg"])
         self.mainContentBox.addWidget(self.contentPages)
         ####
         self.footer = msPanel(self.mainContent)
         self.footer.setMinimumSize(QSize(0, 33))
         self.footer.setMaximumSize(QSize(9999, 33))
-        self.footer.backgroundColor("#101010")
-        self.footer.borderRight(1, "solid", "#050505")
+        self.footer.backgroundColor(style["primarybg"])
+        self.footer.borderRight(1, "solid", style["secondarybg"])
+        self.footer.borderBottom(1, "solid", style["secondarybg"])
         self.footer.flatStyle(True)
         self.mainContentBox.addWidget(self.footer)
         ####
         self.rightModal = msPanel(self.contentPanel)
-        self.rightModal.backgroundColor("#111111")
-        self.rightModal.borderTop(1, "solid", "#050505")
+        self.rightModal.backgroundColor(style["hoverbtns"])
+        self.rightModal.borderTop(0, "solid", style["hoverbtns"])
         self.rightModal.setMinimumWidth(0)
         self.rightModal.setMaximumWidth(0)
         self.contentPanelBox.addWidget(self.rightModal)
@@ -125,38 +126,21 @@ class uiV2(object):
         self.toggleLeftModalBtn = msButton(self.topBar)
         self.toggleLeftModalBtn.setMinimumSize(QSize(33, 33))
         self.toggleLeftModalBtn.setMaximumSize(QSize(33, 33))
-        self.toggleLeftModalBtn.backgroundColor("#111111")
-        self.toggleLeftModalBtn.hoverBackgroundColor("#AA111111")
+        self.toggleLeftModalBtn.backgroundColor(style["secondarybg"])
+        self.toggleLeftModalBtn.hoverBackgroundColor(style["hoverbtns"])
         self.toggleLeftModalBtn.border(0, "none", "transparent")
         self.toggleLeftModalBtn.setFocusPolicy(Qt.FocusPolicy.NoFocus)
-        self.topBar.borderRadius(15, 0, 0, 0)
-        self.toggleLeftModalBtn.borderRadius(0, 0, 0, 0)
         self.toggleLeftModalBtn.setIcon(self.MenuIcon)
         self.topBarBox.addWidget(self.toggleLeftModalBtn)
         
-
-        self.titlePagesBox = QHBoxLayout(self.titlePages)
-        self.titlePagesBox.setContentsMargins(0, 0, 0, 0)
-        self.titlePagesBox.setSpacing(0)
-        self.titlePagesBox.setAlignment(Qt.AlignRight)
-        self.toggleRightModalBtn = msButton(self.titlePages)
-        self.toggleRightModalBtn.setMinimumSize(QSize(33, 33))
-        self.toggleRightModalBtn.setMaximumSize(QSize(33, 33))
-        self.toggleRightModalBtn.backgroundColor("#090909")
-        self.toggleRightModalBtn.hoverBackgroundColor("#66111111")
-        self.toggleRightModalBtn.border(0, "none", "transparent")
-        self.toggleRightModalBtn.setFocusPolicy(Qt.FocusPolicy.NoFocus)
-        self.toggleRightModalBtn.borderRadius(15, 0, 0, 0)
-        self.toggleRightModalBtn.setIcon(self.MenuIcon)
-        self.titlePagesBox.addWidget(self.toggleRightModalBtn)
 ########        ANIMATIONS CONFIGS :)
         self.AnimDelay = 200
-        self.AnimCurve = QEasingCurve.OutElastic
+        self.AnimCurve = QEasingCurve.OutSine
 ########        LEFT MODAL ANIMATION
         self.leftModalOpen = False
         self.leftModalAnimation = QPropertyAnimation(self.leftModal, b"minimumWidth")
-        self.leftModalAnimation.setStartValue(50)
-        self.leftModalAnimation.setEndValue(150)
+        self.leftModalAnimation.setStartValue(style["leftmodalminwidth"])
+        self.leftModalAnimation.setEndValue(style["leftmodalmaxwidth"])
         self.leftModalAnimation.setDuration(self.AnimDelay)
         self.leftModalAnimation.setEasingCurve(self.AnimCurve)
 ########        RIGHT MODAL ANNIMATION
@@ -166,73 +150,118 @@ class uiV2(object):
         self.rightModalAnimation.setEndValue(200)
         self.rightModalAnimation.setDuration(self.AnimDelay)
         self.rightModalAnimation.setEasingCurve(self.AnimCurve)
-########        SIZEGRIPS
-        
-
-########        CREATING BUTTONS TO MINIMIZE MAXIMIZE AND CLOSE WINDOW
+########        TITLE FOR TOPBAR
         self.titleProgram = QLabel(self.topBar)
         mainWindow.bar = self.titleProgram
         self.titleProgram.setText("MS Administration")
-        self.titleProgram.setIndent(10)
-        self.titleProgram.setStyleSheet("color: white")
+        self.titleProgram.setIndent(15)
+        self.titleProgram.setStyleSheet("color: {};".format(style["textcolor"]))
         self.titleProgram.setSizePolicy(QSizePolicy(QSizePolicy.Expanding,QSizePolicy.Expanding))
 
-
+########        CREATING BUTTONS TO LOGOUTBTN, MINIMIZE MAXIMIZE AND CLOSE WINDOW
+        ####    ICONS
         self.minimizeIcon = QIcon(customFunctions.AppGetFile(self.SvgPath, "minimize_white_48dp.svg"))
         self.maximizeIconOff = QIcon(customFunctions.AppGetFile(self.SvgPath, "fullscreen_white_48dp.svg"))
         self.maximizeIconOn = QIcon(customFunctions.AppGetFile(self.SvgPath, "fullscreen_exit_white_48dp.svg"))
         self.closeIcon = QIcon(customFunctions.AppGetFile(self.SvgPath, "close_white_48dp.svg"))
         self.logOutIcon = QIcon(customFunctions.AppGetFile(self.SvgPath, "logout_white_48dp.svg"))
-
-
-
-
+        ####    LOGOUT BTN
         self.logOutBtn = msButton(self.topBar)
         self.logOutBtn.setIcon(self.logOutIcon)
         self.logOutBtn.setMinimumSize(QSize(33, 33))
         self.logOutBtn.backgroundColor("transparent")
-        self.logOutBtn.hoverBorder(1, "solid", "#111111")
-        self.logOutBtn.hoverBackgroundColor("#101010")
+        self.logOutBtn.hoverBorder(0, "solid", style["primarybg"])
+        self.logOutBtn.hoverBackgroundColor(style["hoverbtns"])
         self.logOutBtn.setFocusPolicy(Qt.FocusPolicy.NoFocus)
-
+        ####    MENU RIGHT MODAL BTN
+        self.toggleRightModalBtn = msButton(self.topBar)
+        self.toggleRightModalBtn.setMinimumSize(QSize(33, 33))
+        self.toggleRightModalBtn.setMaximumSize(QSize(33, 33))
+        self.toggleRightModalBtn.backgroundColor(style["secondarybg"])
+        self.toggleRightModalBtn.hoverBackgroundColor(style["hoverbtns"])
+        self.toggleRightModalBtn.border(0, "none", "transparent")
+        self.toggleRightModalBtn.setFocusPolicy(Qt.FocusPolicy.NoFocus)
+        self.toggleRightModalBtn.setIcon(self.MenuIcon)
+        ####    MINIMIZE BTN
         self.minimizeBtn = msButton(self.topBar)
         self.minimizeBtn.setIcon(self.minimizeIcon)
         self.minimizeBtn.setMinimumSize(QSize(33, 33))
         self.minimizeBtn.backgroundColor("transparent")
-        self.minimizeBtn.hoverBorder(1, "solid", "#111111")
-        self.minimizeBtn.hoverBackgroundColor("#101010")
+        self.minimizeBtn.hoverBorder(0, "solid", style["primarybg"])
+        self.minimizeBtn.hoverBackgroundColor(style["hoverbtns"])
         self.minimizeBtn.setFocusPolicy(Qt.FocusPolicy.NoFocus)
+        ####    MAXIMIZE BTN
         self.maximizeBtn = msButton(self.topBar)
         self.maximizeBtn.setIcon(self.maximizeIconOff)
         self.maximizeBtn.setMinimumSize(QSize(33, 33))
         self.maximizeBtn.backgroundColor("transparent")
-        self.maximizeBtn.hoverBorder(1, "solid", "#111111")
-        self.maximizeBtn.hoverBackgroundColor("#101010")
+        self.maximizeBtn.hoverBorder(0, "solid", style["primarybg"])
+        self.maximizeBtn.hoverBackgroundColor(style["hoverbtns"])
         self.maximizeBtn.setFocusPolicy(Qt.FocusPolicy.NoFocus)
+        ####    CLOSE BTN
         self.closeBtn = msButton(self.topBar)
         self.closeBtn.setIcon(self.closeIcon)
         self.closeBtn.setMinimumSize(QSize(33, 33))
         self.closeBtn.backgroundColor("transparent")
-        self.closeBtn.hoverBorder(1, "solid", "#111111")
+        self.closeBtn.hoverBorder(0, "solid", style["primarybg"])
         self.closeBtn.hoverBackgroundColor("#916c0e17")
         self.closeBtn.setFocusPolicy(Qt.FocusPolicy.NoFocus)
-
-
+        ####    ADD TO CONTROLS
+        self.topBarBox.addWidget(self.titleProgram)
+        self.topBarBox.addWidget(self.logOutBtn)
+        self.topBarBox.addWidget(self.toggleRightModalBtn)
+        self.topBarBox.addWidget(self.minimizeBtn)
+        self.topBarBox.addWidget(self.maximizeBtn)
+        self.topBarBox.addWidget(self.closeBtn)
+########        LOGIN PAGE :)
         self.LoginUI = subui_Login()
         self.separator = QHBoxLayout(self.contentPages)
         self.LoginUI.start(self.separator)
         self.separator.addWidget(self.LoginUI.body)
         self.LoginUI.body.setVisible(False)
+########        BUTTONS FOR LEFTMODAL
+        self.leftMenu = QVBoxLayout(self.leftModal)
+        self.leftMenu.setAlignment(Qt.AlignTop)
+        self.leftMenu.setSpacing(5)
+        self.leftMenu.setContentsMargins(0, 3, 0, 10)
+        ####    ICONS
+        self.homeIcon = customFunctions.AppGetFile(self.SvgPath, "Home.svg")
+        self.configIcon = customFunctions.AppGetFile(self.SvgPath, "settings_white_48dp.svg")
+        ####    PROFILE
+        self.profile = msPanel(self.leftModal)
+        self.leftMenu.addWidget(self.profile)
+        self.profile.setMinimumHeight(style["topbarheight"]-6)
+        self.byDesign = msLabel(self.profile)
+        self.byDesign.setGeometry(0, 0, 150, style["topbarheight"]-6)
+        font3 = QFont()
+        font3.setFamilies([u"Times New Roman"])
+        font3.setPointSize(9)
+        font3.setBold(False)
+        font3.setItalic(False)
+        font3.setKerning(True)
+        font3.setStyleStrategy(QFont.PreferAntialias)
+        self.byDesign.setText("designed by: Matheus Santos")
+        self.byDesign.setFont(font3)
+        self.byDesign.color(style["hoverbtns"])
 
-        self.topBarBox.addWidget(self.titleProgram)
-        self.topBarBox.addWidget(self.logOutBtn)
-        self.topBarBox.addWidget(self.minimizeBtn)
-        self.topBarBox.addWidget(self.maximizeBtn)
-        self.topBarBox.addWidget(self.closeBtn)
 
-        DisplayLogin(self.LoginUI.body)
+        ####    HOME BTN
+        self.homeBtn = msButton(self.leftModal)
+        self.leftMenu.addWidget(self.homeBtn, 0, Qt.AlignTop)
+        self.homeBtn.myIcon(self.homeIcon)
+        self.homeBtn.setText("Home")
+        self.homeBtn.padronizerBtnLeftMenu()
+        self.homeBtn.active()
+        ####    SPACER
+        self.leftMenuSpacer = QSpacerItem(50, 50, QSizePolicy.Expanding, QSizePolicy.Expanding)
+        self.leftMenu.addItem(self.leftMenuSpacer)
+
+        ####    CONFIG BTN
+        self.configBtn = msButton(self.leftModal)
+        self.leftMenu.addWidget(self.configBtn, 0, Qt.AlignBottom)
+        self.configBtn.myIcon(self.configIcon)
+        self.configBtn.setText("Configurações")
+        self.configBtn.padronizerBtnLeftMenu()
 
 
 
-def DisplayLogin(obj):
-        obj.setVisible(True)

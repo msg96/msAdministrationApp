@@ -13,6 +13,7 @@
 from PySide6.QtGui import *
 from PySide6.QtWidgets import *
 from PySide6.QtCore import *
+from assets.styles import style
 ###########################################################################################################################
 class msButton(QPushButton):
     def __init__(self, parent :QWidget):
@@ -24,41 +25,51 @@ class msButton(QPushButton):
             self.setGeometry(parent.geometry())
         except:
             pass
+        self.iconleft = 50
+        self.actived = False
+        self.ownerDrawnerIcon = QPixmap()
+        self.activebarColor = "transparent"
+        self.setFocusPolicy(Qt.FocusPolicy.NoFocus)
+
 ########    PARAMETERS 
         self.styled = {
-        "background-color": "",             "color": "",                    "flat-style": False,
+        "background-color": "",             "color": "",                    "flat-style": False,                    "text-align": "",
         "border-left-width": 0,             "border-left-style": "",        "border-left-color": "",
         "border-right-width": 0,            "border-right-style": "",       "border-right-color": "",
         "border-top-width": 0,              "border-top-style": "",         "border-top-color": "",
         "border-bottom-width": 0,           "border-bottom-style": "",      "border-bottom-color": "",
-        "border-top-left-radius": 0,        "border-top-right-radius": 0,   "border-bottom-right-radius": 0,        "border-bottom-left-radius": 0
+        "border-top-left-radius": 0,        "border-top-right-radius": 0,   "border-bottom-right-radius": 0,        "border-bottom-left-radius": 0,
+        "padding-left": 0,                  "padding-right":0,              "padding-top": 0,                       "padding-bottom": 0
         }
         ####    HOVER
         self.hoverStyled = {
-        "background-color": "",             "color": "",                    "flat-style": False,
+        "background-color": "",             "color": "",                    "flat-style": False,                    "text-align": "",
         "border-left-width": 0,             "border-left-style": "",        "border-left-color": "",
         "border-right-width": 0,            "border-right-style": "",       "border-right-color": "",
         "border-top-width": 0,              "border-top-style": "",         "border-top-color": "",
         "border-bottom-width": 0,           "border-bottom-style": "",      "border-bottom-color": "",
-        "border-top-left-radius": 0,        "border-top-right-radius": 0,   "border-bottom-right-radius": 0,        "border-bottom-left-radius": 0
+        "border-top-left-radius": 0,        "border-top-right-radius": 0,   "border-bottom-right-radius": 0,        "border-bottom-left-radius": 0,
+        "padding-left": 0,                  "padding-right":0,              "padding-top": 0,                       "padding-bottom": 0
         }
         ####    PRESS
         self.pressStyled = {
-        "background-color": "",             "color": "",                    "flat-style": False,
+        "background-color": "",             "color": "",                    "flat-style": False,                    "text-align": "",
         "border-left-width": 0,             "border-left-style": "",        "border-left-color": "",
         "border-right-width": 0,            "border-right-style": "",       "border-right-color": "",
         "border-top-width": 0,              "border-top-style": "",         "border-top-color": "",
         "border-bottom-width": 0,           "border-bottom-style": "",      "border-bottom-color": "",
-        "border-top-left-radius": 0,        "border-top-right-radius": 0,   "border-bottom-right-radius": 0,        "border-bottom-left-radius": 0
+        "border-top-left-radius": 0,        "border-top-right-radius": 0,   "border-bottom-right-radius": 0,        "border-bottom-left-radius": 0,
+        "padding-left": 0,                  "padding-right":0,              "padding-top": 0,                       "padding-bottom": 0
         }
         ####    FOCUS 
         self.focusStyled = {
-        "background-color": "",             "color": "",                    "flat-style": False,
+        "background-color": "",             "color": "",                    "flat-style": False,                    "text-align": "",
         "border-left-width": 0,             "border-left-style": "",        "border-left-color": "",
         "border-right-width": 0,            "border-right-style": "",       "border-right-color": "",
         "border-top-width": 0,              "border-top-style": "",         "border-top-color": "",
         "border-bottom-width": 0,           "border-bottom-style": "",      "border-bottom-color": "",
-        "border-top-left-radius": 0,        "border-top-right-radius": 0,   "border-bottom-right-radius": 0,        "border-bottom-left-radius": 0
+        "border-top-left-radius": 0,        "border-top-right-radius": 0,   "border-bottom-right-radius": 0,        "border-bottom-left-radius": 0,
+        "padding-left": 0,                  "padding-right":0,              "padding-top": 0,                       "padding-bottom": 0
         }
 ########
         self.updateStyles()
@@ -118,6 +129,22 @@ class msButton(QPushButton):
     ####    FOCUS
     def focusFlatStyle(self, value :bool):
         self.focusStyled["flat-style"] = value
+        self.updateStyles()
+####    TEXTALIGN
+    def textAlign(self, value :str):
+        self.styled["text-align"] = value
+        self.updateStyles()
+    ####    HOVER
+    def hoverTextAlign(self, value :str):
+        self.hoverStyled["text-align"] = value
+        self.updateStyles()
+    ####    PRESS
+    def pressTextAlign(self, value :str):
+        self.pressStyled["text-align"] = value
+        self.updateStyles()
+    ####    FOCUS
+    def focusTextAlign(self, value :str):
+        self.focusStyled["text-align"] = value
         self.updateStyles()
 ####    BORDER PARAMS
     def border(self, width :int, style :str, color :str):
@@ -266,7 +293,101 @@ class msButton(QPushButton):
         self.focusStyled["border-top-right-radius"] =    topright
         self.focusStyled["border-bottom-right-radius"] = bottomright
         self.focusStyled["border-bottom-left-radius"] =  bottomleft
-        self.updateStyles()       
+        self.updateStyles()
+####    PADDING CHANGE PARAMS
+    def padding(self, top :int, right :int, bottom :int, left :int):
+        self.styled["padding-top"] = top
+        self.styled["padding-right"] = right
+        self.styled["padding-bottom"] = bottom
+        self.styled["padding-left"] = left
+        self.updateStyles()
+    ####    HOVER
+    def hoverPadding(self, top :int, right :int, bottom :int, left :int):
+        self.hoverStyled["padding-top"] = top
+        self.hoverStyled["padding-right"] = right
+        self.hoverStyled["padding-bottom"] = bottom
+        self.hoverStyled["padding-left"] = left
+        self.updateStyles()
+    ####    PRESS
+    def pressPadding(self, top :int, right :int, bottom :int, left :int):
+        self.pressStyled["padding-top"] = top
+        self.pressStyled["padding-right"] = right
+        self.pressStyled["padding-bottom"] = bottom
+        self.pressStyled["padding-left"] = left
+        self.updateStyles()
+    ####    FOCUS
+    def focusPadding(self, top :int, right :int, bottom :int, left :int):
+        self.focusStyled["padding-top"] = top
+        self.focusStyled["padding-right"] = right
+        self.focusStyled["padding-bottom"] = bottom
+        self.focusStyled["padding-left"] = left
+        self.updateStyles()
+####    PADDING LEFT CHANGE PARAMS
+    def paddingLeft(self, value :int):
+        self.styled["padding-left"] = value
+        self.updateStyles()
+    ####    HOVER
+    def hoverPaddingLeft(self, value :int):
+        self.hoverStyled["padding-left"] = value
+        self.updateStyles()
+    ####    PRESS
+    def pressPaddingLeft(self, value :int):
+        self.pressStyled["padding-left"] = value
+        self.updateStyles()
+    ####    FOCUS
+    def focusPaddingLeft(self, value :int):
+        self.focusStyled["padding-left"] = value
+        self.updateStyles()
+####    PADDING RIGHT CHANGE PARAMS
+    def paddingRight(self, value :int):
+        self.styled["padding-right"] = value
+        self.updateStyles()
+    ####    HOVER
+    def hoverPaddingRight(self, value :int):
+        self.hoverStyled["padding-right"] = value
+        self.updateStyles()
+    ####    PRESS
+    def pressPaddingRight(self, value :int):
+        self.pressStyled["padding-right"] = value
+        self.updateStyles()
+    ####    FOCUS
+    def focusPaddingRight(self, value :int):
+        self.focusStyled["padding-right"] = value
+        self.updateStyles()
+####    PADDING TOP CHANGE PARAMS
+    def paddingTop(self, value :int):
+        self.styled["padding-top"] = value
+        self.updateStyles()
+    ####    HOVER
+    def hoverPaddingTop(self, value :int):
+        self.hoverStyled["padding-top"] = value
+        self.updateStyles()
+    ####    PRESS
+    def pressPaddingTop(self, value :int):
+        self.pressStyled["padding-top"] = value
+        self.updateStyles()
+    ####    FOCUS
+    def focusPaddingTop(self, value :int):
+        self.focusStyled["padding-top"] = value
+        self.updateStyles()
+####    PADDING BOTTOM CHANGE PARAMS
+    def paddingBottom(self, value :int):
+        self.styled["padding-bottom"] = value
+        self.updateStyles()
+    ####    HOVER
+    def hoverPaddingBottom(self, value :int):
+        self.hoverStyled["padding-bottom"] = value
+        self.updateStyles()
+    ####    PRESS
+    def pressPaddingBottom(self, value :int):
+        self.pressStyled["padding-bottom"] = value
+        self.updateStyles()
+    ####    FOCUS
+    def focusPaddingBottom(self, value :int):
+        self.focusStyled["padding-bottom"] = value
+        self.updateStyles()
+
+
 ####    UPDATE STYLESHEETS
     def updateStyles(self):
 ########    DEFINE SOME CHECKS TO STYLING   ####
@@ -282,28 +403,33 @@ class msButton(QPushButton):
 ##########################################################################################################################################
 ########    APPEND STYLE TO AN STRING
 ##########################################################################################################################################   
-        style = "{}#{} {{\n".format(objectType, self.objectName())
+        style_ = "{}#{} {{\n".format(objectType, self.objectName())
         #
-        if self.styled["background-color"] != "":           style += "background-color: {};\n".format(backgroundColor)
-        if self.styled["color"] != "":                      style += "color: {};\n".format(self.styled["color"])
-        if self.styled["border-left-width"]:                style += "border-left-width: {}px;\n".format(self.styled["border-left-width"])
-        if self.styled["border-left-style"] != "":          style += "border-left-style: {};\n".format(self.styled["border-left-style"])
-        if self.styled["border-left-color"] != "":          style += "border-left-color: {};\n".format(self.styled["border-left-color"])
-        if self.styled["border-right-width"]:               style += "border-right-width: {}px;\n".format(self.styled["border-right-width"])
-        if self.styled["border-right-style"] != "":         style += "border-right-style: {};\n".format(self.styled["border-right-style"])
-        if self.styled["border-right-color"] != "":         style += "border-right-color: {};\n".format(self.styled["border-right-color"])
-        if self.styled["border-top-width"]:                 style += "border-top-width: {}px;\n".format(self.styled["border-top-width"])
-        if self.styled["border-top-style"] != "":           style += "border-top-style: {};\n".format(self.styled["border-top-style"])
-        if self.styled["border-top-color"] != "":           style += "border-top-color: {};\n".format(self.styled["border-top-color"])
-        if self.styled["border-bottom-width"]:              style += "border-bottom-width: {}px;\n".format(self.styled["border-bottom-width"])
-        if self.styled["border-bottom-style"] != "":        style += "border-bottom-style: {};\n".format(self.styled["border-bottom-style"])
-        if self.styled["border-bottom-color"] != "":        style += "border-bottom-color: {};\n".format(self.styled["border-bottom-color"])
-        if self.styled["border-top-left-radius"]:           style += "border-top-left-radius: {}px;\n".format(self.styled["border-top-left-radius"])
-        if self.styled["border-top-right-radius"]:          style += "border-top-right-radius: {}px;\n".format(self.styled["border-top-right-radius"])
-        if self.styled["border-bottom-right-radius"]:       style += "border-bottom-right-radius: {}px;\n".format(self.styled["border-bottom-right-radius"])
-        if self.styled["border-bottom-left-radius"]:        style += "border-bottom-left-radius: {}px;\n".format(self.styled["border-bottom-left-radius"])
+        if self.styled["background-color"] != "":          style_ += "background-color: {};\n".format(backgroundColor)
+        if self.styled["color"] != "":                     style_ += "color: {};\n".format(self.styled["color"])
+        if self.styled["text-align"] != "":                style_ += "text-align: {};\n".format(self.styled["text-align"])
+        if self.styled["border-left-width"]:               style_ += "border-left-width: {}px;\n".format(self.styled["border-left-width"])
+        if self.styled["border-left-style"] != "":         style_ += "border-left-style: {};\n".format(self.styled["border-left-style"])
+        if self.styled["border-left-color"] != "":         style_ += "border-left-color: {};\n".format(self.styled["border-left-color"])
+        if self.styled["border-right-width"]:              style_ += "border-right-width: {}px;\n".format(self.styled["border-right-width"])
+        if self.styled["border-right-style"] != "":        style_ += "border-right-style: {};\n".format(self.styled["border-right-style"])
+        if self.styled["border-right-color"] != "":        style_ += "border-right-color: {};\n".format(self.styled["border-right-color"])
+        if self.styled["border-top-width"]:                style_ += "border-top-width: {}px;\n".format(self.styled["border-top-width"])
+        if self.styled["border-top-style"] != "":          style_ += "border-top-style: {};\n".format(self.styled["border-top-style"])
+        if self.styled["border-top-color"] != "":          style_ += "border-top-color: {};\n".format(self.styled["border-top-color"])
+        if self.styled["border-bottom-width"]:             style_ += "border-bottom-width: {}px;\n".format(self.styled["border-bottom-width"])
+        if self.styled["border-bottom-style"] != "":       style_ += "border-bottom-style: {};\n".format(self.styled["border-bottom-style"])
+        if self.styled["border-bottom-color"] != "":       style_ += "border-bottom-color: {};\n".format(self.styled["border-bottom-color"])
+        if self.styled["border-top-left-radius"]:          style_ += "border-top-left-radius: {}px;\n".format(self.styled["border-top-left-radius"])
+        if self.styled["border-top-right-radius"]:         style_ += "border-top-right-radius: {}px;\n".format(self.styled["border-top-right-radius"])
+        if self.styled["border-bottom-right-radius"]:      style_ += "border-bottom-right-radius: {}px;\n".format(self.styled["border-bottom-right-radius"])
+        if self.styled["border-bottom-left-radius"]:       style_ += "border-bottom-left-radius: {}px;\n".format(self.styled["border-bottom-left-radius"])
+        if self.styled["padding-left"]:                    style_ += "padding-left: {}px;\n".format(self.styled["padding-left"])
+        if self.styled["padding-right"]:                   style_ += "padding-right: {}px;\n".format(self.styled["padding-right"])
+        if self.styled["padding-top"]:                     style_ += "padding-top: {}px;\n".format(self.styled["padding-top"])
+        if self.styled["padding-bottom"]:                  style_ += "padding-bottom: {}px;\n".format(self.styled["padding-bottom"])
         #
-        style += "\n}\n"
+        style_ += "\n}\n"
 ###########################################################################################################################################
 ########    APEEND HOVER STYLE TO AN STRING
 ###########################################################################################################################################
@@ -311,6 +437,7 @@ class msButton(QPushButton):
         #
         if self.hoverStyled["background-color"] != "":              hoverStyle += "background-color: {};\n".format(hoverBackgroundColor)
         if self.hoverStyled["color"] != "":                         hoverStyle += "color: {};\n".format(self.hoverStyled["color"])
+        if self.hoverStyled["text-align"] != "":                    hoverStyle += "text-align: {};\n".format(self.hoverStyled["text-align"])
         if self.hoverStyled["border-left-width"]:                   hoverStyle += "border-left-width: {}px;\n".format(self.hoverStyled["border-left-width"])
         if self.hoverStyled["border-left-style"] != "":             hoverStyle += "border-left-style: {};\n".format(self.hoverStyled["border-left-style"])
         if self.hoverStyled["border-left-color"] != "":             hoverStyle += "border-left-color: {};\n".format(self.hoverStyled["border-left-color"])
@@ -327,6 +454,10 @@ class msButton(QPushButton):
         if self.hoverStyled["border-top-right-radius"]:             hoverStyle += "border-top-right-radius: {}px;\n".format(self.hoverStyled["border-top-right-radius"])
         if self.hoverStyled["border-bottom-right-radius"]:          hoverStyle += "border-bottom-right-radius: {}px;\n".format(self.hoverStyled["border-bottom-right-radius"])
         if self.hoverStyled["border-bottom-left-radius"]:           hoverStyle += "border-bottom-left-radius: {}px;\n".format(self.hoverStyled["border-bottom-left-radius"])
+        if self.hoverStyled["padding-left"]:                        hoverStyle += "padding-left: {}px;\n".format(self.hoverStyled["padding-left"])
+        if self.hoverStyled["padding-right"]:                       hoverStyle += "padding-right: {}px;\n".format(self.hoverStyled["padding-right"])
+        if self.hoverStyled["padding-top"]:                         hoverStyle += "padding-top: {}px;\n".format(self.hoverStyled["padding-top"])
+        if self.hoverStyled["padding-bottom"]:                      hoverStyle += "padding-bottom: {}px;\n".format(self.hoverStyled["padding-bottom"])
         #
         hoverStyle += "\n}\n"
 ###########################################################################################################################################
@@ -336,6 +467,7 @@ class msButton(QPushButton):
         #
         if self.pressStyled["background-color"] != "":               pressStyle += "background-color: {};\n".format(pressBackgroundColor)
         if self.pressStyled["color"] != "":                          pressStyle += "color: {};\n".format(self.pressStyled["color"])
+        if self.pressStyled["text-align"] != "":                     pressStyle += "text-align: {};\n".format(self.pressStyled["text-align"])
         if self.pressStyled["border-left-width"]:                    pressStyle += "border-left-width: {}px;\n".format(self.pressStyled["border-left-width"])
         if self.pressStyled["border-left-style"] != "":              pressStyle += "border-left-style: {};\n".format(self.pressStyled["border-left-style"])
         if self.pressStyled["border-left-color"] != "":              pressStyle += "border-left-color: {};\n".format(self.pressStyled["border-left-color"])
@@ -352,6 +484,10 @@ class msButton(QPushButton):
         if self.pressStyled["border-top-right-radius"]:              pressStyle += "border-top-right-radius: {}px;\n".format(self.pressStyled["border-top-right-radius"])
         if self.pressStyled["border-bottom-right-radius"]:           pressStyle += "border-bottom-right-radius: {}px;\n".format(self.pressStyled["border-bottom-right-radius"])
         if self.pressStyled["border-bottom-left-radius"]:            pressStyle += "border-bottom-left-radius: {}px;\n".format(self.pressStyled["border-bottom-left-radius"])
+        if self.pressStyled["padding-left"]:                         pressStyle += "padding-left: {}px;\n".format(self.pressStyled["padding-left"])
+        if self.pressStyled["padding-right"]:                        pressStyle += "padding-right: {}px;\n".format(self.pressStyled["padding-right"])
+        if self.pressStyled["padding-top"]:                          pressStyle += "padding-top: {}px;\n".format(self.pressStyled["padding-top"])
+        if self.pressStyled["padding-bottom"]:                       pressStyle += "padding-bottom: {}px;\n".format(self.pressStyled["padding-bottom"])
         #
         pressStyle += "\n}\n"
 ###########################################################################################################################################
@@ -361,6 +497,7 @@ class msButton(QPushButton):
         #
         if self.focusStyled["background-color"] != "":               focusStyle += "background-color: {};\n".format(focusBackgroundColor)
         if self.focusStyled["color"] != "":                          focusStyle += "color: {};\n".format(self.focusStyled["color"])
+        if self.focusStyled["text-align"] != "":                     focusStyle += "text-align: {};\n".format(self.focusStyled["text-align"])
         if self.focusStyled["border-left-width"]:                    focusStyle += "border-left-width: {}px;\n".format(self.focusStyled["border-left-width"])
         if self.focusStyled["border-left-style"] != "":              focusStyle += "border-left-style: {};\n".format(self.focusStyled["border-left-style"])
         if self.focusStyled["border-left-color"] != "":              focusStyle += "border-left-color: {};\n".format(self.focusStyled["border-left-color"])
@@ -377,6 +514,10 @@ class msButton(QPushButton):
         if self.focusStyled["border-top-right-radius"]:              focusStyle += "border-top-right-radius: {}px;\n".format(self.focusStyled["border-top-right-radius"])
         if self.focusStyled["border-bottom-right-radius"]:           focusStyle += "border-bottom-right-radius: {}px;\n".format(self.focusStyled["border-bottom-right-radius"])
         if self.focusStyled["border-bottom-left-radius"]:            focusStyle += "border-bottom-left-radius: {}px;\n".format(self.focusStyled["border-bottom-left-radius"])
+        if self.focusStyled["padding-left"]:                         focusStyle += "padding-left: {}px;\n".format(self.focusStyled["padding-left"])
+        if self.focusStyled["padding-right"]:                        focusStyle += "padding-right: {}px;\n".format(self.focusStyled["padding-right"])
+        if self.focusStyled["padding-top"]:                          focusStyle += "padding-top: {}px;\n".format(self.focusStyled["padding-top"])
+        if self.focusStyled["padding-bottom"]:                       focusStyle += "padding-bottom: {}px;\n".format(self.focusStyled["padding-bottom"])
         #
         focusStyle += "\n}\n"
 
@@ -384,7 +525,7 @@ class msButton(QPushButton):
 ###########################################################################################################################################
 ########    CONCATENED STYLES AND APPLY TO OUR OBJECT
 ###########################################################################################################################################
-        resStyle = style + hoverStyle + pressStyle + focusStyle
+        resStyle = style_ + hoverStyle + pressStyle + focusStyle
         self.setStyleSheet(resStyle)
 ####
     def enterEvent(self, event: QEnterEvent) -> None:
@@ -393,5 +534,71 @@ class msButton(QPushButton):
     def leaveEvent(self, event: QEvent) -> None:
         QWidget.leaveEvent(self, event)
         self.repaint()
+
+    def padronizerBtnLeftMenu(self):
+        self.setMaximumHeight(style["topbarheight"])
+        self.setMinimumHeight(style["topbarheight"])
+        self.paddingLeft(52)
+        self.textAlign("left")
+        self.color("#CDCDCD")
+        self.backgroundColor("transparent")
+        self.hoverBackgroundColor(style["hoverbtns"])
+        self.border(0, "none", "transparent")
+        self.borderRadius(0, 0, 0, 0)
+        self.hoverBorder(0,"none", "Transparent")
+        self.activebarColor = style["primarybg"] 
+
+    def active(self):
+
+        for i in self.parent().children():
+            if i == self:
+                self.backgroundColor(style["primarybg"])
+                self.border(0, "none", "transparent")
+                self.hoverBackgroundColor(style["primarybg"])
+                self.hoverBorder(0, "none", "transparent")
+                self.borderLeft(2, "solid", style["hoverbtns"] )
+                self.hoverBorderLeft(2, "solid", style["hoverbtns"] )
+                self.borderRadius(15, 0, 0 , 15)
+                self.updateStyles()
+            else:
+                try:
+                   
+                    i.actived = False
+                    i.padronizerBtnLeftMenu()
+
+                except:
+                    pass
+        
+
+    def paintIconEvent(self, qp :QPainter, color):
+
+        icon = self.ownerDrawnerIcon
+
+        _w = self.iconleft
+        _x = 0
+        rect = QRect(0,0, _w, self.height())
+        
+        painter = QPainter(icon)
+        painter.setCompositionMode(QPainter.CompositionMode_SourceIn)
+        painter.fillRect(icon.rect(), color)
+        qp.drawPixmap((rect.width() - icon.width()) / 2, (rect.height() - icon.height()) / 2 , icon)
+        painter.end()
+
+    def myIcon(self, value :str):
+        self.ownerDrawnerIcon = QPixmap(value)
+
     def paintEvent(self, event: QPaintEvent) -> None:
         QPushButton.paintEvent(self, event)
+
+
+        qp = QPainter()
+        qp.begin(self)
+        qp.setRenderHint(QPainter.Antialiasing)
+        qp.setPen(Qt.NoPen) 
+        if self.ownerDrawnerIcon:
+            self.paintIconEvent(qp, style["textcolor"])
+
+        if self.actived:
+            qp.setBrush(QBrush(self.activebarColor, Qt.BrushStyle.SolidPattern))
+            qp.drawRect(self.width() - 5, 0, 5, self.height()) 
+        qp.end()
