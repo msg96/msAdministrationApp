@@ -50,29 +50,62 @@ class subui_Login(object):
         self.logo.setMaximumSize(QSize(150, 150))
         self.displayLb = QLabel(self.body)
         self.bodyBox.addWidget(self.displayLb, 0, Qt.AlignVCenter | Qt.AlignHCenter)
+
+
+
         self.displayLb.setText("Algo deu errado ao logar!")
         self.displayLb.setAlignment(Qt.AlignCenter)
         self.displayLb.setFont(font3)
         self.displayLb.setStyleSheet("color: whitesmoke;")
-        self.loginTxt = QLineEdit(self.body)
+
+
+
+        self.loginTxt = MsTxtImput(self.body)
         self.bodyBox.addWidget(self.loginTxt, 0, Qt.AlignVCenter | Qt.AlignHCenter)
+
         self.loginTxt.setMinimumSize(QSize(350, 27))
         self.loginTxt.setMaximumSize(QSize(350, 27))
-        self.passwordTxt = QLineEdit(self.body)
+        self.loginTxt.setPlaceholderText("Usuername or Email")
+        self.loginTxt.backgroundColor("Transparent")
+        self.loginTxt.color("#7D7D7D")
+        self.loginTxt.border(1, "solid", "#33696969")
+        self.loginTxt.borderRadius(5, 5, 5, 5)
+        self.loginTxt.hoverBackgroundColor("#11696969")
+        self.loginTxt.hoverColor("#4D4D4D")
+        self.loginTxt.focusColor("#ADADAD")
+        self.loginTxt.focusBorderBottom(1, "solid", "#99696969")
+        
+
+
+
+        self.passwordTxt = MsTxtImput(self.body)
         self.bodyBox.addWidget(self.passwordTxt, 0, Qt.AlignVCenter | Qt.AlignHCenter)
         self.passwordTxt.setMinimumSize(QSize(350, 27))
         self.passwordTxt.setMaximumSize(QSize(350, 27))
+        self.passwordTxt.setPlaceholderText("Password")
+        self.passwordTxt.setEchoMode(self.passwordTxt.EchoMode.Password)
+        self.passwordTxt.backgroundColor("Transparent")
+        self.passwordTxt.color("#7D7D7D")
+        self.passwordTxt.border(1, "solid", "#33696969")
+        self.passwordTxt.borderRadius(5, 5, 5, 5)
+        self.passwordTxt.hoverBackgroundColor("#11696969")
+        self.passwordTxt.hoverColor("#4D4D4D")
+        self.passwordTxt.focusColor("#ADADAD")
+        self.passwordTxt.focusBorderBottom(1, "solid", "#99696969")
+
+
+        
         self.loginBtn = msButton(self.body)
         self.loginBtn.setText("Logar")
-        self.loginBtn.color("#7D7D7D")
-        self.loginBtn.flatStyle(True)
-        self.loginBtn.border(1, "DASHED", "#33696969")
-        self.loginBtn.borderRadius(5, 5, 5, 5)
-        self.loginBtn.hoverBackgroundColor("#11696969")
-        self.loginBtn.hoverColor("#4D4D4D")
         self.bodyBox.addWidget(self.loginBtn, 0, Qt.AlignVCenter | Qt.AlignHCenter)
         self.loginBtn.setMaximumSize(QSize(150, 27))
         self.loginBtn.setMinimumSize(QSize(150, 27))
-
-
-
+        self.loginBtn.setFocus(Qt.FocusReason.NoFocusReason)
+        self.loginBtn.color("#7D7D7D")
+        self.loginBtn.flatStyle(True)
+        self.loginBtn.border(1, "solid", "#33696969")
+        self.loginBtn.borderRadius(5, 5, 5, 5)
+        self.loginBtn.hoverBackgroundColor("#11696969")
+        self.loginBtn.hoverColor("#4D4D4D")
+        self.loginBtn.focusColor("#ADADAD")
+        self.loginBtn.focusBorderBottom(1, "solid", "#99696969")

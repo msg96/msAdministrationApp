@@ -51,6 +51,15 @@ class msPanel(QFrame):
         "border-bottom-width": 0,           "border-bottom-style": "",      "border-bottom-color": "",
         "border-top-left-radius": 0,        "border-top-right-radius": 0,   "border-bottom-right-radius": 0,        "border-bottom-left-radius": 0
         }
+        ####    FOCUS 
+        self.focusStyled = {
+        "background-color": "",             "color": "",                    "flat-style": False,
+        "border-left-width": 0,             "border-left-style": "",        "border-left-color": "",
+        "border-right-width": 0,            "border-right-style": "",       "border-right-color": "",
+        "border-top-width": 0,              "border-top-style": "",         "border-top-color": "",
+        "border-bottom-width": 0,           "border-bottom-style": "",      "border-bottom-color": "",
+        "border-top-left-radius": 0,        "border-top-right-radius": 0,   "border-bottom-right-radius": 0,        "border-bottom-left-radius": 0
+        }
 ########
         self.updateStyles()
 ########        
@@ -74,6 +83,10 @@ class msPanel(QFrame):
     def pressBackgroundColor(self, color :str):
         self.pressStyled["background-color"] = color
         self.updateStyles()
+    ####    FOCUS
+    def focusBackgroundColor(self, color :str):
+        self.focusStyled["background-color"] = color
+        self.updateStyles()
 ####    CHANGE TEXT COLOR
     def color(self, color :str):
         self.styled["color"] = color
@@ -86,6 +99,10 @@ class msPanel(QFrame):
     def pressColor(self, color :str):
         self.pressStyled["color"] = color
         self.updateStyles()
+    ####    FOCUS
+    def focusColor(self, color :str):
+        self.focusStyled["color"] = color
+        self.updateStyles()
 ####    FLATSTYLE CHANGE
     def flatStyle(self, value :bool):
         self.styled["flat-style"] = value
@@ -97,6 +114,10 @@ class msPanel(QFrame):
     ####    PRESS
     def pressFlatStyle(self, value :bool):
         self.pressStyled["flat-style"] = value
+        self.updateStyles()
+    ####    FOCUS
+    def focusFlatStyle(self, value :bool):
+        self.focusStyled["flat-style"] = value
         self.updateStyles()
 ####    BORDER PARAMS
     def border(self, width :int, style :str, color :str):
@@ -116,6 +137,12 @@ class msPanel(QFrame):
         self.pressStyled["border-left-style"] = self.pressStyled["border-right-style"] = self.pressStyled["border-top-style"] = self.pressStyled["border-bottom-style"] = style
         self.pressStyled["border-left-color"] = self.pressStyled["border-right-color"] = self.pressStyled["border-top-color"] = self.pressStyled["border-bottom-color"] = color
         self.updateStyles()
+    ####    FOCUS
+    def focusBorder(self, width :int, style :str, color :str):
+        self.focusStyled["border-left-width"] = self.focusStyled["border-right-width"] = self.focusStyled["border-top-width"] = self.focusStyled["border-bottom-width"] = width
+        self.focusStyled["border-left-style"] = self.focusStyled["border-right-style"] = self.focusStyled["border-top-style"] = self.focusStyled["border-bottom-style"] = style
+        self.focusStyled["border-left-color"] = self.focusStyled["border-right-color"] = self.focusStyled["border-top-color"] = self.focusStyled["border-bottom-color"] = color
+        self.updateStyles()
 ####    BORDERLEFT CHANGE PARAMS
     def borderLeft(self, width :int, style :str, color :str):
         self.styled["border-left-width"] = width
@@ -133,6 +160,12 @@ class msPanel(QFrame):
         self.pressStyled["border-left-width"] = width
         self.pressStyled["border-left-style"] = style
         self.pressStyled["border-left-color"] = color
+        self.updateStyles()
+    ####    FOCUS
+    def focusBorderLeft(self, width :int, style :str, color :str):
+        self.focusStyled["border-left-width"] = width
+        self.focusStyled["border-left-style"] = style
+        self.focusStyled["border-left-color"] = color
         self.updateStyles()
 ####    BORDERRIGHT CHANGE PARAMS
     def borderRight(self, width :int, style :str, color :str):
@@ -152,6 +185,12 @@ class msPanel(QFrame):
         self.pressStyled["border-right-style"] = style
         self.pressStyled["border-right-color"] = color
         self.updateStyles()
+    ####    FOCUS
+    def focusBorderRight(self, width :int, style :str, color :str):
+        self.focusStyled["border-right-width"] = width
+        self.focusStyled["border-right-style"] = style
+        self.focusStyled["border-right-color"] = color
+        self.updateStyles()
 ####    BORDERTOP CHANGE PARAMS
     def borderTop(self, width :int, style :str, color :str):
         self.styled["border-top-width"] = width
@@ -170,6 +209,12 @@ class msPanel(QFrame):
         self.pressStyled["border-top-style"] = style
         self.pressStyled["border-top-color"] = color
         self.updateStyles()
+    ####    FOCUS
+    def focusBorderTop(self, width :int, style :str, color :str):
+        self.focusStyled["border-top-width"] = width
+        self.focusStyled["border-top-style"] = style
+        self.focusStyled["border-top-color"] = color
+        self.updateStyles()
 ####    BORDER BOTTOM CHANGE PARAMS
     def borderBottom(self, width :int, style :str, color :str):
         self.styled["border-bottom-width"] = width
@@ -187,6 +232,12 @@ class msPanel(QFrame):
         self.pressStyled["border-bottom-width"] = width
         self.pressStyled["border-bottom-style"] = style
         self.pressStyled["border-bottom-color"] = color
+        self.updateStyles()
+    ####    FOCUS
+    def focusBorderBottom(self, width :int, style :str, color :str):
+        self.focusStyled["border-bottom-width"] = width
+        self.focusStyled["border-bottom-style"] = style
+        self.focusStyled["border-bottom-color"] = color
         self.updateStyles()
 ####    BORDER RADIUS CHANGE PARAMS
     def borderRadius(self, topleft :int, topright :int, bottomright :int, bottomleft :int):
@@ -208,6 +259,13 @@ class msPanel(QFrame):
         self.pressStyled["border-top-right-radius"] =    topright
         self.pressStyled["border-bottom-right-radius"] = bottomright
         self.pressStyled["border-bottom-left-radius"] =  bottomleft
+        self.updateStyles()
+    ####    FOCUS
+    def focusBorderRadius(self, topleft :int, topright :int, bottomright :int, bottomleft :int):
+        self.focusStyled["border-top-left-radius"] =     topleft
+        self.focusStyled["border-top-right-radius"] =    topright
+        self.focusStyled["border-bottom-right-radius"] = bottomright
+        self.focusStyled["border-bottom-left-radius"] =  bottomleft
         self.updateStyles()       
 ####    UPDATE STYLESHEETS
     def updateStyles(self):
@@ -219,6 +277,7 @@ class msPanel(QFrame):
         backgroundColor      = self.styled["background-color"]      if not self.styled["flat-style"]      else flatColor
         hoverBackgroundColor = self.hoverStyled["background-color"] if not self.hoverStyled["flat-style"] else flatColor
         pressBackgroundColor = self.pressStyled["background-color"] if not self.pressStyled["flat-style"] else flatColor
+        focusBackgroundColor = self.focusStyled["background-color"] if not self.focusStyled["flat-style"] else flatColor
 ########
 ##########################################################################################################################################
 ########    APPEND STYLE TO AN STRING
@@ -296,9 +355,36 @@ class msPanel(QFrame):
         #
         pressStyle += "\n}\n"
 ###########################################################################################################################################
+########    APPEND FOCUS STYLE TO AN STRING
+###########################################################################################################################################
+        focusStyle = "{}#{}:focus {{\n".format(objectType, self.objectName())
+        #
+        if self.focusStyled["background-color"] != "":               focusStyle += "background-color: {};\n".format(focusBackgroundColor)
+        if self.focusStyled["color"] != "":                          focusStyle += "color: {};\n".format(self.focusStyled["color"])
+        if self.focusStyled["border-left-width"]:                    focusStyle += "border-left-width: {}px;\n".format(self.focusStyled["border-left-width"])
+        if self.focusStyled["border-left-style"] != "":              focusStyle += "border-left-style: {};\n".format(self.focusStyled["border-left-style"])
+        if self.focusStyled["border-left-color"] != "":              focusStyle += "border-left-color: {};\n".format(self.focusStyled["border-left-color"])
+        if self.focusStyled["border-right-width"]:                   focusStyle += "border-right-width: {}px;\n".format(self.focusStyled["border-right-width"])
+        if self.focusStyled["border-right-style"] != "":             focusStyle += "border-right-style: {};\n".format(self.focusStyled["border-right-style"])
+        if self.focusStyled["border-right-color"] != "":             focusStyle += "border-right-color: {};\n".format(self.focusStyled["border-right-color"])
+        if self.focusStyled["border-top-width"]:                     focusStyle += "border-top-width: {}px;\n".format(self.focusStyled["border-top-width"])
+        if self.focusStyled["border-top-style"] != "":               focusStyle += "border-top-style: {};\n".format(self.focusStyled["border-top-style"])
+        if self.focusStyled["border-top-color"] != "":               focusStyle += "border-top-color: {};\n".format(self.focusStyled["border-top-color"])
+        if self.focusStyled["border-bottom-width"]:                  focusStyle += "border-bottom-width: {}px;\n".format(self.focusStyled["border-bottom-width"])
+        if self.focusStyled["border-bottom-style"] != "":            focusStyle += "border-bottom-style: {};\n".format(self.focusStyled["border-bottom-style"])
+        if self.focusStyled["border-bottom-color"] != "":            focusStyle += "border-bottom-color: {};\n".format(self.focusStyled["border-bottom-color"])
+        if self.focusStyled["border-top-left-radius"]:               focusStyle += "border-top-left-radius: {}px;\n".format(self.focusStyled["border-top-left-radius"])
+        if self.focusStyled["border-top-right-radius"]:              focusStyle += "border-top-right-radius: {}px;\n".format(self.focusStyled["border-top-right-radius"])
+        if self.focusStyled["border-bottom-right-radius"]:           focusStyle += "border-bottom-right-radius: {}px;\n".format(self.focusStyled["border-bottom-right-radius"])
+        if self.focusStyled["border-bottom-left-radius"]:            focusStyle += "border-bottom-left-radius: {}px;\n".format(self.focusStyled["border-bottom-left-radius"])
+        #
+        focusStyle += "\n}\n"
+
+
+###########################################################################################################################################
 ########    CONCATENED STYLES AND APPLY TO OUR OBJECT
 ###########################################################################################################################################
-        resStyle = style + hoverStyle + pressStyle
+        resStyle = style + hoverStyle + pressStyle + focusStyle
         self.setStyleSheet(resStyle)
 ####
     def enterEvent(self, event: QEnterEvent) -> None:
