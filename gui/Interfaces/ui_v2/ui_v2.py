@@ -165,10 +165,7 @@ class uiV2(object):
         self.rightModalAnimation.setDuration(self.AnimDelay)
         self.rightModalAnimation.setEasingCurve(self.AnimCurve)
 ########        SIZEGRIPS
-        self.leftGrip = msGrip(self.appWindow, mainWindow, Qt.LeftEdge)
-        self.topGrip = msGrip(self.appWindow, mainWindow,Qt.TopEdge)
-        self.rightGrip = msGrip(self.appWindow, mainWindow,Qt.RightEdge)
-        self.bottomGrip = msGrip(self.appWindow, mainWindow,Qt.BottomEdge)
+        
 
 ########        CREATING BUTTONS TO MINIMIZE MAXIMIZE AND CLOSE WINDOW
         self.titleProgram = QLabel(self.topBar)

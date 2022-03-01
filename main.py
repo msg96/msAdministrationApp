@@ -30,6 +30,7 @@ class myapp(msForm):
         self.appWindow.closeBtn.clicked.connect(self.closeBtnClick)
         self.appWindow.minimizeBtn.clicked.connect(self.minimizeBtnClick)
         self.appWindow.maximizeBtn.clicked.connect(self.maximizeBtnClick)
+        self.myGrip = msGrip(self)
         self.show()
 
     def attCorner(self):
@@ -56,7 +57,6 @@ class myapp(msForm):
                 self.appWindow.appWindow.borderRadius(15, 0, 0, 0)
                 self.appWindow.topBar.borderRadius(15, 0, 0, 0)
 
-
     def toggleLeftModalClick(self):
         if self.appWindow.leftModalAnimation.state() != self.appWindow.leftModalAnimation.Stopped:
             return
@@ -76,7 +76,6 @@ class myapp(msForm):
             self.appWindow.leftModalAnimation.start()
         self.attCorner()
         
-
     def toggleRightModalClick(self):
         if self.appWindow.rightModalOpen:
             self.appWindow.rightModalOpen = False
@@ -96,11 +95,9 @@ class myapp(msForm):
             self.appWindow.rightModalAnimation.setDirection(self.appWindow.rightModalAnimation.Forward)
             self.appWindow.rightModalAnimation.start()
 
-
     def eventFilter(self, watched: QObject, event: QEvent) -> bool:
         msForm.eventFilter(self, watched, event)
         
-
     def mouseDoubleClickEvent(self, event: QMouseEvent) -> None:
         msForm.mouseDoubleClickEvent(self, event)
         
@@ -109,24 +106,16 @@ class myapp(msForm):
     def resizeEvent(self, event: QResizeEvent) -> None:
         msForm.resizeEvent(self, event)
         if self.isMaximized():
-            self.appWindow.leftGrip.setVisible(False)
-            self.appWindow.topGrip.setVisible(False)
-            self.appWindow.rightGrip.setVisible(False)
-            self.appWindow.bottomGrip.setVisible(False)
+            self.myGrip.setVisible(False)
         else:
-            self.appWindow.leftGrip.setVisible(True)
-            self.appWindow.topGrip.setVisible(True)
-            self.appWindow.rightGrip.setVisible(True)
-            self.appWindow.bottomGrip.setVisible(True)
+            self.myGrip.setVisible(True)
 
         if self.windowState() == Qt.WindowMaximized:
             self.appWindow.maximizeBtn.setIcon(self.appWindow.maximizeIconOn)
         elif self.windowState() == Qt.WindowNoState:
             self.appWindow.maximizeBtn.setIcon(self.appWindow.maximizeIconOff)
-        self.appWindow.leftGrip.updateSize()
-        self.appWindow.topGrip.updateSize()
-        self.appWindow.rightGrip.updateSize()
-        self.appWindow.bottomGrip.updateSize()
+        self.myGrip.updateSize()
+
     
     def closeBtnClick(self):
         self.close()
@@ -157,12 +146,17 @@ class myapp(msForm):
     def backopacity(self):
         self.setWindowOpacity(self.old_)
 
+from teste import subApp
+testes = False
+
 if __name__ == "__main__":
-    app = QApplication(sys.argv)
-
-    myApp = myapp()
-
-    try:
-        sys.exit(app.exec())
-    except:
-        exit()
+    if not testes:
+        app = QApplication(sys.argv)
+        myApp = myapp()
+        try:
+            sys.exit(app.exec())
+        except:
+            print("Some error ocurred!.")
+            exit()
+    else:
+        subApp()
