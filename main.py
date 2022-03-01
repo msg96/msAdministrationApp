@@ -136,7 +136,7 @@ class myapp(msForm):
             self.old_ = self.windowOpacity()
             self.anim.setStartValue(self.old_)
             self.anim.setEndValue(0)
-            self.anim.setEasingCurve(QEasingCurve.Linear)
+            self.anim.setEasingCurve(self.appWindow.AnimCurve)
             self.anim.finished.connect(self.backopacity)
             self.anim.start()
 
@@ -147,7 +147,7 @@ class myapp(msForm):
         self.setWindowOpacity(self.old_)
 
 from teste import subApp
-testes = False
+testes = True
 
 if __name__ == "__main__":
     if not testes:
@@ -156,7 +156,6 @@ if __name__ == "__main__":
         try:
             sys.exit(app.exec())
         except:
-            print("Some error ocurred!.")
             exit()
     else:
         subApp()

@@ -74,6 +74,18 @@ class msPanel(QFrame):
     def pressBackgroundColor(self, color :str):
         self.pressStyled["background-color"] = color
         self.updateStyles()
+####    CHANGE TEXT COLOR
+    def color(self, color :str):
+        self.styled["color"] = color
+        self.updateStyles()
+    ####    HOVER
+    def hoverColor(self, color :str):
+        self.hoverStyled["color"] = color
+        self.updateStyles()
+    ####    PRESS
+    def pressColor(self, color :str):
+        self.pressStyled["color"] = color
+        self.updateStyles()
 ####    FLATSTYLE CHANGE
     def flatStyle(self, value :bool):
         self.styled["flat-style"] = value

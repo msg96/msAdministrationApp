@@ -21,4 +21,3 @@ from PySide6.QtCore import *
 from modulos import *
 from gui.Interfaces import *
 from gui.widgets import *
-from assets.stylesheets import GetStyle
