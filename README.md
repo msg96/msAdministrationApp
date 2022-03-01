@@ -1,6 +1,6 @@
 # msAdministrationApp
 
-### Desenvolvimento de **API** for windows/mac/windows para gerenciamento de posts de um site com uso de sql e json files.
+### Desenvolvimento de **GUI** for windows/mac/windows para uso pessoal e treinar um pouco!.
 
 #### Print Atual do Programa
 ![programa](/assets/imgs/screenshot.png)
