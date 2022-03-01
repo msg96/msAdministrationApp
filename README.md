@@ -9,6 +9,7 @@
 ![login](/assets/imgs/login.png)
 
 [27/02/2022]
-> adicionando novo widget de grip para mudar o tamanho da janela do programa
+> adicionando novo widget de grip para mudar o tamanho da janela do programa.
+
 [01/03/2022]
 > adicionada tela de login
