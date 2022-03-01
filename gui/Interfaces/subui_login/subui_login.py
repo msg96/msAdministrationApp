@@ -16,6 +16,7 @@ from PySide6.QtCore import *
 #############################
 from assets.styles import style
 from gui.widgets.msButton.msButton import msButton
+from gui.widgets.msLabel.msLabel import msLabel
 from gui.widgets.msPanel import msPanel
 from gui.widgets.msTxtImput import MsTxtImput
 from modulos import customFunctions
@@ -30,7 +31,7 @@ class subui_Login(object):
         self.body.setMaximumSize(400, 400)
         self.body.setGeometry(0, 0, 400, 400)
         self.bodyBox = QVBoxLayout(self.body)
-        self.bodyBox.setAlignment( Qt.AlignVCenter | Qt.AlignTop)
+        self.bodyBox.setAlignment( Qt.AlignHCenter | Qt.AlignTop)
         self.bodyBox.setContentsMargins(0, 0, 0, 0)
         self.bodyBox.setSpacing(15)
         font3 = QFont()
@@ -48,16 +49,15 @@ class subui_Login(object):
         self.logo.borderRadius(50, 50, 50, 50)
         self.logo.setMinimumSize(QSize(150, 150))
         self.logo.setMaximumSize(QSize(150, 150))
-        self.displayLb = QLabel(self.body)
+        self.logo.setFocusPolicy(Qt.FocusPolicy.NoFocus)
+
+
+        self.displayLb = msLabel(self.body)
         self.bodyBox.addWidget(self.displayLb, 0, Qt.AlignVCenter | Qt.AlignHCenter)
-
-
-
-        self.displayLb.setText("Algo deu errado ao logar!")
         self.displayLb.setAlignment(Qt.AlignCenter)
         self.displayLb.setFont(font3)
-        self.displayLb.setStyleSheet("color: whitesmoke;")
-
+        self.displayLb.color("#916c0e17")
+        self.displayLb.setFocusPolicy(Qt.FocusPolicy.NoFocus)
 
 
         self.loginTxt = MsTxtImput(self.body)
@@ -65,9 +65,15 @@ class subui_Login(object):
 
         self.loginTxt.setMinimumSize(QSize(350, 27))
         self.loginTxt.setMaximumSize(QSize(350, 27))
+        self.loginTxt.setFocus(Qt.FocusReason.NoFocusReason)
+        self.loginTxt.setMaxLength(200)
+        self.loginTxt.setInputMethodHints(Qt.ImhSensitiveData)
+        self.loginTxt.setContextMenuPolicy(Qt.NoContextMenu)
         self.loginTxt.setPlaceholderText("Usuername or Email")
         self.loginTxt.backgroundColor("Transparent")
         self.loginTxt.color("#7D7D7D")
+        self.loginTxt.flatStyle(True)
+        self.loginTxt.hoverFlatStyle(True)
         self.loginTxt.border(1, "solid", "#33696969")
         self.loginTxt.borderRadius(5, 5, 5, 5)
         self.loginTxt.hoverBackgroundColor("#11696969")
@@ -83,9 +89,14 @@ class subui_Login(object):
         self.passwordTxt.setMinimumSize(QSize(350, 27))
         self.passwordTxt.setMaximumSize(QSize(350, 27))
         self.passwordTxt.setPlaceholderText("Password")
+        self.passwordTxt.setInputMethodHints(Qt.ImhSensitiveData | Qt.ImhHiddenText | Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText)
+        self.passwordTxt.setContextMenuPolicy(Qt.NoContextMenu)
+        self.passwordTxt.setMaxLength(32)
         self.passwordTxt.setEchoMode(self.passwordTxt.EchoMode.Password)
         self.passwordTxt.backgroundColor("Transparent")
         self.passwordTxt.color("#7D7D7D")
+        self.passwordTxt.flatStyle(True)
+        self.passwordTxt.hoverFlatStyle(True)
         self.passwordTxt.border(1, "solid", "#33696969")
         self.passwordTxt.borderRadius(5, 5, 5, 5)
         self.passwordTxt.hoverBackgroundColor("#11696969")
@@ -100,7 +111,6 @@ class subui_Login(object):
         self.bodyBox.addWidget(self.loginBtn, 0, Qt.AlignVCenter | Qt.AlignHCenter)
         self.loginBtn.setMaximumSize(QSize(150, 27))
         self.loginBtn.setMinimumSize(QSize(150, 27))
-        self.loginBtn.setFocus(Qt.FocusReason.NoFocusReason)
         self.loginBtn.color("#7D7D7D")
         self.loginBtn.flatStyle(True)
         self.loginBtn.border(1, "solid", "#33696969")

@@ -35,12 +35,12 @@ def login (login, password) -> int:
     curCursor = tryconnect()
     if not curCursor:
         return 0
-    useroremail =  "app_email"  if "@" in login else "app_username"
+    useroremail =  ENV["emailrow"]  if "@" in login else ENV["userrow"]
         
     curCursor.execute(f"SELECT {ENV['dbprivileges']}, {ENV['dbusercolum']} from {ENV['pgusertable']} WHERE {useroremail}='{login}' AND {ENV['dbpasscolum']}='{password}'")
     matched = curCursor.fetchall()
     if login == ENV["LocalUser"] and password == ENV["LocalPass"]:
-        return 1
+        return [1, "admin"]
     if not matched: 
         return 0
     else:

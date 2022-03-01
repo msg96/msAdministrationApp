@@ -15,10 +15,11 @@ from PySide6.QtWidgets import *
 from PySide6.QtCore import *
 #############################
 ####### MODULOS
+#############################
+from ..subui_login import subui_Login
 from gui.widgets.msPanel import msPanel
 from gui.widgets.msButton import msButton
 from gui.widgets.msForm import msForm
-from gui.widgets.msGrip import msGrip
 from modulos import customFunctions
 #############################
 
@@ -49,8 +50,8 @@ class uiV2(object):
         self.leftModal = msPanel(self.appWindowBox)
         self.leftModal.borderRadius(15, 0, 0, 0)
         self.leftModal.backgroundColor("#111111")
-        self.leftModal.setMinimumWidth(0)
-        self.leftModal.setMaximumWidth(0)
+        self.leftModal.setMinimumWidth(50)
+        self.leftModal.setMaximumWidth(50)
         self.appWindowBox.addWidget(self.leftModal)
         #####
         self.appWindowSub = msPanel(self.appWindowBox)
@@ -64,7 +65,6 @@ class uiV2(object):
         self.topBar.setMinimumSize(QSize(0, 33))
         self.topBar.setMaximumSize(QSize(9999, 33))
         self.topBar.backgroundColor("#050505")
-        mainWindow.bar = self.topBar
         self.appWindowSubBox.addWidget(self.topBar)
         ####
         self.contentPanel = msPanel(self.appWindowSub)
@@ -125,11 +125,12 @@ class uiV2(object):
         self.toggleLeftModalBtn = msButton(self.topBar)
         self.toggleLeftModalBtn.setMinimumSize(QSize(33, 33))
         self.toggleLeftModalBtn.setMaximumSize(QSize(33, 33))
-        self.toggleLeftModalBtn.backgroundColor("#050505")
-        self.toggleLeftModalBtn.hoverBackgroundColor("#66111111")
+        self.toggleLeftModalBtn.backgroundColor("#111111")
+        self.toggleLeftModalBtn.hoverBackgroundColor("#AA111111")
         self.toggleLeftModalBtn.border(0, "none", "transparent")
+        self.toggleLeftModalBtn.setFocusPolicy(Qt.FocusPolicy.NoFocus)
         self.topBar.borderRadius(15, 0, 0, 0)
-        self.toggleLeftModalBtn.borderRadius(15, 0, 0, 0)
+        self.toggleLeftModalBtn.borderRadius(0, 0, 0, 0)
         self.toggleLeftModalBtn.setIcon(self.MenuIcon)
         self.topBarBox.addWidget(self.toggleLeftModalBtn)
         
@@ -144,6 +145,7 @@ class uiV2(object):
         self.toggleRightModalBtn.backgroundColor("#090909")
         self.toggleRightModalBtn.hoverBackgroundColor("#66111111")
         self.toggleRightModalBtn.border(0, "none", "transparent")
+        self.toggleRightModalBtn.setFocusPolicy(Qt.FocusPolicy.NoFocus)
         self.toggleRightModalBtn.borderRadius(15, 0, 0, 0)
         self.toggleRightModalBtn.setIcon(self.MenuIcon)
         self.titlePagesBox.addWidget(self.toggleRightModalBtn)
@@ -153,8 +155,8 @@ class uiV2(object):
 ########        LEFT MODAL ANIMATION
         self.leftModalOpen = False
         self.leftModalAnimation = QPropertyAnimation(self.leftModal, b"minimumWidth")
-        self.leftModalAnimation.setStartValue(0)
-        self.leftModalAnimation.setEndValue(200)
+        self.leftModalAnimation.setStartValue(50)
+        self.leftModalAnimation.setEndValue(150)
         self.leftModalAnimation.setDuration(self.AnimDelay)
         self.leftModalAnimation.setEasingCurve(self.AnimCurve)
 ########        RIGHT MODAL ANNIMATION
@@ -169,7 +171,9 @@ class uiV2(object):
 
 ########        CREATING BUTTONS TO MINIMIZE MAXIMIZE AND CLOSE WINDOW
         self.titleProgram = QLabel(self.topBar)
+        mainWindow.bar = self.titleProgram
         self.titleProgram.setText("MS Administration")
+        self.titleProgram.setIndent(10)
         self.titleProgram.setStyleSheet("color: white")
         self.titleProgram.setSizePolicy(QSizePolicy(QSizePolicy.Expanding,QSizePolicy.Expanding))
 
@@ -178,6 +182,18 @@ class uiV2(object):
         self.maximizeIconOff = QIcon(customFunctions.AppGetFile(self.SvgPath, "fullscreen_white_48dp.svg"))
         self.maximizeIconOn = QIcon(customFunctions.AppGetFile(self.SvgPath, "fullscreen_exit_white_48dp.svg"))
         self.closeIcon = QIcon(customFunctions.AppGetFile(self.SvgPath, "close_white_48dp.svg"))
+        self.logOutIcon = QIcon(customFunctions.AppGetFile(self.SvgPath, "logout_white_48dp.svg"))
+
+
+
+
+        self.logOutBtn = msButton(self.topBar)
+        self.logOutBtn.setIcon(self.logOutIcon)
+        self.logOutBtn.setMinimumSize(QSize(33, 33))
+        self.logOutBtn.backgroundColor("transparent")
+        self.logOutBtn.hoverBorder(1, "solid", "#111111")
+        self.logOutBtn.hoverBackgroundColor("#101010")
+        self.logOutBtn.setFocusPolicy(Qt.FocusPolicy.NoFocus)
 
         self.minimizeBtn = msButton(self.topBar)
         self.minimizeBtn.setIcon(self.minimizeIcon)
@@ -185,23 +201,38 @@ class uiV2(object):
         self.minimizeBtn.backgroundColor("transparent")
         self.minimizeBtn.hoverBorder(1, "solid", "#111111")
         self.minimizeBtn.hoverBackgroundColor("#101010")
+        self.minimizeBtn.setFocusPolicy(Qt.FocusPolicy.NoFocus)
         self.maximizeBtn = msButton(self.topBar)
         self.maximizeBtn.setIcon(self.maximizeIconOff)
         self.maximizeBtn.setMinimumSize(QSize(33, 33))
         self.maximizeBtn.backgroundColor("transparent")
         self.maximizeBtn.hoverBorder(1, "solid", "#111111")
         self.maximizeBtn.hoverBackgroundColor("#101010")
+        self.maximizeBtn.setFocusPolicy(Qt.FocusPolicy.NoFocus)
         self.closeBtn = msButton(self.topBar)
         self.closeBtn.setIcon(self.closeIcon)
         self.closeBtn.setMinimumSize(QSize(33, 33))
         self.closeBtn.backgroundColor("transparent")
         self.closeBtn.hoverBorder(1, "solid", "#111111")
         self.closeBtn.hoverBackgroundColor("#916c0e17")
+        self.closeBtn.setFocusPolicy(Qt.FocusPolicy.NoFocus)
 
 
-
+        self.LoginUI = subui_Login()
+        self.separator = QHBoxLayout(self.contentPages)
+        self.LoginUI.start(self.separator)
+        self.separator.addWidget(self.LoginUI.body)
+        self.LoginUI.body.setVisible(False)
 
         self.topBarBox.addWidget(self.titleProgram)
+        self.topBarBox.addWidget(self.logOutBtn)
         self.topBarBox.addWidget(self.minimizeBtn)
         self.topBarBox.addWidget(self.maximizeBtn)
         self.topBarBox.addWidget(self.closeBtn)
+
+        DisplayLogin(self.LoginUI.body)
+
+
+
+def DisplayLogin(obj):
+        obj.setVisible(True)
