@@ -19,6 +19,7 @@ from env import usersdb_conn
 import psycopg2
 
 from modulos import cripter
+from modulos import hwnd
 ###########################################################################################################################
 ########    VARIAVEIS
 ###########################################################################################################################
@@ -46,6 +47,8 @@ def login (login, password) -> int:
     login = str(bytes(login, "utf-8")).replace("'", "").replace("b(","")
     password = cripter.encript(password, ENV['bdmasterkey'])
     password = str(bytes(password, "utf-8")).replace("'", "").replace("b(","")
+    hwnd_ = hwnd.getEncriptedHWND()
+    hwnd_ = str(bytes(hwnd_, "utf-8")).replace("'", "").replace("b(","")
 ####    USE THIS SINTAX TO PREVENT SQL INJECTION
     curCursor[0].execute(f"SELECT * FROM {ENV['pgusertable']} WHERE {useroremail}=%(login)s AND {ENV['dbpasscolum']}=%(password)s",
      {'login': login, 'password': password})
@@ -55,11 +58,19 @@ def login (login, password) -> int:
         if login == ENV["LocalUser"] and password == ENV["LocalPass"]:
             return [1, "admin"]
 #####   VERIFY IF SOME MATCH AND SEND SOME RESPONSE TO CALLER
-    curCursor[0].close()
-    if not matched: 
+    if not matched:
+        curCursor[0].close()
         return 0
     else:
-        return matched[0]
+        if matched[0][6] == None:
+            myHWNDs = hwnd_
+            curCursor[0].execute(f"UPDATE {ENV['pgusertable']} SET {ENV['hwndrow']}=%(myHWNDs)s WHERE {ENV['dbidrow']}={int(matched[0][0])}", {"myHWNDs": myHWNDs})
+            curCursor[1].commit()
+            curCursor[0].close()
+            result = (matched[0][0],matched[0][1],matched[0][2],matched[0][3],matched[0][4],matched[0][5],myHWNDs)
+            return result
+        else:
+            return matched[0]
 
 
 def ChangePW(login :str, oldpassword :str, newpassword :str):

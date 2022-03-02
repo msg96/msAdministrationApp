@@ -15,6 +15,10 @@ class testeme(QMainWindow):
         self.setGeometry((self.centerS.width() - 500) / 2, (self.centerS.height() - 550) / 2 , 500, 550)
         self.show()
 
+
+        
+
+
 def subApp():
     # app = QApplication(sys.argv)
 
@@ -25,5 +29,4 @@ def subApp():
     # except:
     #     print("some error on teste side")
     #     exit()
-    
     pass

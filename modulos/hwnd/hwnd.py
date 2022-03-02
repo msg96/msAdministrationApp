@@ -3,8 +3,7 @@ from modulos import cripter
 from env import ENVVAR as ENV
 
 def getHWND() -> str:
-    return __uuid.uuid1()
-
+    return str(__uuid.uuid1()).split("-")[-1]
 
 def getEncriptedHWND():
     result = cripter.encript(getHWND(), ENV["bdmasterkey"])
