@@ -8,5 +8,7 @@
 ###########################################################################################################################
 ###########################################################################################################################
 from .auth import *
+from .cripter import decript, encript, fileDecript, fileEncript
+from .hwnd import getHWND, getEncriptedHWND, decriptHWND
 from .customFunctions import AppGetUniversalPath
 from .customFunctions import AppGetFile

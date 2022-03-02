@@ -25,7 +25,7 @@ class myapp(msForm):
         super().__init__()
         self.appWindow = uiV2()
         self.appWindow.start(self)
-        self.loged = False
+        self.loged = True
         self.__back1 = self.geometry()
         self.__back2 = self.minimumSize()
         self.__back3 = self.maximumSize()
@@ -38,6 +38,7 @@ class myapp(msForm):
         self.appWindow.LoginUI.loginBtn.clicked.connect(self.loginBtnClick)
         self.appWindow.logOutBtn.clicked.connect(self.logoutBtnClick)
         self.appWindow.homeBtn.clicked.connect(self.homeBtnClick)
+        self.savedWindowState = self.windowState()
         self.checkeLogin()
         self.myGrip = msGrip(self)
         self.show()
@@ -67,6 +68,7 @@ class myapp(msForm):
     def loginBtnClick(self):
         con = auth.login(login=self.appWindow.LoginUI.loginTxt.text(), password=self.appWindow.LoginUI.passwordTxt.text())
         if con and con[0] < 4:
+            self.savedWindowState = self.windowState()
             self.loged = True
             self.checkeLogin()
         else:
@@ -85,6 +87,7 @@ class myapp(msForm):
     def logoutBtnClick(self):
         self.loged = False
         self.checkeLogin()
+        self.setWindowState(self.savedWindowState)
 
 
 #######     DISPLAY ERROR ON NOT HAVE MATCHED USER O PASS
@@ -119,7 +122,6 @@ class myapp(msForm):
             else:
                 self.appWindow.leftModal.borderRadius(style["topleftradius"], 0, 0, 0)
                 self.appWindow.appWindow.borderRadius(style["topleftradius"], 0, 0, 0)
-
 
     def toggleLeftModalClick(self):
         if self.appWindow.leftModalAnimation.state() != self.appWindow.leftModalAnimation.Stopped:
@@ -213,7 +215,7 @@ class myapp(msForm):
         if self.appWindow.homeBtn.actived: return
         self.appWindow.homeBtn.active()
 from teste import subApp
-testes = False
+testes = True
 
 if __name__ == "__main__":
     if not testes:

@@ -224,7 +224,7 @@ class uiV2(object):
         self.leftMenu = QVBoxLayout(self.leftModal)
         self.leftMenu.setAlignment(Qt.AlignTop)
         self.leftMenu.setSpacing(5)
-        self.leftMenu.setContentsMargins(0, 3, 0, 10)
+        self.leftMenu.setContentsMargins(1, 3, 0, 5)
         ####    ICONS
         self.homeIcon = customFunctions.AppGetFile(self.SvgPath, "Home.svg")
         self.configIcon = customFunctions.AppGetFile(self.SvgPath, "settings_white_48dp.svg")

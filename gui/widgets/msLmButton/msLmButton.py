@@ -37,13 +37,13 @@ class msLmButton(msButton):
     def padronizerBtnLeftMenu(self):
         self.setMaximumHeight(style["topbarheight"])
         self.setMinimumHeight(style["topbarheight"])
-        self.paddingLeft(52)
+        self.paddingLeft(style["leftmodalminwidth"])
         self.textAlign("left")
         self.color("#CDCDCD")
         self.backgroundColor("transparent")
+        self.borderRadius(15, 0, 0 , 15)
         self.hoverBackgroundColor(style["hoverbtns"])
         self.border(0, "none", "transparent")
-        self.borderRadius(0, 0, 0, 0)
         self.hoverBorder(0,"none", "Transparent")
         self.activebarColor = style["primarybg"] 
 
@@ -57,7 +57,6 @@ class msLmButton(msButton):
                 self.hoverBorder(0, "none", "transparent")
                 self.borderLeft(2, "solid", style["hoverbtns"] )
                 self.hoverBorderLeft(2, "solid", style["hoverbtns"] )
-                self.borderRadius(15, 0, 0 , 15)
                 self.updateStyles()
             else:
                 try:
