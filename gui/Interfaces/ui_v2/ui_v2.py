@@ -15,6 +15,7 @@ from PySide6.QtWidgets import *
 from PySide6.QtCore import *
 
 from gui.widgets.msLabel.msLabel import msLabel
+from gui.widgets.msLmButton.msLmButton import msLmButton
 #############################
 ####### MODULOS
 #############################
@@ -246,7 +247,7 @@ class uiV2(object):
 
 
         ####    HOME BTN
-        self.homeBtn = msButton(self.leftModal)
+        self.homeBtn = msLmButton(self.leftModal)
         self.leftMenu.addWidget(self.homeBtn, 0, Qt.AlignTop)
         self.homeBtn.myIcon(self.homeIcon)
         self.homeBtn.setText("Home")
@@ -257,7 +258,7 @@ class uiV2(object):
         self.leftMenu.addItem(self.leftMenuSpacer)
 
         ####    CONFIG BTN
-        self.configBtn = msButton(self.leftModal)
+        self.configBtn = msLmButton(self.leftModal)
         self.leftMenu.addWidget(self.configBtn, 0, Qt.AlignBottom)
         self.configBtn.myIcon(self.configIcon)
         self.configBtn.setText("Configurações")

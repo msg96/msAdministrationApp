@@ -12,6 +12,7 @@ from .msPanel import msPanel
 from .msSVGRender import msSVGRender
 from .msTxtImput import MsTxtImput
 from .msButton import msButton
+from .msLmButton import msLmButton
 from .msGrip import msGrip
 from .msLabel import msLabel
 ###########################################################################################################################
