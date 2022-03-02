@@ -215,7 +215,7 @@ class myapp(msForm):
         if self.appWindow.homeBtn.actived: return
         self.appWindow.homeBtn.active()
 from teste import subApp
-testes = True
+testes = False
 
 if __name__ == "__main__":
     if not testes:

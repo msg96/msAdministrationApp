@@ -39,8 +39,12 @@ def login (login, password) -> int:
         
     curCursor.execute(f"SELECT {ENV['dbprivileges']}, {ENV['dbusercolum']} from {ENV['pgusertable']} WHERE {useroremail}='{login}' AND {ENV['dbpasscolum']}='{password}'")
     matched = curCursor.fetchall()
-    if login == ENV["LocalUser"] and password == ENV["LocalPass"]:
-        return [1, "admin"]
+
+######  IF YOU PUT SOME 0 OR "" IN LocalUser or LocalPass YOU DISABLE YOUR LOCAL TEST LOGIN. IT'S EASY :)
+    if ENV["LocalUser"] and ENV["LocalPass"]:
+        if login == ENV["LocalUser"] and password == ENV["LocalPass"]:
+            return [1, "admin"]
+#####   VERIFY IF SOME MATCH AND SEND SOME RESPONSE TO CALLER
     if not matched: 
         return 0
     else:
