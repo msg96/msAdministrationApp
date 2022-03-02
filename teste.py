@@ -1,8 +1,10 @@
 from PySide6.QtCore import *
 from PySide6.QtGui import *
 from PySide6.QtWidgets import *
+from env import ENVVAR
 # import sys
-
+import modulos.auth
+from modulos.cripter.encript import encript
 
 class testeme(QMainWindow):
     def __init__(self) -> None:
@@ -12,10 +14,6 @@ class testeme(QMainWindow):
         self.centerS = QApplication.primaryScreen().availableGeometry()
         self.setGeometry((self.centerS.width() - 500) / 2, (self.centerS.height() - 550) / 2 , 500, 550)
         self.show()
-
-
-        
-
 
 def subApp():
     # app = QApplication(sys.argv)
@@ -27,4 +25,5 @@ def subApp():
     # except:
     #     print("some error on teste side")
     #     exit()
+    
     pass

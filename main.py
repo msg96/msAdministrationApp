@@ -25,7 +25,7 @@ class myapp(msForm):
         super().__init__()
         self.appWindow = uiV2()
         self.appWindow.start(self)
-        self.loged = True
+        self.loged = False
         self.__back1 = self.geometry()
         self.__back2 = self.minimumSize()
         self.__back3 = self.maximumSize()
@@ -38,10 +38,10 @@ class myapp(msForm):
         self.appWindow.LoginUI.loginBtn.clicked.connect(self.loginBtnClick)
         self.appWindow.logOutBtn.clicked.connect(self.logoutBtnClick)
         self.appWindow.homeBtn.clicked.connect(self.homeBtnClick)
-        self.savedWindowState = self.windowState()
         self.checkeLogin()
         self.myGrip = msGrip(self)
         self.show()
+        self.user = 0
 
 
     def checkeLogin(self):
@@ -67,16 +67,16 @@ class myapp(msForm):
 
     def loginBtnClick(self):
         con = auth.login(login=self.appWindow.LoginUI.loginTxt.text(), password=self.appWindow.LoginUI.passwordTxt.text())
-        if con and con[0] < 4:
-            self.savedWindowState = self.windowState()
+        if con and con[4] < 4:
             self.loged = True
+            self.user = con
             self.checkeLogin()
         else:
             if self.loged:
                 self.loged = False
             if not con:
                 self.LoginFailed(2000, "Ocorreu um Erro ao logar!.")
-            elif con[0] == 4:
+            elif con[4] == 4:
                 self.LoginFailed(2000, "Conta Bloqueada, entre em contato com o administrador!.")
             else:
                 self.LoginFailed(2000, "Ocorreu um Erro ao logar!.")
@@ -87,7 +87,6 @@ class myapp(msForm):
     def logoutBtnClick(self):
         self.loged = False
         self.checkeLogin()
-        self.setWindowState(self.savedWindowState)
 
 
 #######     DISPLAY ERROR ON NOT HAVE MATCHED USER O PASS
@@ -122,6 +121,7 @@ class myapp(msForm):
             else:
                 self.appWindow.leftModal.borderRadius(style["topleftradius"], 0, 0, 0)
                 self.appWindow.appWindow.borderRadius(style["topleftradius"], 0, 0, 0)
+
 
     def toggleLeftModalClick(self):
         if self.appWindow.leftModalAnimation.state() != self.appWindow.leftModalAnimation.Stopped:
@@ -194,19 +194,19 @@ class myapp(msForm):
             self.setWindowState(Qt.WindowMaximized)
         self.attCorner()
 
-    # def event(self, event: QEvent) -> None:
-    #     if event.type() == event.WindowStateChange:
-    #         self.anim = QPropertyAnimation(self, b"windowOpacity")
-    #         self.anim.setDuration(self.appWindow.AnimDelay)
-    #         self.old_ = self.windowOpacity()
-    #         self.anim.setStartValue(self.old_)
-    #         self.anim.setEndValue(0)
-    #         self.anim.setEasingCurve(self.appWindow.AnimCurve)
-    #         self.anim.finished.connect(self.backopacity)
-    #         self.anim.start()
+    def event(self, event: QEvent) -> None:
+        if event.type() == event.WindowStateChange:
+            self.anim = QPropertyAnimation(self, b"windowOpacity")
+            self.anim.setDuration(self.appWindow.AnimDelay)
+            self.old_ = self.windowOpacity()
+            self.anim.setStartValue(self.old_)
+            self.anim.setEndValue(0)
+            self.anim.setEasingCurve(self.appWindow.AnimCurve)
+            self.anim.finished.connect(self.backopacity)
+            self.anim.start()
 
-    #     QMainWindow.event(self, event)
-    #     return True
+        QMainWindow.event(self, event)
+        return True
 
     def backopacity(self):
         self.setWindowOpacity(self.old_)

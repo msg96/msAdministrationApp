@@ -120,3 +120,5 @@ class subui_Login(object):
         self.loginBtn.hoverColor(style["logintxthover"])
         self.loginBtn.focusColor(style["displaycolor"])
         self.loginBtn.focusBorderBottom(1, "solid", style["displaycolor"])
+        self.loginBtn.setAutoDefault(True)
+        self.loginBtn.setDefault(True)
