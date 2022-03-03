@@ -33,6 +33,7 @@ class msLmButton(msButton):
         self.actived = False
         self.ownerDrawnerIcon = QPixmap()
         self.activebarColor = "transparent"
+        self.padronizerBtnLeftMenu()
 
     def padronizerBtnLeftMenu(self):
         self.setMaximumHeight(style["topbarheight"])
@@ -60,10 +61,8 @@ class msLmButton(msButton):
                 self.updateStyles()
             else:
                 try:
-                   
                     i.actived = False
                     i.padronizerBtnLeftMenu()
-
                 except:
                     pass
 

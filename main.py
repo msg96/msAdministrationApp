@@ -24,9 +24,12 @@ from assets.styles import style
 class myapp(msForm):
     def __init__(self):
         super().__init__()
+        self.setWindowTitle("MS Administration")
         self.appWindow = uiV2()
         self.appWindow.start(self)
-        self.loged = False
+        self.ApplyStyleClick()
+
+        self.loged = True
         self.__back1 = self.geometry()
         self.__back2 = self.minimumSize()
         self.__back3 = self.maximumSize()
@@ -38,7 +41,7 @@ class myapp(msForm):
         self.appWindow.maximizeBtn.clicked.connect(self.maximizeBtnClick)
         self.appWindow.LoginUI.loginBtn.clicked.connect(self.loginBtnClick)
         self.appWindow.logOutBtn.clicked.connect(self.logoutBtnClick)
-        self.appWindow.homeBtn.clicked.connect(self.homeBtnClick)
+        self.appWindow.leftModal.leftMenu.homeBtn.clicked.connect(self.homeBtnClick)
         self.checkeLogin()
         self.myGrip = msGrip(self)
         self.show()
@@ -47,11 +50,11 @@ class myapp(msForm):
 
     def checkeLogin(self):
         self.appWindow.leftModal.setVisible(self.loged)
-        self.appWindow.rightModal.setVisible(self.loged)
         self.appWindow.toggleLeftModalBtn.setVisible(self.loged)
         self.appWindow.toggleRightModalBtn.setVisible(self.loged)
         self.appWindow.maximizeBtn.setEnabled(self.loged)
         self.appWindow.LoginUI.body.setVisible(not self.loged)
+        self.appWindow.contentPanel.setVisible(self.loged)
         self.appWindow.logOutBtn.setVisible(self.loged)
         if not self.loged:
             self.__back1 = self.geometry()
@@ -112,14 +115,14 @@ class myapp(msForm):
 
     def attCorner(self):
         if self.windowState() == Qt.WindowMaximized:
-            if not self.appWindow.leftModalOpen:
+            if not self.appWindow.leftModal.isOpen:
                 self.appWindow.leftModal.borderRadius(0, 0, 0, 0)
                 self.appWindow.appWindow.borderRadius(0, 0, 0, 0)
             else:
                 self.appWindow.leftModal.borderRadius(0, 0, 0, 0)
                 self.appWindow.appWindow.borderRadius(0, 0, 0, 0)
         else:
-            if not self.appWindow.leftModalOpen:
+            if not self.appWindow.leftModal.isOpen:
                 self.appWindow.leftModal.borderRadius(style["topleftradius"], 0, 0, 0)
                 self.appWindow.appWindow.borderRadius(style["topleftradius"], 0, 0, 0)
             else:
@@ -127,39 +130,11 @@ class myapp(msForm):
                 self.appWindow.appWindow.borderRadius(style["topleftradius"], 0, 0, 0)
 
     def toggleLeftModalClick(self):
-        if self.appWindow.leftModalAnimation.state() != self.appWindow.leftModalAnimation.Stopped:
-            return
-        if self.appWindow.leftModalOpen:
-            self.appWindow.leftModalOpen = False
-            self.appWindow.toggleLeftModalBtn.setIcon(self.appWindow.MenuIcon)
-            self.appWindow.toggleLeftModalBtn.backgroundColor(style["secondarybg"])
-            self.appWindow.toggleLeftModalBtn.hoverBackgroundColor(style["hoverbtns"])
-            self.appWindow.leftModalAnimation.setDirection(self.appWindow.leftModalAnimation.Backward)
-            self.appWindow.leftModalAnimation.start()
-        else:
-            self.appWindow.leftModalOpen = True
-            self.appWindow.toggleLeftModalBtn.setIcon(self.appWindow.MenuLeftOpenIcon)
-            self.appWindow.toggleLeftModalBtn.backgroundColor(style["secondarybg"])
-            self.appWindow.toggleLeftModalBtn.hoverBackgroundColor(style["hoverbtns"])
-            self.appWindow.leftModalAnimation.setDirection(self.appWindow.leftModalAnimation.Forward)
-            self.appWindow.leftModalAnimation.start()
+        self.appWindow.leftModal.toggle(self.appWindow.toggleLeftModalBtn)
         self.attCorner()
         
     def toggleRightModalClick(self):
-        if self.appWindow.rightModalOpen:
-            self.appWindow.rightModalOpen = False
-            self.appWindow.toggleRightModalBtn.setIcon(self.appWindow.MenuIcon)
-            self.appWindow.toggleRightModalBtn.backgroundColor(style["secondarybg"])
-            self.appWindow.toggleRightModalBtn.hoverBackgroundColor(style["hoverbtns"])
-            self.appWindow.rightModalAnimation.setDirection(self.appWindow.rightModalAnimation.Backward)
-            self.appWindow.rightModalAnimation.start()     
-        else:
-            self.appWindow.rightModalOpen = True
-            self.appWindow.toggleRightModalBtn.setIcon(self.appWindow.menuRightOpenIcon)
-            self.appWindow.toggleRightModalBtn.backgroundColor(style["hoverbtns"])
-            self.appWindow.toggleRightModalBtn.hoverBackgroundColor(style["hoverbtns"])
-            self.appWindow.rightModalAnimation.setDirection(self.appWindow.rightModalAnimation.Forward)
-            self.appWindow.rightModalAnimation.start()
+        self.appWindow.rightModal.toggle(self.appWindow.toggleRightModalBtn)
 
     def eventFilter(self, watched: QObject, event: QEvent) -> bool:
         msForm.eventFilter(self, watched, event)
@@ -178,9 +153,9 @@ class myapp(msForm):
             self.myGrip.setVisible(self.loged)
 
         if self.windowState() == Qt.WindowMaximized:
-            self.appWindow.maximizeBtn.setIcon(self.appWindow.maximizeIconOn)
+            self.appWindow.maximizeBtn.setIcon(QIcon(self.appWindow.Svgs['fullscreen_exit_white_48dp']))
         elif self.windowState() == Qt.WindowNoState:
-            self.appWindow.maximizeBtn.setIcon(self.appWindow.maximizeIconOff)
+            self.appWindow.maximizeBtn.setIcon(QIcon(self.appWindow.Svgs['fullscreen_white_48dp']))
         self.myGrip.updateSize()
 
     def closeBtnClick(self):
@@ -215,68 +190,15 @@ class myapp(msForm):
     #     self.setWindowOpacity(self.old_)
 
     def homeBtnClick(self):
-        if self.appWindow.homeBtn.actived: return
-        self.appWindow.homeBtn.active()
+        if self.appWindow.leftModal.leftMenu.homeBtn.actived: return
+        self.appWindow.leftModal.leftMenu.homeBtn.active()
 
-    def ApplyStyleClick(self):
-        #
-        self.appWindow.appWindow.backgroundColor(style["secondarybg"])
-        self.appWindow.appWindow.border(1, "solid", style["secondarybg"])
-        self.appWindow.appWindow.hoverBorder(2, "solid", style["secondarybg"])
-        self.appWindow.appWindow.borderRadius(style["topleftradius"], 0, 0, 0)
-        #
-        self.appWindow.leftModal.borderRadius(style["topleftradius"], 0, 0, 0)
-        self.appWindow.leftModal.backgroundColor(style["secondarybg"])
-        self.appWindow.leftModal.setMinimumWidth(style["leftmodalminwidth"])
-        self.appWindow.leftModal.setMaximumWidth(style["leftmodalminwidth"])
-        #
-        self.appWindow.topBar.setMinimumSize(QSize(0, style["topbarheight"]))
-        self.appWindow.topBar.setMaximumSize(QSize(9999, style["topbarheight"]))
-        self.appWindow.topBar.backgroundColor(style["secondarybg"])
-        self.appWindow.topBar.borderRadius(style["topleftradius"], 0, 0, 0)
-        #
-        self.appWindow.mainContent.backgroundColor(style["primarybg"])
-        self.appWindow.mainContent.borderTop(0, "solid", style["secondarybg"])
-        self.appWindow.mainContent.borderLeft(0, "solid", style["secondarybg"])
-        #
-        self.appWindow.contentPages.borderTop(1, "solid", style["secondarybg"])
-        self.appWindow.contentPages.borderRight(1, "solid", style["secondarybg"])
-        #
-        self.appWindow.footer.backgroundColor(style["primarybg"])
-        self.appWindow.footer.borderRight(1, "solid", style["secondarybg"])
-        self.appWindow.footer.borderBottom(1, "solid", style["secondarybg"])
-        #
-        self.appWindow.rightModal.backgroundColor(style["hoverbtns"])
-        self.appWindow.rightModal.borderTop(0, "solid", style["hoverbtns"])
-        #
-        self.appWindow.toggleLeftModalBtn.backgroundColor(style["secondarybg"])
-        self.appWindow.toggleLeftModalBtn.hoverBackgroundColor(style["hoverbtns"])
-        #
-        self.appWindow.leftModalAnimation.setStartValue(style["leftmodalminwidth"])
-        self.appWindow.leftModalAnimation.setEndValue(style["leftmodalmaxwidth"])
-        #
-        self.appWindow.titleProgram.color(style["textcolor"])
-        #
-        self.appWindow.logOutBtn.hoverBorder(0, "solid", style["primarybg"])
-        self.appWindow.logOutBtn.hoverBackgroundColor(style["hoverbtns"])
-        #
-        self.appWindow.toggleRightModalBtn.backgroundColor(style["secondarybg"])
-        self.appWindow.toggleRightModalBtn.hoverBackgroundColor(style["hoverbtns"])
-        #
-        self.appWindow.minimizeBtn.hoverBorder(0, "solid", style["primarybg"])
-        self.appWindow.minimizeBtn.hoverBackgroundColor(style["hoverbtns"])
-        #
-        self.appWindow.maximizeBtn.hoverBorder(0, "solid", style["primarybg"])
-        self.appWindow.maximizeBtn.hoverBackgroundColor(style["hoverbtns"])
-        #
-        self.appWindow.closeBtn.hoverBorder(0, "solid", style["primarybg"])
-        #
-        self.appWindow.profile.setMinimumHeight(style["topbarheight"]-7)
-        #
-        self.appWindow.byDesign.setGeometry(0, 0, 150, style["topbarheight"]-7)
-        #
-        self.appWindow.byDesign.color(style["hoverbtns"])
-        #
+    def ApplyStyleClick(self):      
+        for i in self.appWindow.__dict__:
+            try:
+                i.applyStyles()
+            except: 
+                pass
 
 
 from teste import subApp
@@ -286,6 +208,8 @@ if __name__ == "__main__":
     if not testes:
         modulos.LoadJsonStyle()
         app = QApplication(sys.argv)
+        app.setAttribute(Qt.AA_EnableHighDpiScaling)
+        app.setAttribute(Qt.AA_UseHighDpiPixmaps)
         myApp = myapp()
         try:
             sys.exit(app.exec())

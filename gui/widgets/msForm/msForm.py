@@ -20,9 +20,11 @@ class msForm(QMainWindow):
         pass
         self.bar = QWidget()
         self.__moving = False
-        self.setWindowFlag(Qt.FramelessWindowHint)
+        self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
         self.setAttribute(Qt.WA_TranslucentBackground)
-        self.setWindowFlag(Qt.WindowStaysOnTopHint)
+        #self.setAttribute(Qt.AA_UseHighDpiPixmaps)
+        #self.setAttribute(Qt.AA_EnableHighDpiScaling)
+        
 
     def mousePressEvent(self, event: QMouseEvent) -> None:
         QMainWindow.mousePressEvent(self, event)
