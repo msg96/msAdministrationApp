@@ -66,7 +66,6 @@ class myapp(msForm):
             self.setMaximumSize(self.__back3)
             self.setGeometry(self.__back1)
 
-
     def loginBtnClick(self):
         con = auth.login(login=self.appWindow.LoginUI.loginTxt.text(), password=self.appWindow.LoginUI.passwordTxt.text())
         hwnd_ = cripter.digest(hwnd.getHWND())
@@ -126,7 +125,6 @@ class myapp(msForm):
             else:
                 self.appWindow.leftModal.borderRadius(style["topleftradius"], 0, 0, 0)
                 self.appWindow.appWindow.borderRadius(style["topleftradius"], 0, 0, 0)
-
 
     def toggleLeftModalClick(self):
         if self.appWindow.leftModalAnimation.state() != self.appWindow.leftModalAnimation.Stopped:
@@ -213,12 +211,74 @@ class myapp(msForm):
     #     QMainWindow.event(self, event)
     #     return True
 
-    def backopacity(self):
-        self.setWindowOpacity(self.old_)
+    # def backopacity(self):
+    #     self.setWindowOpacity(self.old_)
 
     def homeBtnClick(self):
         if self.appWindow.homeBtn.actived: return
         self.appWindow.homeBtn.active()
+
+    def ApplyStyleClick(self):
+        #
+        self.appWindow.appWindow.backgroundColor(style["secondarybg"])
+        self.appWindow.appWindow.border(1, "solid", style["secondarybg"])
+        self.appWindow.appWindow.hoverBorder(2, "solid", style["secondarybg"])
+        self.appWindow.appWindow.borderRadius(style["topleftradius"], 0, 0, 0)
+        #
+        self.appWindow.leftModal.borderRadius(style["topleftradius"], 0, 0, 0)
+        self.appWindow.leftModal.backgroundColor(style["secondarybg"])
+        self.appWindow.leftModal.setMinimumWidth(style["leftmodalminwidth"])
+        self.appWindow.leftModal.setMaximumWidth(style["leftmodalminwidth"])
+        #
+        self.appWindow.topBar.setMinimumSize(QSize(0, style["topbarheight"]))
+        self.appWindow.topBar.setMaximumSize(QSize(9999, style["topbarheight"]))
+        self.appWindow.topBar.backgroundColor(style["secondarybg"])
+        self.appWindow.topBar.borderRadius(style["topleftradius"], 0, 0, 0)
+        #
+        self.appWindow.mainContent.backgroundColor(style["primarybg"])
+        self.appWindow.mainContent.borderTop(0, "solid", style["secondarybg"])
+        self.appWindow.mainContent.borderLeft(0, "solid", style["secondarybg"])
+        #
+        self.appWindow.contentPages.borderTop(1, "solid", style["secondarybg"])
+        self.appWindow.contentPages.borderRight(1, "solid", style["secondarybg"])
+        #
+        self.appWindow.footer.backgroundColor(style["primarybg"])
+        self.appWindow.footer.borderRight(1, "solid", style["secondarybg"])
+        self.appWindow.footer.borderBottom(1, "solid", style["secondarybg"])
+        #
+        self.appWindow.rightModal.backgroundColor(style["hoverbtns"])
+        self.appWindow.rightModal.borderTop(0, "solid", style["hoverbtns"])
+        #
+        self.appWindow.toggleLeftModalBtn.backgroundColor(style["secondarybg"])
+        self.appWindow.toggleLeftModalBtn.hoverBackgroundColor(style["hoverbtns"])
+        #
+        self.appWindow.leftModalAnimation.setStartValue(style["leftmodalminwidth"])
+        self.appWindow.leftModalAnimation.setEndValue(style["leftmodalmaxwidth"])
+        #
+        self.appWindow.titleProgram.color(style["textcolor"])
+        #
+        self.appWindow.logOutBtn.hoverBorder(0, "solid", style["primarybg"])
+        self.appWindow.logOutBtn.hoverBackgroundColor(style["hoverbtns"])
+        #
+        self.appWindow.toggleRightModalBtn.backgroundColor(style["secondarybg"])
+        self.appWindow.toggleRightModalBtn.hoverBackgroundColor(style["hoverbtns"])
+        #
+        self.appWindow.minimizeBtn.hoverBorder(0, "solid", style["primarybg"])
+        self.appWindow.minimizeBtn.hoverBackgroundColor(style["hoverbtns"])
+        #
+        self.appWindow.maximizeBtn.hoverBorder(0, "solid", style["primarybg"])
+        self.appWindow.maximizeBtn.hoverBackgroundColor(style["hoverbtns"])
+        #
+        self.appWindow.closeBtn.hoverBorder(0, "solid", style["primarybg"])
+        #
+        self.appWindow.profile.setMinimumHeight(style["topbarheight"]-7)
+        #
+        self.appWindow.byDesign.setGeometry(0, 0, 150, style["topbarheight"]-7)
+        #
+        self.appWindow.byDesign.color(style["hoverbtns"])
+        #
+
+
 from teste import subApp
 testes = False
 

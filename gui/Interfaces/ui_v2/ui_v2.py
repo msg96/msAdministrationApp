@@ -152,11 +152,11 @@ class uiV2(object):
         self.rightModalAnimation.setDuration(self.AnimDelay)
         self.rightModalAnimation.setEasingCurve(self.AnimCurve)
 ########        TITLE FOR TOPBAR
-        self.titleProgram = QLabel(self.topBar)
+        self.titleProgram = msLabel(self.topBar)
         mainWindow.bar = self.titleProgram
         self.titleProgram.setText("MS Administration")
         self.titleProgram.setIndent(15)
-        self.titleProgram.setStyleSheet("color: {};".format(style["textcolor"]))
+        self.titleProgram.color(style["textcolor"])
         self.titleProgram.setSizePolicy(QSizePolicy(QSizePolicy.Expanding,QSizePolicy.Expanding))
 
 ########        CREATING BUTTONS TO LOGOUTBTN, MINIMIZE MAXIMIZE AND CLOSE WINDOW
