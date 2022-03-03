@@ -13,3 +13,7 @@
 
 [01/03/2022]
 > adicionada tela de login
+
+[03/03/2021]
+> adicionado sistema de autenticação por banco de dados, com hwnd e encriptamento
+
