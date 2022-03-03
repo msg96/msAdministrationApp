@@ -12,6 +12,7 @@
 ###########################################################################################################################
 import sys
 from gui.Interfaces.ui_v2.ui_v2 import uiV2
+import modulos
 from required import *
 from assets.styles import style
 ###########################################################################################################################
@@ -59,6 +60,7 @@ class myapp(msForm):
             self.setMinimumSize(550, 500)
             self.setMaximumSize(550, 500)
             self.setGeometry((self.centerScreen.width() - 550) / 2, (self.centerScreen.height() -  500) / 2 , 550, 500)
+            self.appWindow.LoginUI.loginTxt.setFocus(Qt.FocusReason.TabFocusReason)
         else:
             self.setMinimumSize(self.__back2)
             self.setMaximumSize(self.__back3)
@@ -67,8 +69,7 @@ class myapp(msForm):
 
     def loginBtnClick(self):
         con = auth.login(login=self.appWindow.LoginUI.loginTxt.text(), password=self.appWindow.LoginUI.passwordTxt.text())
-        hwnd_ = hwnd.getEncriptedHWND()
-        hwnd_ = str(bytes(hwnd_, "utf-8")).replace("'", "").replace("b(","")
+        hwnd_ = cripter.digest(hwnd.getHWND())
         if con and con[4] < 4 and hwnd_ in con[6]:
             self.loged = True
             self.user = con
@@ -223,6 +224,7 @@ testes = False
 
 if __name__ == "__main__":
     if not testes:
+        modulos.LoadJsonStyle()
         app = QApplication(sys.argv)
         myApp = myapp()
         try:

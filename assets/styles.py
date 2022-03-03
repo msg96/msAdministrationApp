@@ -1,4 +1,5 @@
-style = {"primarybg": "#151515",
+defaultStyle = {
+"primarybg": "#151515",
 "textcolor": "#CFCFCF",
 "secondarybg": "#190B1D",
 "hoverbtns": "#3352057B",
@@ -11,3 +12,5 @@ style = {"primarybg": "#151515",
 "logintxt": "#807287",
 "logintxthover": "#72199e"
 }
+
+style = defaultStyle.copy()

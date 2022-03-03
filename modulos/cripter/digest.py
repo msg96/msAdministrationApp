@@ -8,6 +8,21 @@
 ###########################################################################################################################
 ###########################################################################################################################
 ###########################################################################################################################
-from .encript import *
-from .decript import *
-from .digest import digest
+from ..cripter import *
+from env import ENVVAR as ENV
+###########################################################################################################################
+#########   ENCRIPT / DECRIPT, AND GET HEX FROM BYTES OS SOME STRING
+def digest(value :str, reverse = False) -> str:
+    return __dec(value) if reverse else __enc(value)
+######################################################
+def __enc(value):
+    value = encript(value, ENV['bdmasterkey'])
+    value = bytes(value, "utf-8")
+    value = bytes.hex(value)
+    return value
+######################################################
+def __dec(value):
+    value = bytes.fromhex(value)
+    value = bytes.decode(value, "utf-8")
+    value = decript(value, ENV['bdmasterkey'])
+    return value

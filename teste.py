@@ -1,10 +1,9 @@
 from PySide6.QtCore import *
 from PySide6.QtGui import *
 from PySide6.QtWidgets import *
-from env import ENVVAR
-# import sys
-import modulos.auth
-from modulos.cripter.encript import encript
+
+from required import *
+
 
 class testeme(QMainWindow):
     def __init__(self) -> None:

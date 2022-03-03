@@ -231,9 +231,9 @@ class uiV2(object):
         ####    PROFILE
         self.profile = msPanel(self.leftModal)
         self.leftMenu.addWidget(self.profile)
-        self.profile.setMinimumHeight(style["topbarheight"]-6)
+        self.profile.setMinimumHeight(style["topbarheight"]-7)
         self.byDesign = msLabel(self.profile)
-        self.byDesign.setGeometry(0, 0, 150, style["topbarheight"]-6)
+        self.byDesign.setGeometry(0, 0, 150, style["topbarheight"]-7)
         font3 = QFont()
         font3.setFamilies([u"Times New Roman"])
         font3.setPointSize(9)
