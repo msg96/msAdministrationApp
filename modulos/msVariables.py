@@ -2,4 +2,4 @@ from .customFunctions.appGetUniversalPath import AppGetUniversalPath as __AppGet
 from .customFunctions.appGetFile import AppGetFile as __AppGetFile
 
 styleJson = __AppGetFile(__AppGetUniversalPath("assets"), "style.json")
-
+admin = 'admin'

@@ -13,8 +13,9 @@
 from PySide6.QtGui import *
 from PySide6.QtWidgets import *
 from PySide6.QtCore import *
+from modulos import msVariables
 
-##################### NOT WORKED FINE -> WAIT FOR RECODIGN THIS PART OF PROJECT
+###########################################################################################################################
 class msSVGRender(QFrame):
     def __init__(self, parent :str, File,
      largura = 25, altura = 25 , cor = "red"):
@@ -25,7 +26,24 @@ class msSVGRender(QFrame):
         self.mySize(largura, altura)
         self.cor(cor)
         self.myIcon(self.file)
+        self.__privileges = [msVariables.admin]
         ####
+###########################################################################################################################
+########    PROPERTYS
+###########################################################################################################################
+###########################################################################################################################   
+    @property
+    def privileges(self):
+        return self.__privileges
+    @privileges.setter
+    def privileges(self, value):
+        if type(value) == 'str':
+            self.__privileges.append(value)
+        elif type(value) == 'list':
+            self.__privileges.extend(value)
+    @privileges.deleter
+    def privileges(self, value):
+        self.__privileges.remove(value)
 ########################################################################
 ####    SET SIZE OF THE SVG DISPLAYER
     def mySize(self, largura, altura):

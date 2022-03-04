@@ -14,9 +14,8 @@ import os
 from PySide6.QtGui import *
 from PySide6.QtWidgets import *
 from PySide6.QtCore import *
-
-           
-
+from modulos import msVariables
+###########################################################################################################################
 class MsTxtImput(QLineEdit):
     def __init__(self, parent :QObject) -> None:
         super(MsTxtImput, self).__init__()
@@ -29,6 +28,7 @@ class MsTxtImput(QLineEdit):
             self.setGeometry(parent.geometry())
         except:
             pass
+        self.__privileges = [msVariables.admin]
 ########    PARAMETERS 
         self.styled = {
         "background-color": "",             "color": "",                    "flat-style": False,                    "text-align": "",
@@ -47,7 +47,23 @@ class MsTxtImput(QLineEdit):
         self.focusStyled = self.styled.copy()
 ########
         self.updateStyles()
-########        
+########
+###########################################################################################################################################
+########    PROPERTYS
+###########################################################################################################################################    
+###########################################################################################################################################      
+    @property
+    def privileges(self):
+        return self.__privileges
+    @privileges.setter
+    def privileges(self, value):
+        if type(value) == 'str':
+            self.__privileges.append(value)
+        elif type(value) == 'list':
+            self.__privileges.extend(value)
+    @privileges.deleter
+    def privileges(self, value):
+        self.__privileges.remove(value)        
 ###########################################################################################################################################
 ########    METHODS FOR THIS OBJECT
 ###########################################################################################################################################
