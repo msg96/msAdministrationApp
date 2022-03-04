@@ -148,11 +148,10 @@ class subui_Login(object):
         self.bodyBox.addWidget(self.loginTxt, 0, Qt.AlignVCenter | Qt.AlignHCenter)
         self.bodyBox.addWidget(self.passwordTxt, 0, Qt.AlignVCenter | Qt.AlignHCenter)
         self.bodyBox.addWidget(self.loginBtn, 0, Qt.AlignVCenter | Qt.AlignHCenter)
-########    APPLY STYLES FOR ALL COMPONETS
+########    APPLY STYLES FOR ALL COMPONENTS
     def applyStyles(self):
         for i in self.__dict__:
             try:
                 i.applyStyles()
             except: 
                 pass
-            
