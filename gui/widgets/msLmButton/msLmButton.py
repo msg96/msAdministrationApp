@@ -33,12 +33,15 @@ class msLmButton(msButton):
         self.actived = False
         self.ownerDrawnerIcon = QPixmap()
         self.activebarColor = "transparent"
-        self.padronizerBtnLeftMenu()
+        self.applyStyle()
+        self.ood = QFont()
 
-    def padronizerBtnLeftMenu(self):
+    def applyStyle(self):
         self.setMaximumHeight(style["topbarheight"])
         self.setMinimumHeight(style["topbarheight"])
+        self.setMinimumWidth(style["leftmodalminwidth"])
         self.paddingLeft(style["leftmodalminwidth"])
+        self.verticalAlign("bottom")
         self.textAlign("left")
         self.color("#CDCDCD")
         self.backgroundColor("transparent")
@@ -62,7 +65,7 @@ class msLmButton(msButton):
             else:
                 try:
                     i.actived = False
-                    i.padronizerBtnLeftMenu()
+                    i.applyStyle()
                 except:
                     pass
 
@@ -82,6 +85,8 @@ class msLmButton(msButton):
 
     def myIcon(self, value :str):
         self.ownerDrawnerIcon = QPixmap(value)
+        self.ownerDrawnerIcon = self.ownerDrawnerIcon.scaled(QSize(self.height() - 10, self.height() - 10), Qt.KeepAspectRatio, Qt.SmoothTransformation)
+        
 
     def paintEvent(self, event: QPaintEvent) -> None:
         QPushButton.paintEvent(self, event)
@@ -94,7 +99,8 @@ class msLmButton(msButton):
         if self.ownerDrawnerIcon:
             self.paintIconEvent(qp, style["textcolor"])
 
+
         if self.actived:
             qp.setBrush(QBrush(self.activebarColor, Qt.BrushStyle.SolidPattern))
-            qp.drawRect(self.width() - 5, 0, 5, self.height()) 
+            qp.drawRect(self.width(), 0, 5, self.height()) 
         qp.end()

@@ -42,6 +42,10 @@ class myapp(msForm):
         self.appWindow.LoginUI.loginBtn.clicked.connect(self.loginBtnClick)
         self.appWindow.logOutBtn.clicked.connect(self.logoutBtnClick)
         self.appWindow.leftModal.leftMenu.homeBtn.clicked.connect(self.homeBtnClick)
+        #### TEMP
+        self.appWindow.leftModal.leftMenu.cloudBtn.clicked.connect(self.CcloudBtnClick)
+        ####
+
         self.checkeLogin()
         self.myGrip = msGrip(self)
         self.show()
@@ -192,6 +196,10 @@ class myapp(msForm):
     def homeBtnClick(self):
         if self.appWindow.leftModal.leftMenu.homeBtn.actived: return
         self.appWindow.leftModal.leftMenu.homeBtn.active()
+    
+    def CcloudBtnClick(self):
+        if self.appWindow.leftModal.leftMenu.cloudBtn.actived: return
+        self.appWindow.leftModal.leftMenu.cloudBtn.active()
 
     def ApplyStyleClick(self):      
         for i in self.appWindow.__dict__:

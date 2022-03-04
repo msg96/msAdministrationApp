@@ -30,7 +30,7 @@ class msButton(QPushButton):
 ########    PARAMETERS 
         self.styled = {
         "background-color": "",             "color": "",                    "flat-style": False,                    "text-align": "",
-        "border-left-width": 0,             "border-left-style": "",        "border-left-color": "",
+        "border-left-width": 0,             "border-left-style": "",        "border-left-color": "",                "vertical-align": "",
         "border-right-width": 0,            "border-right-style": "",       "border-right-color": "",
         "border-top-width": 0,              "border-top-style": "",         "border-top-color": "",
         "border-bottom-width": 0,           "border-bottom-style": "",      "border-bottom-color": "",
@@ -38,35 +38,11 @@ class msButton(QPushButton):
         "padding-left": 0,                  "padding-right":0,              "padding-top": 0,                       "padding-bottom": 0
         }
         ####    HOVER
-        self.hoverStyled = {
-        "background-color": "",             "color": "",                    "flat-style": False,                    "text-align": "",
-        "border-left-width": 0,             "border-left-style": "",        "border-left-color": "",
-        "border-right-width": 0,            "border-right-style": "",       "border-right-color": "",
-        "border-top-width": 0,              "border-top-style": "",         "border-top-color": "",
-        "border-bottom-width": 0,           "border-bottom-style": "",      "border-bottom-color": "",
-        "border-top-left-radius": 0,        "border-top-right-radius": 0,   "border-bottom-right-radius": 0,        "border-bottom-left-radius": 0,
-        "padding-left": 0,                  "padding-right":0,              "padding-top": 0,                       "padding-bottom": 0
-        }
+        self.hoverStyled = self.styled.copy()
         ####    PRESS
-        self.pressStyled = {
-        "background-color": "",             "color": "",                    "flat-style": False,                    "text-align": "",
-        "border-left-width": 0,             "border-left-style": "",        "border-left-color": "",
-        "border-right-width": 0,            "border-right-style": "",       "border-right-color": "",
-        "border-top-width": 0,              "border-top-style": "",         "border-top-color": "",
-        "border-bottom-width": 0,           "border-bottom-style": "",      "border-bottom-color": "",
-        "border-top-left-radius": 0,        "border-top-right-radius": 0,   "border-bottom-right-radius": 0,        "border-bottom-left-radius": 0,
-        "padding-left": 0,                  "padding-right":0,              "padding-top": 0,                       "padding-bottom": 0
-        }
+        self.pressStyled = self.styled.copy()
         ####    FOCUS 
-        self.focusStyled = {
-        "background-color": "",             "color": "",                    "flat-style": False,                    "text-align": "",
-        "border-left-width": 0,             "border-left-style": "",        "border-left-color": "",
-        "border-right-width": 0,            "border-right-style": "",       "border-right-color": "",
-        "border-top-width": 0,              "border-top-style": "",         "border-top-color": "",
-        "border-bottom-width": 0,           "border-bottom-style": "",      "border-bottom-color": "",
-        "border-top-left-radius": 0,        "border-top-right-radius": 0,   "border-bottom-right-radius": 0,        "border-bottom-left-radius": 0,
-        "padding-left": 0,                  "padding-right":0,              "padding-top": 0,                       "padding-bottom": 0
-        }
+        self.focusStyled = self.styled.copy()
 ########
         self.updateStyles()
 ########        
@@ -141,6 +117,22 @@ class msButton(QPushButton):
     ####    FOCUS
     def focusTextAlign(self, value :str):
         self.focusStyled["text-align"] = value
+        self.updateStyles()
+####    VERTICALALIGN
+    def verticalAlign(self, value :str):
+        self.styled["vertical-align"] = value
+        self.updateStyles()
+    ####    HOVER
+    def hoverVerticalAlign(self, value :str):
+        self.hoverStyled["vertical-align"] = value
+        self.updateStyles()
+    ####    PRESS
+    def pressVerticalAlign(self, value :str):
+        self.pressStyled["vertical-align"] = value
+        self.updateStyles()
+    ####    FOCUS
+    def focusVerticalAlign(self, value :str):
+        self.focusStyled["vertical-align"] = value
         self.updateStyles()
 ####    BORDER PARAMS
     def border(self, width :int, style :str, color :str):
@@ -404,6 +396,7 @@ class msButton(QPushButton):
         if self.styled["background-color"] != "":          style_ += "background-color: {};\n".format(backgroundColor)
         if self.styled["color"] != "":                     style_ += "color: {};\n".format(self.styled["color"])
         if self.styled["text-align"] != "":                style_ += "text-align: {};\n".format(self.styled["text-align"])
+        if self.styled["vertical-align"] != "":            style_ += "vertical-align: {};\n".format(self.styled["vertical-align"])
         if self.styled["border-left-width"]:               style_ += "border-left-width: {}px;\n".format(self.styled["border-left-width"])
         if self.styled["border-left-style"] != "":         style_ += "border-left-style: {};\n".format(self.styled["border-left-style"])
         if self.styled["border-left-color"] != "":         style_ += "border-left-color: {};\n".format(self.styled["border-left-color"])
@@ -434,6 +427,7 @@ class msButton(QPushButton):
         if self.hoverStyled["background-color"] != "":              hoverStyle += "background-color: {};\n".format(hoverBackgroundColor)
         if self.hoverStyled["color"] != "":                         hoverStyle += "color: {};\n".format(self.hoverStyled["color"])
         if self.hoverStyled["text-align"] != "":                    hoverStyle += "text-align: {};\n".format(self.hoverStyled["text-align"])
+        if self.hoverStyled["vertical-align"] != "":                hoverStyle += "vertical-align: {};\n".format(self.hoverStyled["vertical-align"])
         if self.hoverStyled["border-left-width"]:                   hoverStyle += "border-left-width: {}px;\n".format(self.hoverStyled["border-left-width"])
         if self.hoverStyled["border-left-style"] != "":             hoverStyle += "border-left-style: {};\n".format(self.hoverStyled["border-left-style"])
         if self.hoverStyled["border-left-color"] != "":             hoverStyle += "border-left-color: {};\n".format(self.hoverStyled["border-left-color"])
@@ -464,6 +458,7 @@ class msButton(QPushButton):
         if self.pressStyled["background-color"] != "":               pressStyle += "background-color: {};\n".format(pressBackgroundColor)
         if self.pressStyled["color"] != "":                          pressStyle += "color: {};\n".format(self.pressStyled["color"])
         if self.pressStyled["text-align"] != "":                     pressStyle += "text-align: {};\n".format(self.pressStyled["text-align"])
+        if self.pressStyled["vertical-align"] != "":                 pressStyle += "vertical-align: {};\n".format(self.pressStyled["vertical-align"])
         if self.pressStyled["border-left-width"]:                    pressStyle += "border-left-width: {}px;\n".format(self.pressStyled["border-left-width"])
         if self.pressStyled["border-left-style"] != "":              pressStyle += "border-left-style: {};\n".format(self.pressStyled["border-left-style"])
         if self.pressStyled["border-left-color"] != "":              pressStyle += "border-left-color: {};\n".format(self.pressStyled["border-left-color"])
@@ -494,6 +489,7 @@ class msButton(QPushButton):
         if self.focusStyled["background-color"] != "":               focusStyle += "background-color: {};\n".format(focusBackgroundColor)
         if self.focusStyled["color"] != "":                          focusStyle += "color: {};\n".format(self.focusStyled["color"])
         if self.focusStyled["text-align"] != "":                     focusStyle += "text-align: {};\n".format(self.focusStyled["text-align"])
+        if self.focusStyled["vertical-align"] != "":                 focusStyle += "vertical-align: {};\n".format(self.focusStyled["vertical-align"])
         if self.focusStyled["border-left-width"]:                    focusStyle += "border-left-width: {}px;\n".format(self.focusStyled["border-left-width"])
         if self.focusStyled["border-left-style"] != "":              focusStyle += "border-left-style: {};\n".format(self.focusStyled["border-left-style"])
         if self.focusStyled["border-left-color"] != "":              focusStyle += "border-left-color: {};\n".format(self.focusStyled["border-left-color"])

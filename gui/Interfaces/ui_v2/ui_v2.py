@@ -19,10 +19,10 @@ from PySide6.QtCore import *
 ####### MODULOS
 #############################
 import os
-from gui.widgets.msLabel.msLabel import msLabel
-from gui.widgets.msLmButton.msLmButton import msLmButton
 from gui.widgets.msBoxLayout.msHBoxLayout import msHBoxLayout
 from gui.widgets.msBoxLayout.msVBoxLayout import msVBoxLayout
+from gui.widgets.msLabel.msLabel import msLabel
+from gui.widgets.msLmButton.msLmButton import msLmButton
 from ..subui_login import subui_Login
 from gui.widgets.msPanel import msPanel
 from gui.widgets.msButton import msButton
@@ -45,10 +45,10 @@ def LoadIconsUrls(Svgs :dict):
                 if file.endswith(".svg"):
                         filename = file.split("/")[-1].replace(".svg", "")
                         Svgs.update({filename: customFunctions.AppGetFile(SvgPath, file)}) 
-
+########        INITI PARAMS FOR DE MSFORM
 def initMainWindow(object :msForm) -> QRect:
         if not object.objectName():
-            object.setObjectName(u"MainWindow")
+            object.setClassName(u"MainWindow")
         centerScreen = QApplication.primaryScreen().availableGeometry()
         geometry_ = QRect((centerScreen.width() - width) / 2, (centerScreen.height() -  height) / 2 , width, height)
         object.setGeometry(geometry_)
@@ -104,41 +104,62 @@ class leftModal(msPanel):
                         self.Animation.start()
 ########        LEFTMENU WIDGET
 class leftMenu(object):
+        #####   PROFILE
+        class profile(msPanel):
+                def __init__(self, parent: QWidget,  menu: QVBoxLayout):
+                        super().__init__(parent)
+                        menu.addWidget(self)
+                        self.byDesign = msLabel(self)
+                        self.byDesign.setGeometry(0, 0, 150, style["topbarheight"]-7)
+                        self.applyStyles()
+                def applyStyles(self):
+                        self.setMinimumHeight(style["topbarheight"]-7)
+        #####   HOMEBTN
+        class homeBtn(msLmButton):
+                def __init__(self, parent: QWidget, menu: QVBoxLayout):
+                        super().__init__(parent)
+                        menu.addWidget(self, 0, Qt.AlignTop)
+                        self.myIcon(Svgs['Home'])
+                        self.setText("Home")
+                        self.active()
+        #####   CLOUDBTN
+        class cloudBtn(msLmButton):
+                def __init__(self, parent: QWidget, menu: QVBoxLayout):
+                        super().__init__(parent)
+                        menu.addWidget(self, 0, Qt.AlignTop)
+                        self.myIcon(Svgs['cloud_upload_white_48dp'])
+                        self.setText("Cloud")
+        #####   CONFIGBTN
+        class configBtn(msLmButton):
+                def __init__(self, parent: QWidget, menu: QVBoxLayout):
+                        super().__init__(parent)
+                        menu.addWidget(self, 0, Qt.AlignBottom)
+                        self.myIcon(Svgs['settings_white_48dp'])
+                        self.setText("Configurações")        
+        #####   CREATE ALL COMPONENTS
         def create(self, parent :leftModal):
-                self.leftMenu = QVBoxLayout(parent)
+                self.leftMenu = msVBoxLayout(parent)
                 self.leftMenu.setAlignment(Qt.AlignTop)
                 self.leftMenu.setSpacing(5)
-                self.leftMenu.setContentsMargins(1, 3, 0, 2)
+                self.leftMenu.setContentsMargins(1, 3, 0, 5)
                 ####    PROFILE
-                self.profile = msPanel(parent)
-                self.leftMenu.addWidget(self.profile)
-                self.profile.setMinimumHeight(style["topbarheight"]-7)
-                self.byDesign = msLabel(self.profile)
-                self.byDesign.setGeometry(0, 0, 150, style["topbarheight"]-7)
-                font3 = QFont()
-                font3.setFamilies([u"Times New Roman"])
-                font3.setPointSize(9)
-                font3.setBold(False)
-                font3.setItalic(False)
-                font3.setKerning(True)
-                font3.setStyleStrategy(QFont.PreferAntialias)
-                self.byDesign.setText("designed by: Matheus Santos")
-                self.byDesign.setFont(font3)
-                self.byDesign.color(style["hoverbtns"])
-                ####    HOME BTN
-                self.homeBtn = msLmButton(parent)
-                self.leftMenu.addWidget(self.homeBtn, 0, Qt.AlignTop)
-                self.homeBtn.myIcon(Svgs['Home'])
-                self.homeBtn.setText("Home")
-                self.homeBtn.active()
-                ####    SPACER
+                self.profile = self.profile(parent, self.leftMenu)
+                ####    MENU BUTTONS
+                self.homeBtn = self.homeBtn(parent, self.leftMenu)
+                self.cloudBtn = self.cloudBtn(parent, self.leftMenu)
                 self.leftMenuSpacer = QSpacerItem(50, 50, QSizePolicy.Expanding, QSizePolicy.Expanding)
-                self.leftMenu.addItem(self.leftMenuSpacer)
+                self.leftMenu.addSpacerItem(self.leftMenuSpacer)
                 ####    CONFIG BTN
-                self.configBtn = msLmButton(parent)
-                self.leftMenu.addWidget(self.configBtn, 0, Qt.AlignBottom)
-                self.configBtn.myIcon(Svgs['settings_white_48dp'])
-                self.configBtn.setText("Configurações")
+                self.configBtn = self.configBtn(parent, self.leftMenu)
+                ####    APPLY STYLE TO ALL MENU COMPONENTS
+                self.applyStyle()
+########
+        def applyStyle(self):
+                for i in self.__dict__:
+                        try:
+                                i.applyStyles()
+                        except: 
+                                pass
 ########        APPWINDOWSUB WIDGET
 class appWindowSub(msPanel):
         def __init__(self, parent: QWidget):
@@ -305,7 +326,6 @@ class closeBtn(msButton):
                 self.backgroundColor("transparent")
                 self.hoverBorder(0, "solid", style["primarybg"])           
 ########
-
 #####   PRINCIPAL CLASS OBJECT
 class uiV2(object):
     def start(self, mainWindow :msForm):
@@ -318,9 +338,7 @@ class uiV2(object):
         self.appWindow = appWindow(mainWindow)
         ####
 ########        SET SOME BOX FOR APPWINDOW USE CHILDS
-        self.appWindowBox = QHBoxLayout(self.appWindow)
-        self.appWindowBox.setContentsMargins(0, 0, 0, 0)
-        self.appWindowBox.setSpacing(0)
+        self.appWindowBox = msHBoxLayout(self.appWindow)
         ####
 ########        SET SOME CHILDS TO APPWINDOWBOX
         self.leftModal = leftModal(self.appWindowBox)
@@ -330,9 +348,7 @@ class uiV2(object):
         self.appWindowBox.addWidget(self.appWindowSub)
         ####
 ########        BOX FOR ALL CONTENT ELSE LEFTMODAL
-        self.bodyBox = QVBoxLayout(self.appWindowSub)
-        self.bodyBox.setContentsMargins(0, 0, 0, 0)
-        self.bodyBox.setSpacing(0)
+        self.bodyBox = msVBoxLayout(self.appWindowSub)
 ########        SET SOME CHILDS TO BODYBOX
         self.topBar = topBar(self.appWindowSub)
         self.contentPanel = contentPanel(self.appWindowSub)
@@ -345,9 +361,7 @@ class uiV2(object):
         self.bodyBox.addWidget(self.LoginUI.body, 0, Qt.AlignVCenter | Qt.AlignHCenter)
         ####
 ########        SET SOME BOX TO RECEIVE OUR CONTENT AND RIGHTMODAL
-        self.contentPanelBox = QHBoxLayout(self.contentPanel)
-        self.contentPanelBox.setContentsMargins(0, 0, 0, 0)
-        self.contentPanelBox.setSpacing(0)
+        self.contentPanelBox = msHBoxLayout(self.contentPanel)
 ########        SET SOME CHILDS TO CONTENTPANELBOX
         self.mainContent = mainContent(self.contentPanel)
         self.rightModal = rightModal(self.contentPanel)
@@ -355,9 +369,7 @@ class uiV2(object):
         self.contentPanelBox.addWidget(self.mainContent)
         self.contentPanelBox.addWidget(self.rightModal)
 ########        SET SOME BOX TO RECEIVE CONTENTPAGES AND FOOTER
-        self.mainContentBox = QVBoxLayout(self.mainContent)
-        self.mainContentBox.setContentsMargins(0, 0, 0, 0)
-        self.mainContentBox.setSpacing(0)
+        self.mainContentBox = msVBoxLayout(self.mainContent)
 ########        SET SOME CHILDS TO MAINCONTENTBOX
         self.contentPages = contentPages(self.mainContent)
         self.footer = footer(self.mainContent)
@@ -366,9 +378,7 @@ class uiV2(object):
         self.mainContentBox.addWidget(self.footer)
         ####
 ########        SET SOME BOX ON  TOPBAR
-        self.topBarBox = QHBoxLayout(self.topBar)
-        self.topBarBox.setContentsMargins(0, 0, 0, 0)
-        self.topBarBox.setSpacing(0)
+        self.topBarBox = msHBoxLayout(self.topBar)
         self.topBarBox.setAlignment(Qt.AlignLeft)
         ####    SET SOME CHILDS TO TOPBARBOX
         self.toggleLeftModalBtn = toggleModalLeftBtn(self.topBar)

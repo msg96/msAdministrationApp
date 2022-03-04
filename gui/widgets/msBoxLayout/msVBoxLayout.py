@@ -16,5 +16,10 @@ from PySide6.QtCore import *
 ###########################################################################################################################
 
 class msVBoxLayout(QVBoxLayout):
+    def __init__(self, parent :QWidget):
+        super(msVBoxLayout, self).__init__(parent)
+        self.setSpacing(0)
+        self.setContentsMargins(0, 0, 0, 0)
+
     def __init_subclass__(cls) -> None:
         return super().__init_subclass__()
