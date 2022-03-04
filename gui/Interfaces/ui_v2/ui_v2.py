@@ -10,7 +10,6 @@
 ###########################################################################################################################
 ########    PYSIDE6 IMPORTS                             ~   * IMPORTANT
 ###########################################################################################################################
-from fileinput import close
 from PySide6.QtGui import *
 from PySide6.QtWidgets import *
 from PySide6.QtCore import *
@@ -152,9 +151,9 @@ class leftMenu(object):
                 ####    CONFIG BTN
                 self.configBtn = self.configBtn(parent, self.leftMenu)
                 ####    APPLY STYLE TO ALL MENU COMPONENTS
-                self.applyStyle()
+                self.applyStyles()
 ########
-        def applyStyle(self):
+        def applyStyles(self):
                 for i in self.__dict__:
                         try:
                                 i.applyStyles()

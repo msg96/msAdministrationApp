@@ -176,23 +176,6 @@ class myapp(msForm):
             self.setWindowState(Qt.WindowMaximized)
         self.attCorner()
 
-    # def event(self, event: QEvent) -> None:
-    #     if event.type() == event.WindowStateChange:
-    #         self.anim = QPropertyAnimation(self, b"windowOpacity")
-    #         self.anim.setDuration(self.appWindow.AnimDelay)
-    #         self.old_ = self.windowOpacity()
-    #         self.anim.setStartValue(self.old_)
-    #         self.anim.setEndValue(0)
-    #         self.anim.setEasingCurve(self.appWindow.AnimCurve)
-    #         self.anim.finished.connect(self.backopacity)
-    #         self.anim.start()
-
-    #     QMainWindow.event(self, event)
-    #     return True
-
-    # def backopacity(self):
-    #     self.setWindowOpacity(self.old_)
-
     def homeBtnClick(self):
         if self.appWindow.leftModal.leftMenu.homeBtn.actived: return
         self.appWindow.leftModal.leftMenu.homeBtn.active()
@@ -225,3 +208,4 @@ if __name__ == "__main__":
             exit()
     else:
         subApp()
+        
