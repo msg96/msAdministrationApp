@@ -8,6 +8,9 @@
 #### Print Atual da Tela de login
 ![login](/assets/imgs/login.png)
 
+#### Print Atual da pagina de configurações
+![configs](/assets/imgs/configpage.png)
+
 [27/02/2022]
 > adicionando novo widget de grip para mudar o tamanho da janela do programa.
 
