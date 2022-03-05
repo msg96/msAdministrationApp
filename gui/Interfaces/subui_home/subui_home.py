@@ -33,8 +33,8 @@ class body(msPanel):
         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.applyStyles()
     def applyStyles(self):
-        self.backgroundColor("red")
-        #self.backgroundColor(style['primarybg'])
+        #self.backgroundColor("red")
+        self.backgroundColor(style['primarybg'])
 #####
 class subui_Home(object):
     def start(self, parent: QObject):
