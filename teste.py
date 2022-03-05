@@ -1,9 +1,12 @@
 from PySide6.QtCore import *
 from PySide6.QtGui import *
 from PySide6.QtWidgets import *
+import sys
+from gui.Interfaces import subui_config
 
 from required import *
 
+from gui.Interfaces.subui_config import subui_Config
 
 class testeme(QMainWindow):
     def __init__(self) -> None:
@@ -11,7 +14,12 @@ class testeme(QMainWindow):
         self.setWindowFlag(Qt.FramelessWindowHint)
         self.setWindowFlag(Qt.WindowStaysOnTopHint)
         self.centerS = QApplication.primaryScreen().availableGeometry()
-        self.setGeometry((self.centerS.width() - 500) / 2, (self.centerS.height() - 550) / 2 , 500, 550)
+        self._w = 940 - 350
+        self._h = 500 - 33
+        self.setStyleSheet("background: #202020;")
+        self.setGeometry((self.centerS.width() - self._w) / 2, (self.centerS.height() - self._h) / 2 , self._w, self._h)
+        self.sp = subui_config.stylePage(self)
+        self.setCentralWidget(self.sp)
         self.show()
 
 
@@ -19,13 +27,13 @@ class testeme(QMainWindow):
 
 
 def subApp():
-    # app = QApplication(sys.argv)
+    app = QApplication(sys.argv)
 
-    # thiswindow = testeme()
+    thiswindow = testeme()
 
-    # try:
-    #     sys.exit(app.exec())       
-    # except:
-    #     print("some error on teste side")
-    #     exit()
-    pass
+    try:
+        sys.exit(app.exec())       
+    except:
+        exit()
+
+    # pass

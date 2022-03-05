@@ -10,14 +10,16 @@
 ###########################################################################################################################
 ########    IMPORTS
 ###########################################################################################################################
-import sys
-from gui.Interfaces.ui_v2.ui_v2 import uiV2
-import modulos
+from re import S
 from required import *
+import sys
+import modulos
 from assets.styles import style
+from modulos.msVariables import Svgs
 ###########################################################################################################################
 ########    CUSTOM WIDGETS AND QTDESIGNEDS IMPORTS
 ###########################################################################################################################
+from gui.Interfaces.ui_v2 import uiV2
 ###########################################################################################################################
 ########    CLASS FOR OUR MAIN FORM APPLICATION
 ###########################################################################################################################
@@ -27,13 +29,18 @@ class myapp(msForm):
         self.setWindowTitle("MS Administration")
         self.appWindow = uiV2()
         self.appWindow.start(self)
+        self.lMenu = self.appWindow.leftModal.leftMenu
         self.ApplyStyleClick()
-
         self.loged = True
         self.__back1 = self.geometry()
         self.__back2 = self.minimumSize()
         self.__back3 = self.maximumSize()
         self.centerScreen = QApplication.primaryScreen().availableGeometry()
+        # self.homeBtnClick()
+        self.configBtnClick()
+###########################################################################################################################
+########    SET CLICK EVENTS
+###########################################################################################################################
         self.appWindow.toggleLeftModalBtn.clicked.connect(self.toggleLeftModalClick)
         self.appWindow.toggleRightModalBtn.clicked.connect(self.toggleRightModalClick)
         self.appWindow.closeBtn.clicked.connect(self.closeBtnClick)
@@ -41,11 +48,20 @@ class myapp(msForm):
         self.appWindow.maximizeBtn.clicked.connect(self.maximizeBtnClick)
         self.appWindow.LoginUI.loginBtn.clicked.connect(self.loginBtnClick)
         self.appWindow.logOutBtn.clicked.connect(self.logoutBtnClick)
-        self.appWindow.leftModal.leftMenu.homeBtn.clicked.connect(self.homeBtnClick)
-        #### TEMP
-        self.appWindow.leftModal.leftMenu.cloudBtn.clicked.connect(self.CcloudBtnClick)
-        ####
-
+###########################################################################################################################
+########    LEFT MENU
+###########################################################################################################################
+        self.lMenu.homeBtn.clicked.connect(self.homeBtnClick)
+        self.lMenu.cloudBtn.clicked.connect(self.CcloudBtnClick)
+        self.lMenu.configBtn.clicked.connect(self.configBtnClick)
+###########################################################################################################################
+########    CONFIG
+        self.lmConfig = self.appWindow.configPage.leftMenu
+###########################################################################################################################
+        self.lmConfig.styleBtn.clicked.connect(self.styleBtnClick)
+        self.lmConfig.secondBtn.clicked.connect(self.interopBtnClick)
+###########################################################################################################################
+###########################################################################################################################
         self.checkeLogin()
         self.myGrip = msGrip(self)
         self.show()
@@ -72,6 +88,7 @@ class myapp(msForm):
             self.setMinimumSize(self.__back2)
             self.setMaximumSize(self.__back3)
             self.setGeometry(self.__back1)
+            self.homeBtnClick()
 
     def loginBtnClick(self):
         con = auth.login(login=self.appWindow.LoginUI.loginTxt.text(), password=self.appWindow.LoginUI.passwordTxt.text())
@@ -157,17 +174,20 @@ class myapp(msForm):
             self.myGrip.setVisible(self.loged)
 
         if self.windowState() == Qt.WindowMaximized:
-            self.appWindow.maximizeBtn.setIcon(QIcon(self.appWindow.Svgs['fullscreen_exit_white_48dp']))
+            self.appWindow.maximizeBtn.setIcon(QIcon(Svgs['fullscreen_exit_white_48dp']))
         elif self.windowState() == Qt.WindowNoState:
-            self.appWindow.maximizeBtn.setIcon(QIcon(self.appWindow.Svgs['fullscreen_white_48dp']))
+            self.appWindow.maximizeBtn.setIcon(QIcon(Svgs['fullscreen_white_48dp']))
         self.myGrip.updateSize()
-
+###########################################################################################################################
+########    CLICK EVENTS
+###########################################################################################################################
+########    CLOSE
     def closeBtnClick(self):
         self.close()
-
+########    MINIMIZE
     def minimizeBtnClick(self):
         self.setWindowState(Qt.WindowMinimized)
-
+########    MAXIMIZE
     def maximizeBtnClick(self):
         if not self.loged: return
         if self.windowState() == Qt.WindowMaximized:
@@ -175,14 +195,40 @@ class myapp(msForm):
         elif self.windowState() == Qt.WindowNoState:
             self.setWindowState(Qt.WindowMaximized)
         self.attCorner()
-
+########    LEFTMENU HOMEBTN
     def homeBtnClick(self):
-        if self.appWindow.leftModal.leftMenu.homeBtn.actived: return
-        self.appWindow.leftModal.leftMenu.homeBtn.active()
-    
+        if self.lMenu.homeBtn.actived: return
+        self.lMenu.homeBtn.active()
+        self.pageSelector("home")
+########    LEFTMENU CLOUDBTN
     def CcloudBtnClick(self):
-        if self.appWindow.leftModal.leftMenu.cloudBtn.actived: return
-        self.appWindow.leftModal.leftMenu.cloudBtn.active()
+        if self.lMenu.cloudBtn.actived: return
+        self.lMenu.cloudBtn.active()
+        self.pageSelector("cloud")
+########    LEFTMENU CONFIGBTN  
+    def configBtnClick(self):
+        if self.lMenu.configBtn.actived: return
+        self.lMenu.configBtn.active()
+        self.pageSelector("config")
+########    CONFIG  STYLEBTN
+    def styleBtnClick(self):
+        if self.lmConfig.styleBtn.actived: return
+        self.lmConfig.styleBtn.active()
+        self.appWindow.configPage.content.displayPage("theme")
+########    CONFIG  INTEROPBTN
+    def interopBtnClick(self):
+        if self.lmConfig.secondBtn.actived: return
+        self.lmConfig.secondBtn.active()
+        self.appWindow.configPage.content.displayPage("interop")
+
+###########################################################################################################################
+###########################################################################################################################
+###########################################################################################################################
+
+
+    def pageSelector(self, pageName):
+        self.appWindow.contentPages.showPage(pageName)
+        
 
     def ApplyStyleClick(self):      
         for i in self.appWindow.__dict__:
@@ -195,9 +241,13 @@ class myapp(msForm):
 from teste import subApp
 testes = False
 
+def loaders():
+    modulos.LoadJsonStyle()
+   
+
 if __name__ == "__main__":
     if not testes:
-        modulos.LoadJsonStyle()
+        loaders()
         app = QApplication(sys.argv)
         app.setAttribute(Qt.AA_EnableHighDpiScaling)
         app.setAttribute(Qt.AA_UseHighDpiPixmaps)

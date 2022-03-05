@@ -10,7 +10,8 @@ defaultStyle = {
 "topbarheight": 33,
 "displaycolor": "#ce6bff",
 "logintxt": "#807287",
-"logintxthover": "#72199e"
+"logintxthover": "#72199e",
+"separators": "#4C3F91"
 }
 
 style = defaultStyle.copy()

@@ -8,16 +8,50 @@
 ###########################################################################################################################
 ###########################################################################################################################
 ###########################################################################################################################
-from env import *
-###########################################################################################################################
 ########    PYSIDE6 IMPORTS                             ~   * IMPORTANT
 ###########################################################################################################################
 from PySide6.QtGui import *
 from PySide6.QtWidgets import *
 from PySide6.QtCore import *
 ###########################################################################################################################
-########    ANOTHER IMPORTS
+########    MODULES
 ###########################################################################################################################
-from modulos import *
-from gui.Interfaces import *
-from gui.widgets import *
+from assets.styles import style
+from gui.widgets.msBoxLayout.msHBoxLayout import msHBoxLayout
+from gui.widgets.msPanel.msPanel import msPanel
+from modulos.msVariables import Svgs
+###########################################################################################################################
+############    
+###########################################################################################################################
+#####   BODY
+class body(msPanel):
+    def __init__(self, parent: QWidget):
+        super(body, self).__init__(parent)
+        self.setObjectName("home")
+        self.setMinimumSize(680 - style['leftmodalmaxwidth'], 434)
+        self.setMaximumSize(9999,9999)
+        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        self.applyStyles()
+    def applyStyles(self):
+        self.backgroundColor("red")
+        #self.backgroundColor(style['primarybg'])
+#####
+class subui_Home(object):
+    def start(self, parent: QObject):
+        self.parent = parent
+        self.body = body(self.parent)
+########    SET BOX TO THE BODY
+        self.bodyBox = msHBoxLayout(self.body)
+        self.bodyBox.setContentsMargins(10, 10, 10, 10)
+########    SET SOME CHILDS TO BODYBOX
+        ####
+
+        ####
+########    SET STYLES TO ALL WIDGETS
+    def applyStyles(self):
+        for i in self.__dict__:
+            try:
+                i.applyStyles()
+            except: 
+                pass
+

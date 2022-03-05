@@ -17,15 +17,17 @@ from PySide6.QtCore import *
 ########    MODULES
 ###########################################################################################################################
 from assets.styles import style
-from gui.widgets.msBoxLayout.msVBoxLayout import msVBoxLayout
-from gui.widgets.msButton.msButton import msButton
-from gui.widgets.msLabel.msLabel import msLabel
-from gui.widgets.msPanel import msPanel
-from gui.widgets.msSVGRender.msSVGRender import msSVGRender
-from gui.widgets.msTxtImput import MsTxtImput
-from modulos import customFunctions
+from modulos.msVariables import Svgs
 ###########################################################################################################################
-Svgs = {"manage_accounts_white_48dp": customFunctions.AppGetFile(customFunctions.AppGetUniversalPath("assets/svg"), "manage_accounts_white_48dp.svg")}
+########    WIDGETS
+###########################################################################################################################
+from gui.widgets.msBoxLayout.msVBoxLayout import msVBoxLayout
+from gui.widgets.msButton import msButton
+from gui.widgets.msLabel import msLabel
+from gui.widgets.msPanel import msPanel
+from gui.widgets.msSVGRender import msSVGRender
+from gui.widgets.msTxtImput import MsTxtImput
+###########################################################################################################################
 ###########################################################################################################################
 #####   BODY WIDGET
 class body(msPanel):

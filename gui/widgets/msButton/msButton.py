@@ -249,6 +249,7 @@ class msButton(QPushButton):
         self.updateStyles()
 ####    BORDER BOTTOM CHANGE PARAMS
     def borderBottom(self, width :int, style :str, color :str):
+        
         self.styled["border-bottom-width"] = width
         self.styled["border-bottom-style"] = style
         self.styled["border-bottom-color"] = color
@@ -411,25 +412,34 @@ class msButton(QPushButton):
         style_ = "{}#{} {{\n".format(objectType, self.objectName())
         #
         if self.styled["background-color"] != "":          style_ += "background-color: {};\n".format(backgroundColor)
+
         if self.styled["color"] != "":                     style_ += "color: {};\n".format(self.styled["color"])
+
         if self.styled["text-align"] != "":                style_ += "text-align: {};\n".format(self.styled["text-align"])
+
         if self.styled["vertical-align"] != "":            style_ += "vertical-align: {};\n".format(self.styled["vertical-align"])
+
         if self.styled["border-left-width"]:               style_ += "border-left-width: {}px;\n".format(self.styled["border-left-width"])
         if self.styled["border-left-style"] != "":         style_ += "border-left-style: {};\n".format(self.styled["border-left-style"])
         if self.styled["border-left-color"] != "":         style_ += "border-left-color: {};\n".format(self.styled["border-left-color"])
+
         if self.styled["border-right-width"]:              style_ += "border-right-width: {}px;\n".format(self.styled["border-right-width"])
         if self.styled["border-right-style"] != "":        style_ += "border-right-style: {};\n".format(self.styled["border-right-style"])
         if self.styled["border-right-color"] != "":        style_ += "border-right-color: {};\n".format(self.styled["border-right-color"])
+
         if self.styled["border-top-width"]:                style_ += "border-top-width: {}px;\n".format(self.styled["border-top-width"])
         if self.styled["border-top-style"] != "":          style_ += "border-top-style: {};\n".format(self.styled["border-top-style"])
         if self.styled["border-top-color"] != "":          style_ += "border-top-color: {};\n".format(self.styled["border-top-color"])
+
         if self.styled["border-bottom-width"]:             style_ += "border-bottom-width: {}px;\n".format(self.styled["border-bottom-width"])
         if self.styled["border-bottom-style"] != "":       style_ += "border-bottom-style: {};\n".format(self.styled["border-bottom-style"])
         if self.styled["border-bottom-color"] != "":       style_ += "border-bottom-color: {};\n".format(self.styled["border-bottom-color"])
+
         if self.styled["border-top-left-radius"]:          style_ += "border-top-left-radius: {}px;\n".format(self.styled["border-top-left-radius"])
         if self.styled["border-top-right-radius"]:         style_ += "border-top-right-radius: {}px;\n".format(self.styled["border-top-right-radius"])
         if self.styled["border-bottom-right-radius"]:      style_ += "border-bottom-right-radius: {}px;\n".format(self.styled["border-bottom-right-radius"])
         if self.styled["border-bottom-left-radius"]:       style_ += "border-bottom-left-radius: {}px;\n".format(self.styled["border-bottom-left-radius"])
+
         if self.styled["padding-left"]:                    style_ += "padding-left: {}px;\n".format(self.styled["padding-left"])
         if self.styled["padding-right"]:                   style_ += "padding-right: {}px;\n".format(self.styled["padding-right"])
         if self.styled["padding-top"]:                     style_ += "padding-top: {}px;\n".format(self.styled["padding-top"])

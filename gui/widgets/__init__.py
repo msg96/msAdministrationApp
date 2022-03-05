@@ -13,6 +13,7 @@ from .msSVGRender import msSVGRender
 from .msTxtImput import MsTxtImput
 from .msButton import msButton
 from .msLmButton import msLmButton
+from .msClmButton import msClmButton
 from .msGrip import msGrip
 from .msLabel import msLabel
 from .msBoxLayout import *

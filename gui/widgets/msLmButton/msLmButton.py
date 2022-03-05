@@ -56,11 +56,11 @@ class msLmButton(msButton):
         for i in self.parent().children():
             if i == self:
                 self.backgroundColor(style["primarybg"])
-                self.border(0, "none", "transparent")
                 self.hoverBackgroundColor(style["primarybg"])
-                self.hoverBorder(0, "none", "transparent")
-                self.borderLeft(2, "solid", style["hoverbtns"] )
-                self.hoverBorderLeft(2, "solid", style["hoverbtns"] )
+                self.border(1, "solid", style['hoverbtns'])
+                self.hoverBorder(1, "solid", style['hoverbtns'])
+                self.borderRight(0, "none", "Transparent" )
+                self.hoverBorderRight(0, "none", "Transparent" )
                 self.updateStyles()
             else:
                 try:

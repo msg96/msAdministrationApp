@@ -10,5 +10,6 @@
     "secondarybg": "#190B1D",
     "textcolor": "#CFCFCF",
     "topbarheight": 33,
-    "topleftradius": 0
+    "topleftradius": 0,
+    "separators": "#190B1D"
 }

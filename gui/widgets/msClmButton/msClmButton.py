@@ -8,16 +8,39 @@
 ###########################################################################################################################
 ###########################################################################################################################
 ###########################################################################################################################
-from env import *
-###########################################################################################################################
 ########    PYSIDE6 IMPORTS                             ~   * IMPORTANT
 ###########################################################################################################################
 from PySide6.QtGui import *
 from PySide6.QtWidgets import *
 from PySide6.QtCore import *
+from assets.styles import style
+################################
+#### widget pai ################
+from ..msButton import msButton
 ###########################################################################################################################
-########    ANOTHER IMPORTS
-###########################################################################################################################
-from modulos import *
-from gui.Interfaces import *
-from gui.widgets import *
+class msClmButton(msButton):
+    def __init__(self, parent: QWidget):
+        super(msClmButton, self).__init__(parent)
+        self.setParent(parent)
+        self.actived = False
+    def applyStyle(self):
+            self.color(style['textcolor'])
+            self.backgroundColor("Transparent")
+            self.textAlign('left')
+            self.paddingLeft(5)
+            self.hoverColor(style['logintxt'])
+
+    def active(self):
+        for i in self.parent().children():
+            if i == self:
+                self.color(style['logintxthover'])
+                self.backgroundColor("Transparent")
+                self.textAlign('left')
+                self.paddingLeft(5)
+                self.hoverColor(style['logintxthover'])
+            else:
+                try:
+                    i.actived = False
+                    i.applyStyle()
+                except:
+                    pass

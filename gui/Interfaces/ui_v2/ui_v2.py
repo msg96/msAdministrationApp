@@ -14,23 +14,30 @@ from PySide6.QtGui import *
 from PySide6.QtWidgets import *
 from PySide6.QtCore import *
 ###########################################################################################################################
+import os
 #############################
 ####### MODULOS
 #############################
-import os
-from gui.widgets.msBoxLayout.msHBoxLayout import msHBoxLayout
-from gui.widgets.msBoxLayout.msVBoxLayout import msVBoxLayout
-from gui.widgets.msLabel.msLabel import msLabel
-from gui.widgets.msLmButton.msLmButton import msLmButton
-from ..subui_login import subui_Login
-from gui.widgets.msPanel import msPanel
-from gui.widgets.msButton import msButton
-from gui.widgets.msForm import msForm
 from modulos import customFunctions
 from assets.styles import style
 #############################
+########        SUB UIS
 #############################
-####### VARIABLES
+from ..subui_login import subui_Login
+from ..subui_home import subui_Home
+from ..subui_config import subui_Config
+#############################
+########        WIDGETS
+#############################
+from gui.widgets.msBoxLayout.msHBoxLayout import msHBoxLayout
+from gui.widgets.msBoxLayout.msVBoxLayout import msVBoxLayout
+from gui.widgets.msLabel import msLabel
+from gui.widgets.msLmButton import msLmButton
+from gui.widgets.msPanel import msPanel
+from gui.widgets.msButton import msButton
+from gui.widgets.msForm import msForm
+#############################
+########        VARIABLES
 #############################
 width = 940
 height = 500
@@ -38,6 +45,8 @@ animationDelay = 200
 animationEffect = QEasingCurve.OutElastic
 Svgs = {}
 #############################
+#############################
+###
 def LoadIconsUrls(Svgs :dict):
         SvgPath = customFunctions.AppGetUniversalPath("assets/svg/")
         for file in os.listdir(SvgPath):
@@ -134,13 +143,13 @@ class leftMenu(object):
                         super().__init__(parent)
                         menu.addWidget(self, 0, Qt.AlignBottom)
                         self.myIcon(Svgs['settings_white_48dp'])
-                        self.setText("Configurações")        
+                        self.setText("Configurações")
         #####   CREATE ALL COMPONENTS
         def create(self, parent :leftModal):
                 self.leftMenu = msVBoxLayout(parent)
                 self.leftMenu.setAlignment(Qt.AlignTop)
                 self.leftMenu.setSpacing(5)
-                self.leftMenu.setContentsMargins(1, 3, 0, 5)
+                self.leftMenu.setContentsMargins(1, 3, 0, 2)
                 ####    PROFILE
                 self.profile = self.profile(parent, self.leftMenu)
                 ####    MENU BUTTONS
@@ -198,6 +207,8 @@ class rightModal(msPanel):
         def __init__(self, parent: QWidget):
                 super(rightModal, self).__init__(parent)
                 self.isOpen = False
+                self.setMinimumWidth(0)
+                self.setMaximumWidth(0)
                 self.Animation= QPropertyAnimation(self, b"minimumWidth")
                 self.Animation.setDuration(animationDelay)
                 self.Animation.setEasingCurve(animationEffect)
@@ -205,8 +216,6 @@ class rightModal(msPanel):
         def applyStyles(self):
                 self.backgroundColor(style["hoverbtns"])
                 self.borderTop(0, "solid", style["hoverbtns"])
-                self.setMinimumWidth(0)
-                self.setMaximumWidth(0)
                 self.Animation.setStartValue(0)
                 self.Animation.setEndValue(200)
         def toggle(self, btn :msButton):
@@ -229,7 +238,23 @@ class rightModal(msPanel):
 class contentPages(msPanel):
         def __init__(self, parent: QWidget):
                 super(contentPages, self).__init__(parent)
+                self.organizer = msHBoxLayout(self)
+                # self.organizer.setContentsMargins(10, 10, 10, 10)
+                self.pages = [QWidget]
                 self.applyStyles()
+        def addPage(self, object: QWidget):
+                self.organizer.addWidget(object)
+                self.pages.append(object)
+                object.setVisible(False)
+        def showPage(self, pageName):
+                for page in self.pages:
+                        try:
+                                if page.objectName() == pageName:
+                                        page.setVisible(True)
+                                else:
+                                        page.setVisible(False)
+                        except:
+                                pass
         def applyStyles(self):
                 self.borderTop(1, "solid", style["secondarybg"])
                 self.borderRight(1, "solid", style["secondarybg"])
@@ -239,6 +264,7 @@ class footer(msPanel):
                 super(footer, self).__init__(parent)
                 self.setMinimumSize(QSize(0, 33))
                 self.setMaximumSize(QSize(9999, 33))
+                self.setVisible(False)
                 self.applyStyles()
         def applyStyles(self):
                 self.backgroundColor(style["primarybg"])
@@ -395,4 +421,13 @@ class uiV2(object):
         self.topBarBox.addWidget(self.minimizeBtn)
         self.topBarBox.addWidget(self.maximizeBtn)
         self.topBarBox.addWidget(self.closeBtn)
-########
+########        SET SOME PAGES TO CONTENTPAGES
+        self.homePage = subui_Home()
+        self.configPage = subui_Config()
+        ####    START PAGES
+        self.homePage.start(self.contentPages)
+        self.configPage.start(self.contentPages)
+        ####    ADD PAGES IN CONTENT PAGES
+        self.contentPages.addPage(self.homePage.body)
+        self.contentPages.addPage(self.configPage.body)
+        
