@@ -17,6 +17,11 @@
 [01/03/2022]
 > adicionada tela de login
 
-[03/03/2021]
+[03/03/2022]
 > adicionado sistema de autenticação por banco de dados, com hwnd e encriptamento
 
+[04/03/2022]
+> adicionado sistema de estilização do programa com base em uma json file
+
+[05/03/2022]
+> criando a pagina de configurações
